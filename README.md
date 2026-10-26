@@ -97,3 +97,13 @@ permit cross-source ratios or authorize publishing. See
 ### Windows Census extraction: unexpected final CSV record
 
 If the audited Census income ZIP passes `review_source_rows.py` but an earlier extractor raised `Malformed Census CSV row 484870`, update to the M00-T02 trailing-record fix. It only ignores fully blank **terminal** records and preserves duplicate and nonblank-row guards. From the repository root, re-run `python scripts/extract_statcan_cma_income.py`. Send the full report, including `trailing_blank_rows_skipped`, or the new field-count diagnostic if extraction still fails. Do not edit or re-download a verified publisher file just to address the parser issue. See `docs/SOURCE_VALIDATION_M00_T02.md`.
+
+## M00 local evidence reconciliation (read-only)
+
+With both previously verified publisher files in the gitignored source-probe directory, run:
+
+```powershell
+python scripts/reconcile_vancouver_evidence.py
+```
+
+This validates reviewed Vancouver 2020 income and 2024/2025 rent observations against their pinned file hashes. It **does not** calculate or authorize a rent-to-income ratio. See [`docs/SOURCE_RECONCILIATION_M00.md`](docs/SOURCE_RECONCILIATION_M00.md).
