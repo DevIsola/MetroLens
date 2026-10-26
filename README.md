@@ -79,3 +79,7 @@ python scripts/review_source_rows.py --source cmhc-vancouver --sheet '1.1.1'  # 
 ```
 
 This previews raw Census values with `Symbol` fields and selected CMHC worksheet cells **only if the source manifest/file audit passes**. It does not match rent to income, approve source licensing, or write public datasets. Full instructions and explicit limitations are in [`docs/SOURCE_ROW_REVIEW_M00_T02.md`](docs/SOURCE_ROW_REVIEW_M00_T02.md). Keep review reports in gitignored `pipeline/data/raw/`.
+
+## M00-T02 Vancouver CMA rental extraction (review only)
+
+After auditing the downloaded CMHC Vancouver workbook, run `python scripts/extract_cmhc_cma_rents.py`. It checks the exact `Table 1.1.2` headers, reads the `Vancouver CMA` total rather than city/zone subtotals, preserves 2024/2025 observations for each apartment type with source reliability flags, and fails on missing/suppressed/changed source evidence. **This is not a production dataset or an approved rent/income join.** See [`docs/CMHC_VANCOUVER_CMA_REVIEW_M00_T02.md`](docs/CMHC_VANCOUVER_CMA_REVIEW_M00_T02.md).
