@@ -26,7 +26,7 @@ The proposed observatory uses official Canadian datasets whose periods, update r
 
 ## Consequences and explicit limitations
 
-- Developers run tests locally; manual-only CI does **not** provide an automatic required check for every PR. M01 will revisit targeted PR verification if needed to support branch protection.
+- Developers run tests locally; manual-only CI does **not** provide an automatic required check for every PR. GitHub exposes `workflow_dispatch` only after the workflow exists on the default branch; the first M00 PR is therefore validated locally. M01 will revisit targeted PR verification if needed to support branch protection.
 - Human release choice decouples integration from production. Major merged milestones may be published; partial merges need not be.
 - Manual releases can become stale; later observable source freshness and a controlled ETL schedule will address this.
 - Free-tier billing is plan- and usage-dependent. This policy reduces unnecessary Actions activity but is not a zero-cost guarantee.

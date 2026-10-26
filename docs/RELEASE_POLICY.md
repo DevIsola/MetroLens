@@ -11,7 +11,7 @@ Keep feature-branch pushes fast and cheap. Preserve an explicit human release de
 1. One long-lived branch **per milestone only**, not per individual task: `feat/Mnn-description` from the latest `main`. Feature branches stay short-lived within their milestone.
 2. Small commits for one checkable change (code + matching tests/docs), with Conventional Commit scope `Mnn-Txx`.
 3. Push each validated increment to its milestone branch. This is a developer action, not a GitHub Actions trigger.
-4. Review the accumulated milestone in a PR targeting `main`; link relevant Issues when GitHub is available. Obtain required manual verification before merge.
+4. Review the accumulated milestone in a PR targeting `main`; link relevant Issues when GitHub is available. For the first M00 PR, run local validation and inspect the diff: GitHub `workflow_dispatch` becomes available only after workflow files exist on the default branch. Thereafter, perform manual CI verification at milestone gates.
 5. Merge accepted milestone work to `main`; leave incomplete milestones `in_progress`, recording the merge SHA in the status file only when actually known.
 6. Publish only when the milestone merits a public release. From the GitHub Actions tab, manually run **Publish Pages (manual milestone release)** on `main` with explicit confirmation.
 

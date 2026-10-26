@@ -28,7 +28,7 @@ For a roadmap-status change, edit `docs/roadmap-status.json` and run `python scr
 - Small atomic commits: `docs(M00-T01): ...`, `test(M00-T01): ...`, `ci(M00): ...`.
 - Run local tests before **every** push; push to the current milestone branch, not directly to `main`.
 - Open one PR for the milestone, updating it with each increment; merge only after review and demonstrated acceptance.
-- Workflows intentionally have `workflow_dispatch` only. Ordinary commits, branch pushes, PR updates, and merges do **not** start Actions. Run the manual verification workflow when accepting a milestone.
+- Workflows intentionally have `workflow_dispatch` only. Ordinary commits, branch pushes, PR updates, and merges do **not** start Actions. **Bootstrap exception:** GitHub only exposes `workflow_dispatch` once the workflow file exists on the default branch; validate the first M00 PR locally, then manually run the workflow on later milestone checkpoints once the initial branch is merged.
 - Pages publishing is an explicitly confirmed, manually dispatched action from `main` **only**. No deployment is expected before frontend static export and contracts are ready (M01/M05). No ETL schedule is enabled (M09 will introduce one under an ADR).
 - Choose **GitHub Actions** in repository Settings → Pages → Build and deployment → Source. **Do not** select branch publishing, which would circumvent the release gate. Protect the `github-pages` environment to allow deployments from `main` only.
 
