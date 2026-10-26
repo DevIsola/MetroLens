@@ -12,7 +12,7 @@
       "merged_commit": null,
       "evidence": [],
       "accepted_at": null,
-      "notes": "Vancouver CMHC October 2024/2025 rents, 2020 private-household Census income, and 2023/2024 CIS economic-family income passed user-run audited full-file extraction; CIS 2023/2024 exact values and SHA were confirmed. M00-T03 nonpublic unjoined indicator preview contract and proposed ADR-0002 prepared; no population/period pairing, CMHC crosswalk, source reuse or publication approval. M00 remains in progress."
+      "notes": "Vancouver three-source full-file technical validation and M00-T03 separate-indicator local preview confirmed by user; M00-T04 paired light/dark desktop/mobile wireframe review and proposed UX baseline/backlog prepared. ADR-0002 scope and visual copy await maintainer acceptance. No CMHC geographic crosswalk, population/period join, publisher reuse or publication approval; M00 remains in progress."
     },
     {
       "id": "M01",
