@@ -1,0 +1,79 @@
+name: Publish Pages (manual milestone release)
+
+# Deliberately manual only. No push/PR/tag/schedule deployment triggers.
+# The site cannot deploy from a milestone branch or without confirmation.
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_release:
+        description: 'Publish approved static site from main (major release only)?'
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: ${{ github.ref == 'refs/heads/main' && inputs.confirm_release == true }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      # GitHub Pages project-site subpath; revise for custom domains using ADR.
+      NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify release prerequisites
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f package.json || { echo '::error::M01 repository bootstrap not ready'; exit 1; }
+          test -f pnpm-lock.yaml || { echo '::error::Frozen pnpm lockfile is required'; exit 1; }
+          test -f frontend/package.json || { echo '::error::M05 frontend not ready'; exit 1; }
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Validate M00/M01 contracts
+        run: |
+          python -m unittest discover -s tests -v
+          python scripts/sync_roadmap.py --check
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Enable pinned package manager
+        run: corepack enable
+      - name: Install locked packages
+        run: pnpm install --frozen-lockfile
+      - name: Build Next.js static export
+        run: pnpm --dir frontend build
+      - name: Require exported entrypoint
+        run: test -s frontend/out/index.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: frontend/out
+
+  deploy:
+    needs: build
+    if: ${{ github.ref == 'refs/heads/main' && inputs.confirm_release == true }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy only the validated artifact
+        id: deployment
+        uses: actions/deploy-pages@v4
