@@ -32,6 +32,10 @@ _INCOME_HOSTS = {'www12.statcan.gc.ca', 'www150.statcan.gc.ca', 'www.statcan.gc.
 _RENT_HOSTS = {'www.cmhc-schl.gc.ca', 'assets.cmhc-schl.gc.ca'}
 
 
+def _allowed_string(value: object, permitted: set[str]) -> bool:
+    return isinstance(value, str) and value in permitted
+
+
 def _official_url(value: object) -> bool:
     if not isinstance(value, str):
         return False
@@ -91,7 +95,7 @@ def assess_pair(
 
     if rent.get('metric_id') != RENT_METRIC or income.get('metric_id') != INCOME_METRIC:
         blockers.append('metric_definition_mismatch')
-    if rent.get('source_id') not in _RENT_SOURCES or income.get('source_id') not in _INCOME_SOURCES:
+    if not _allowed_string(rent.get('source_id'), _RENT_SOURCES) or not _allowed_string(income.get('source_id'), _INCOME_SOURCES):
         blockers.append('source_role_mismatch')
     if rent.get('unit') != 'CAD_per_month' or income.get('unit') != 'CAD_per_year':
         blockers.append('unit_mismatch')
@@ -115,7 +119,7 @@ def assess_pair(
     elif rent_period[:4] != income_period:
         blockers.append('reference_year_mismatch')
 
-    if rent.get('quality_flag') not in _RECOGNIZED_QUALITY or income.get('quality_flag') not in _RECOGNIZED_QUALITY:
+    if not _allowed_string(rent.get('quality_flag'), _RECOGNIZED_QUALITY) or not _allowed_string(income.get('quality_flag'), _RECOGNIZED_QUALITY):
         gaps.append('quality_flags_not_verified')
     if not _publisher_url(rent.get('source_url'), _RENT_HOSTS) or not _publisher_url(income.get('source_url'), _INCOME_HOSTS):
         gaps.append('source_provenance_missing')

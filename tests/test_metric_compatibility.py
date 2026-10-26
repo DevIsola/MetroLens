@@ -126,6 +126,20 @@ class MetricComparabilityTests(unittest.TestCase):
         evidence['population_interpretation']['status'] = 'pending'
         self.assertEqual(assess_pair(rent, income, evidence=evidence)['status'], 'needs_evidence')
 
+    def test_malformed_quality_field_fails_closed(self):
+        rent, income, evidence = self.eligible_pair()
+        rent['quality_flag'] = ['observed']
+        result = assess_pair(rent, income, evidence=evidence)
+        self.assertEqual(result['status'], 'needs_evidence')
+        self.assertIn('quality_flags_not_verified', result['evidence_gaps'])
+
+    def test_malformed_source_role_fails_closed(self):
+        rent, income, evidence = self.eligible_pair()
+        income['source_id'] = ['statcan_census2021_profile']
+        result = assess_pair(rent, income, evidence=evidence)
+        self.assertEqual(result['status'], 'blocked')
+        self.assertIn('source_role_mismatch', result['blockers'])
+
     def test_cli_discovery_samples_outputs_no_value(self):
         with io.StringIO() as output, redirect_stdout(output):
             self.assertEqual(main([]), 0)
