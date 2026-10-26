@@ -171,6 +171,42 @@ class CensusIncomeTests(unittest.TestCase):
         with self.assertRaisesRegex(income.IncomeExtractionError, 'Malformed'):
             income.extract_verified(self.folder)
 
+    def test_trailing_blank_csv_records_are_ignored_only_at_eof(self):
+        # CSV readers can expose physical empty lines as zero-field records.
+        # Both physical blanks and a quoted/whitespace blank field are safe
+        # to ignore, but only if no subsequent data records appear.
+        for suffix in ([''], ['   '], []):
+            with self.subTest(suffix=suffix):
+                self.prepare(rows=[BASE, [], suffix, [''] * len(HEADER)])
+                report = income.extract_verified(self.folder)
+                self.assertEqual(report['status'], 'extracted_for_review')
+                self.assertEqual(report['data_rows_scanned'], 1)
+                self.assertEqual(report['trailing_blank_rows_skipped'], 3)
+                self.assertEqual(report['scanned_rows'], 4)
+                self.assertEqual(report['observations'][1]['value'], 90000)
+
+    def test_blank_record_inside_csv_is_not_silently_ignored(self):
+        self.prepare(rows=[BASE, [], BASE])
+        with self.assertRaisesRegex(income.IncomeExtractionError, 'blank rows are only allowed at EOF'):
+            income.extract_verified(self.folder)
+
+    def test_nonempty_row_after_blank_fails_even_if_other_cma(self):
+        other = BASE.copy()
+        other[1:3] = ['Toronto (CMA) 535, Ont.', '2021S0503535']
+        self.prepare(rows=[BASE, [''], other])
+        with self.assertRaisesRegex(income.IncomeExtractionError, 'Nonempty Census record 3'):
+            income.extract_verified(self.folder)
+
+    def test_nonempty_malformed_trailer_remains_invalid_with_field_count(self):
+        self.prepare(rows=[BASE, ['Source', 'Statistics Canada']])
+        with self.assertRaisesRegex(income.IncomeExtractionError, r'expected 18 fields, found 2'):
+            income.extract_verified(self.folder)
+
+    def test_empty_only_file_still_rejects_missing_aggregate(self):
+        self.prepare(rows=[[], ['']])
+        with self.assertRaisesRegex(income.IncomeExtractionError, 'aggregate not found'):
+            income.extract_verified(self.folder)
+
     def test_non_digit_amount_rejected(self):
         row = BASE.copy()
         row[10] = '90,0?0'

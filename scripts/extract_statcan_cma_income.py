@@ -75,6 +75,7 @@ def extract_census(path: Path) -> dict:
         raise IncomeExtractionError('Required source dimension positions are missing or ambiguous')
     found = None
     scanned = 0
+    trailing_blank_rows = 0
     with ZipFile(path) as archive, archive.open(info['csv_member']) as binary:
         with io.TextIOWrapper(binary, encoding='utf-8-sig', newline='') as text:
             reader = csv.reader(text)
@@ -84,8 +85,24 @@ def extract_census(path: Path) -> dict:
                 scanned += 1
                 if scanned > MAX_CENSUS_ROWS:
                     raise IncomeExtractionError('Census row scan exceeded discovery bound')
+                # Some full-table CSVs can contain empty records after the
+                # last data row. Only skip records with *no populated fields*.
+                # Keep scanning to EOF so an empty record in the middle cannot
+                # hide a later, malformed, or duplicate CMA observation.
+                if not values or all(not value.strip() for value in values):
+                    trailing_blank_rows += 1
+                    continue
+                if trailing_blank_rows:
+                    raise IncomeExtractionError(
+                        f'Nonempty Census record {scanned} after '
+                        f'{trailing_blank_rows} blank record(s); blank rows are only allowed at EOF'
+                    )
                 if len(values) != len(expected_columns):
-                    raise IncomeExtractionError(f'Malformed Census CSV row {scanned}')
+                    raise IncomeExtractionError(
+                        f'Malformed Census CSV row {scanned}: '
+                        f'expected {len(expected_columns)} fields, found {len(values)}; '
+                        'nonblank records cannot be skipped'
+                    )
                 if values[col_index['DGUID']].strip() != DGUID:
                     continue
                 size = values[col_index['Household size (7)']]
@@ -115,7 +132,13 @@ def extract_census(path: Path) -> dict:
                 }
     if found is None:
         raise IncomeExtractionError('Vancouver CMA all-household aggregate not found')
-    return {**found, 'scanned_rows': scanned, 'source_csv_member': info['csv_member']}
+    return {
+        **found,
+        'scanned_rows': scanned,
+        'data_rows_scanned': scanned - trailing_blank_rows,
+        'trailing_blank_rows_skipped': trailing_blank_rows,
+        'source_csv_member': info['csv_member'],
+    }
 
 
 def extract_verified(raw_dir: Path = RAW_DIR) -> dict:
