@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "project_version": "0.2.0",
+  "updated_at": "2026-10-26",
+  "milestones": [
+    {
+      "id": "M00",
+      "title": "Discovery e contrato do produto",
+      "status": "in_progress",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "Candidate CMA scope and metrics dictionary drafted locally; cross-source feasibility and acceptance not established."
+    },
+    {
+      "id": "M01",
+      "title": "Foundation + CI + governança",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M02",
+      "title": "Ingestão das fontes oficiais",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M03",
+      "title": "Bronze / Silver + qualidade",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M04",
+      "title": "Gold marts + dbt + export",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M05",
+      "title": "Design system, i18n e Overview",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M06",
+      "title": "City Explorer + mapas",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M07",
+      "title": "Affordability Lab",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M08",
+      "title": "Insights, EDA e storytelling",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M09",
+      "title": "Refresh automático + deploy",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M10",
+      "title": "Data transparency + observability",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M11",
+      "title": "Hardening + lançamento + case study",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    }
+  ]
+}
