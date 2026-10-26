@@ -12,7 +12,7 @@
       "merged_commit": null,
       "evidence": [],
       "accepted_at": null,
-      "notes": "Candidate CMAs and metrics drafted; official HTML observations documented; reproducible source probes and an offline hash/schema audit added. The reported real source downloads and rent/income compatibility have not been independently reviewed in this repository; M00 remains in progress."
+      "notes": "Candidate CMA and metric definitions drafted; M00-T02 offline provenance checks and M00-T03 fail-closed comparability triage implemented and tested. The 2020/2025 examples are blocked; actual publisher rows, compatible series, source crosswalk and reuse approvals are not yet verified. M00 remains in progress."
     },
     {
       "id": "M01",

@@ -59,3 +59,11 @@ python scripts/audit_source_probes.py
 ```
 
 It revalidates original files and their manifests, and reports missing/invalid evidence without authorizing an affordability calculation. Exit codes: `0` = all selected **structural** checks pass; `1` = incomplete evidence; `2` = invalid evidence. The source files and reports remain gitignored. Refer to [`docs/SOURCE_VALIDATION_M00_T02.md`](docs/SOURCE_VALIDATION_M00_T02.md) for interpretation and limitations.
+
+## Assess rent/income comparability (M00-T03, review only)
+
+```sh
+python scripts/assess_metric_compatibility.py
+```
+
+The command reports why the existing 2020-income/2025-rent discovery samples are **blocked**. No affordability value is calculated or published. The output never authorizes data promotion; even complete metadata requires independent methodology review. See [`docs/COMPARABILITY_REVIEW_M00_T03.md`](docs/COMPARABILITY_REVIEW_M00_T03.md). GitHub Actions, Pages and ETL schedules are unchanged.

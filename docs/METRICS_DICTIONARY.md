@@ -38,3 +38,9 @@
 | `source_id` | string | Points to a real catalog entry with official URL |
 
 Before marking this task complete, select real tables, use example observations to prove the formulas, and test at least one negative case (invalid/mismatched inputs). See the master roadmap §1.3 and §2.1 for definition and quality requirements.
+
+## M00-T03 executable discovery gate (2026-10-26)
+
+The first policy check is implemented in [`scripts/assess_metric_compatibility.py`](../scripts/assess_metric_compatibility.py), with the review contract documented in [`COMPARABILITY_REVIEW_M00_T03.md`](COMPARABILITY_REVIEW_M00_T03.md). It checks the proposed **annualized mean turnover two-bedroom rent versus median total household income** pairing against strict source roles, units, periods, geography identifiers, quality flags, and required methodology evidence. These are distinct aggregated statistics, **not** observed household-level rent burdens.
+
+`blocked`, `needs_evidence` and `ready_for_methodology_review` are **triage states, not production approvals**. All outputs explicitly retain `approved_for_publication: false` and `computed_value: null`. The manually transcribed 2020 income / 2025 rent examples remain blocked. A numeric formula must not be applied to these observations. See the separate review contract for data and licensing acceptance work.
