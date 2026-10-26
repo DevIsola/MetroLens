@@ -83,3 +83,13 @@ This previews raw Census values with `Symbol` fields and selected CMHC worksheet
 ## M00-T02 Vancouver CMA rental extraction (review only)
 
 After auditing the downloaded CMHC Vancouver workbook, run `python scripts/extract_cmhc_cma_rents.py`. It checks the exact `Table 1.1.2` headers, reads the `Vancouver CMA` total rather than city/zone subtotals, preserves 2024/2025 observations for each apartment type with source reliability flags, and fails on missing/suppressed/changed source evidence. **This is not a production dataset or an approved rent/income join.** See [`docs/CMHC_VANCOUVER_CMA_REVIEW_M00_T02.md`](docs/CMHC_VANCOUVER_CMA_REVIEW_M00_T02.md).
+
+## M00-T02 exact Vancouver CMA Census income (review only)
+
+Following a passing local StatCan source-file audit, run
+`python scripts/extract_statcan_cma_income.py` to extract the unique Vancouver CMA
+**all-household** observation for 2020 median total/after-tax income and the 2021
+household count. Preserve original Census dimension codes, quality symbols,
+periods and ZIP checksum. This **does not** align 2020 income to 2024/2025 rent,
+permit cross-source ratios or authorize publishing. See
+[`docs/STATCAN_VANCOUVER_CMA_REVIEW_M00_T02.md`](docs/STATCAN_VANCOUVER_CMA_REVIEW_M00_T02.md).

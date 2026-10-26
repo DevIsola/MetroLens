@@ -12,7 +12,7 @@
       "merged_commit": null,
       "evidence": [],
       "accepted_at": null,
-      "notes": "Candidate CMA and metric definitions drafted; source probes, hash/schema audits, bounded Census/CMHC row-review tooling, and fail-closed comparability triage implemented with synthetic tests. User-reported CMHC Vancouver CMA Table 1.1.2 values/2021-vintage footnote reviewed, and an audited local extractor with quality gates implemented. Independent extraction on the publisher workbook, aligned income series, source geography crosswalk, licensing sign-off, and M00 acceptance remain pending."
+      "notes": "Candidate CMA and metric definitions drafted; source probes, hash/schema audits, bounded row preview and fail-closed comparability triage implemented. User-reported CMHC Vancouver CMA 2024/2025 rent extraction and Statistics Canada 2021 Census Vancouver all-household 2020 income observations reviewed. Source-specific Census income extractor added; requires user-side real-file execution. Temporal alignment, household-universe compatibility, licensing sign-off, geography crosswalk and M00 acceptance remain pending."
     },
     {
       "id": "M01",
