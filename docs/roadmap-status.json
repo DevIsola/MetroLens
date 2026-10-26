@@ -12,7 +12,7 @@
       "merged_commit": null,
       "evidence": [],
       "accepted_at": null,
-      "notes": "Candidate CMAs, source discovery and metric definitions drafted. Local source audit and full-file extraction confirmed Vancouver CMA 2020 median private-household income (2021 Census) and 2024/2025 CMHC mean purpose-built apartment rents; manually reviewed hashes/row identifiers captured. Read-only cross-source evidence reconciliation added. Geographic publisher-ID crosswalk, aligned reference years, statistical population compatibility, reuse sign-off, and M00 acceptance remain pending; no ratio approved."
+      "notes": "Candidate CMAs, source definitions and fail-closed comparability controls exist. User-run local extraction and reconciliation confirm Vancouver Census 2020 private-household income and CMHC 2024/2025 purpose-built average rents, but do not authorize a join. An opt-in Canadian Income Survey annual 2024 economic-family CMA candidate probe/reviewer is implemented; real CIS rows, source-geography crosswalk, population alignment, reuse notices, and M00 acceptance remain pending."
     },
     {
       "id": "M01",

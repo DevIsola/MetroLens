@@ -22,6 +22,18 @@ python scripts/sync_roadmap.py --check
 
 For a roadmap-status change, edit `docs/roadmap-status.json` and run `python scripts/sync_roadmap.py --write`, then rerun validation. Milestones cannot be marked `done` without merged PR and acceptance evidence.
 
+## Optional M00-T02 annual CMA income candidate (discovery only)
+
+Statistics Canada Table `11-10-0190-01` is a Canadian Income Survey **economic-family** series through 2024, not a private-household income replacement. To download and inspect it **once, manually**, run:
+
+```powershell
+python scripts/probe_official_sources.py --source statcan-cis-income --fetch --max-mib 150
+python scripts/audit_source_probes.py --source statcan-cis-income
+python scripts/review_cis_income_candidate.py --limit 12 --max-scan 2000000
+```
+
+The new source is an *optional* discovery candidate and is omitted from the original four-source `audit_source_probes.py --source all` default. Source bytes remain ignored by Git. **All compatibility and publication flags remain false**. Full source and reporting requirements: [`docs/CIS_2024_INCOME_CANDIDATE_M00_T02.md`](docs/CIS_2024_INCOME_CANDIDATE_M00_T02.md).
+
 ## Branch, commit, and deployment policy
 
 - Milestone branches: `feat/M00-product-discovery`, `feat/M01-engineering-foundation`, etc.
