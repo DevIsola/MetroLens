@@ -123,3 +123,13 @@ python scripts/reconcile_vancouver_evidence.py
 ```
 
 This validates reviewed Vancouver 2020 income and 2024/2025 rent observations against their pinned file hashes. It **does not** calculate or authorize a rent-to-income ratio. See [`docs/SOURCE_RECONCILIATION_M00.md`](docs/SOURCE_RECONCILIATION_M00.md).
+
+## M00-T04 accepted design and M00-T05 proposed static pipeline architecture
+
+The maintainer accepted the **separate rent/income indicator scope**, paired light/dark responsive wireframe, and the two explanatory story concepts on 2026-10-26. More **interactive charts (ECharts, M05/M08) and CMA maps (MapLibre, M06)** are explicit future UX acceptance requirements, subject to geography licences and source validity. See [`docs/design/M00_T04_REVIEW_DECISION.md`](docs/design/M00_T04_REVIEW_DECISION.md).
+
+M00-T05 proposes **gitignored original raw source files + source manifests → offline Parquet Silver → DuckDB/dbt Gold → small, approved, versioned JSON shards → static Next.js frontend**. This is an architecture proposal, **not an active export/deployment pipeline**; publication flags remain false and GitHub Actions stay manual-only. Review [`docs/adr/ADR-0001-static-release-control.md`](docs/adr/ADR-0001-static-release-control.md) and its [machine-readable policy](docs/architecture/static_pipeline_policy.json) before acceptance. Validate locally with:
+
+```powershell
+python scripts/validate_m00_architecture.py
+```

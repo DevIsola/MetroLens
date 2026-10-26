@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "milestone": "M00-T05",
+  "decision_status": "proposed_for_review",
+  "implementation_active": false,
+  "storage": {
+    "raw": {"directory": "pipeline/data/raw/", "format": "publisher_original", "gitignored": true, "browser_served": false},
+    "bronze": {"directory": "pipeline/data/bronze/", "format": "source_manifest", "gitignored": true, "browser_served": false},
+    "silver": {"directory": "pipeline/data/silver/", "format": "parquet", "gitignored": true, "browser_served": false, "introduced_in": "M03"},
+    "gold": {"directory": "pipeline/data/gold/", "format": "duckdb_dbt_and_parquet", "gitignored": true, "browser_served": false, "introduced_in": "M04"},
+    "public_export": {"format": "versioned_json_shards", "approved_only": true, "introduced_in": "M04-M05", "publication_active": false}
+  },
+  "runtime": {"frontend": "nextjs_static_export", "application_server_required": false, "client_charts": "echarts", "client_maps": "maplibre", "geodata_requires_licence_review": true, "interactive_requirements_milestones": ["M05", "M06", "M08"]},
+  "execution": {"github_actions_triggers": ["workflow_dispatch"], "push_auto_ci": false, "automatic_deploy": false, "scheduled_etl": false, "schedule_review_milestone": "M09", "deployment_branch": "main", "requires_explicit_release_confirmation": true},
+  "publication_gates": {"publisher_reuse_approved": false, "cmhc_statcan_crosswalk_approved": false, "rent_income_join_approved": false, "public_data_export_approved": false},
+  "review_record": "docs/design/M00_T04_REVIEW_DECISION.md",
+  "adr": "docs/adr/ADR-0001-static-release-control.md"
+}

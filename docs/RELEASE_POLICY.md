@@ -1,6 +1,6 @@
 # GitHub and release execution policy — proposed
 
-Status: initial implementation contract, subject to M00-T05 ADR acceptance.
+Status: manual-only release implementation contract; revised M00-T05 ADR-0001 remains proposed for review and does not activate public release.
 
 ## Goal
 
