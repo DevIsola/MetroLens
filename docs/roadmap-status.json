@@ -12,7 +12,7 @@
       "merged_commit": null,
       "evidence": [],
       "accepted_at": null,
-      "notes": "Candidate CMA and metric definitions drafted; M00-T02 offline provenance checks and M00-T03 fail-closed comparability triage implemented and tested. The 2020/2025 examples are blocked; actual publisher rows, compatible series, source crosswalk and reuse approvals are not yet verified. M00 remains in progress."
+      "notes": "Candidate CMA and metric definitions drafted; source probes, hash/schema audits, bounded Census/CMHC row-review tooling, and fail-closed comparability triage implemented with synthetic tests. Actual publisher observations, compatible series, source geography crosswalk, licensing sign-off, and independent M00 acceptance remain pending."
     },
     {
       "id": "M01",

@@ -67,3 +67,15 @@ python scripts/assess_metric_compatibility.py
 ```
 
 The command reports why the existing 2020-income/2025-rent discovery samples are **blocked**. No affordability value is calculated or published. The output never authorizes data promotion; even complete metadata requires independent methodology review. See [`docs/COMPARABILITY_REVIEW_M00_T03.md`](docs/COMPARABILITY_REVIEW_M00_T03.md). GitHub Actions, Pages and ETL schedules are unchanged.
+
+## Preview actual publisher rows for manual source review (M00-T02)
+
+After local `--fetch` source probes succeed, use the **offline-only**, bounded inspector:
+
+```sh
+python scripts/review_source_rows.py --source statcan-income --region Vancouver --limit 5 --max-scan 200000
+python scripts/review_source_rows.py --source cmhc-vancouver  # List sheet names
+python scripts/review_source_rows.py --source cmhc-vancouver --sheet '1.1.1'  # Example; use real sheet name
+```
+
+This previews raw Census values with `Symbol` fields and selected CMHC worksheet cells **only if the source manifest/file audit passes**. It does not match rent to income, approve source licensing, or write public datasets. Full instructions and explicit limitations are in [`docs/SOURCE_ROW_REVIEW_M00_T02.md`](docs/SOURCE_ROW_REVIEW_M00_T02.md). Keep review reports in gitignored `pipeline/data/raw/`.
