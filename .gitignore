@@ -39,3 +39,6 @@ playwright-report/
 *.duckdb
 *.parquet
 *.log
+
+# Local M00 UX review output (source-derived; never commit or deploy)
+local-previews/
