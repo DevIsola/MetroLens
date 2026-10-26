@@ -131,3 +131,16 @@ python scripts/audit_source_probes.py > pipeline/data/raw/m00-source-probes/evid
 Because the publisher files and manifests remain on your workstation, **passing the audit is not independently verifiable by another developer until they reproduce the download**. The recorded hash proves only consistency between a local file and its local manifest; it is not a publisher-provided authenticity attestation. It does not check row semantics, suppression, the exact CMHC CMA crosswalk, compatible reference periods, matching household populations, or source-data redistribution permission. `metric_comparability_approved` is always `false`. **Do not calculate rent-to-income ratios from the 2020 Census-income and 2025 CMHC-rent examples.**
 
 The next substantive M00 gate is a manual, cited field/worksheet review of the real files and evidence of compatible rent/income concepts, followed by the M00-T03 approved metric contract. A successful structural audit alone does not complete M00-T02 or unlock M01/M02.
+
+### Windows symlink privilege portability
+
+On Windows, creating a symbolic link during the test suite may raise `OSError: [WinError 1314] A required privilege is not held by the client` when the account lacks symbolic-link privileges. The source auditor **must still reject symlinked files**. The suite now always tests that rejection through a mocked `Path.is_symlink()` response (no privileges required) and additionally attempts a real filesystem symlink. Only the real-symlink integration test is skipped if Windows specifically returns `WinError 1314`; other errors still fail the suite. No Developer Mode or administrator permission is required for local validation.
+
+In PowerShell from the project root:
+
+```powershell
+python -m unittest discover -s tests -v
+python scripts/sync_roadmap.py --check
+```
+
+A result of **54 tests, OK (skipped=1)** is expected on Windows systems that deny symlink creation. On platforms where symlink creation is allowed, all 54 run without that skip. The production auditor logic and the manual-only deployment policy are unchanged.
