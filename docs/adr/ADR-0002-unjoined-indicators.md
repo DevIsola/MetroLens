@@ -1,6 +1,6 @@
 # ADR-0002 — Propose separate income and rent indicators for the MVP
 
-- **Status:** proposed; requires maintainer acceptance and documented source-use review
+- **Status:** accepted for MVP design scope on 2026-10-26; source-use/publication approval outstanding
 - **Date:** 2026-10-26
 - **Related roadmap:** M00-T03, M00-T04, M00-T06; M04–M07
 
@@ -16,7 +16,7 @@ The periods, summary measures and statistical units are different. A matching CM
 
 M00's acceptance criteria explicitly require changing scope when data cannot be reconciled rather than inventing an estimate.
 
-## Proposed decision (not yet accepted)
+## Accepted design decision (does not authorize publication)
 
 1. For the discovery UX contract, **show separate source-specific rent and CIS income series**, each in its own card or chart, with distinct population and frequency labels, dates, units, quality badges/legends and source links. Do not create an affordability score, rent-to-income ratio, shared cross-source growth chart, or point comparison from these sources.
 2. Keep the verified 2020 Census private-household income available as a *separately identified historical source* for methodology review, not as the denominator of 2024/2025 rents.
@@ -32,6 +32,6 @@ M00's acceptance criteria explicitly require changing scope when data cannot be 
 
 ## Consequences and approval gate
 
-The local JSON contract explicitly returns `rent_to_income_ratio: null`, `publication_approved: false`, `metric_comparability_approved: false`, and `production_ready: false`. It prints no joined or inferred numeric field. This ADR **does not close M00** or update milestone status, nor does it authorize a GitHub Pages/Cloudflare deployment. Maintainer still needs to review the exact copy/design and publisher attribution, sampling limitations, and geographic definitions before approving implementation in M04/M05.
+The local JSON contract explicitly returns `rent_to_income_ratio: null`, `publication_approved: false`, `metric_comparability_approved: false`, and `production_ready: false`. It prints no joined or inferred numeric field. This ADR **does not close M00** or update milestone status, nor does it authorize a GitHub Pages/Cloudflare deployment. Maintainer accepted the separate-series scope, paired visual direction and two story concepts on 2026-10-26 (see `docs/design/M00_T04_REVIEW_DECISION.md`). This is design acceptance only: publisher attribution/reuse, geographic crosswalk, sampling limitations, content approval and implementation in M04/M05 remain independently gated.
 
 Evidence: `docs/SOURCE_RECONCILIATION_M00.md`, `docs/CIS_VANCOUVER_EXTRACT_REVIEW_M00.md`, and `docs/M00_INDICATOR_PREVIEW_CONTRACT.md`.

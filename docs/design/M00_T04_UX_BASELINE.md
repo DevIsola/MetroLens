@@ -1,6 +1,6 @@
 # M00-T04 — MetroLens UX baseline, paired local wireframes, and stories
 
-**Status:** Proposed for maintainer review; **not** production-ready, publicly approved or an accepted ADR. **Date:** 2026-10-26. Related [ADR-0002](../adr/ADR-0002-unjoined-indicators.md), [M00-T03 preview contract](../M00_INDICATOR_PREVIEW_CONTRACT.md), and [master roadmap](../NORTHSTAR_MASTER_ROADMAP.md). M00-T04 delivers a review artifact; **M05 implements the production frontend**.
+**Status:** Visual direction, separate-indicator scope and two story concepts accepted by maintainer on 2026-10-26; **not** production-ready or publicly approved. **Date:** 2026-10-26. Related [ADR-0002](../adr/ADR-0002-unjoined-indicators.md), [M00-T03 preview contract](../M00_INDICATOR_PREVIEW_CONTRACT.md), and [master roadmap](../NORTHSTAR_MASTER_ROADMAP.md). M00-T04 delivers a review artifact; **M05 implements the production frontend**.
 
 ## Source and scope boundary
 
@@ -86,12 +86,10 @@ Both story outlines are editorial hypotheses, not approved factual interpretatio
 | P1 | Explorer city/type filters and missing-data states | No unverified location joins; appropriate null displays | M06 |
 | P1 | Methodology panels with source notes, period vs publication date, quality meanings | Link and source-content audits | M05/M10 |
 | P1 | Chart data tables and no-color-only encodings | WCAG 2.2 AA testing, color-blind review | M05/M06 |
+| P1 | Interactive source-specific charts: keyboard access, focus tooltips, selectable series, data tables and reduced-motion alternatives | ECharts component/E2E tests, no cross-source ratio or implied comparison | M05/M08 |
+| P1 | MapLibre CMA explorer with pan/zoom, linked region/chart filters, URL state, legend and accessible alternative | Approved boundary provenance, crosswalk gate, keyboard/performance/fallback tests | M06 |
 | P2 | Two sourced, editorially signed-off stories | Claim/evidence audit, no implied cross-source causality | M08 |
 
-## Review decision required from maintainer
+## Review decision and interactive-visualization follow-up
 
-1. **ADR-0002:** Accept the initial MVP as **two separately labelled series**, without a composite affordability score, pending evidence for a compatible pairing? (Accept / request revision.)
-2. **Visual:** Accept v0.2.0 coral/light-dark palette, typographic hierarchy, card layout, bedroom selector and visible comparison-unavailable panel? (Accept / request revisions.)
-3. **Copy:** Confirm source-unit wording and proposed two story questions are understandable? (Accept / request revisions.)
-
-Save decisions in the project review record or ADR; this file does **not** mark any of these accepted. M00 remains `in_progress` and M01 remains `not_started`.
+**All three design decisions were accepted by the maintainer on 2026-10-26.** The request for more interactive maps and charts is captured with M05/M06/M08 deliverables and acceptance criteria in [`M00_T04_REVIEW_DECISION.md`](M00_T04_REVIEW_DECISION.md). Visual approval does **not** authorize public distribution or statistical joins. M00 remains `in_progress`; M01 remains `not_started`.
