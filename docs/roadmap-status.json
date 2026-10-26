@@ -12,7 +12,7 @@
       "merged_commit": null,
       "evidence": [],
       "accepted_at": null,
-      "notes": "Candidate CMAs and metrics drafted; official HTML observations documented; M00-T02 opt-in binary-format probe and synthetic tests added. No live machine-readable payload hashes or cross-source comparability accepted; M00 in progress."
+      "notes": "Candidate CMAs and metrics drafted; official HTML observations documented; reproducible source probes and an offline hash/schema audit added. The reported real source downloads and rent/income compatibility have not been independently reviewed in this repository; M00 remains in progress."
     },
     {
       "id": "M01",

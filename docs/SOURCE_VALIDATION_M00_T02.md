@@ -102,3 +102,32 @@ python scripts/probe_official_sources.py --source statcan-income --input /path/t
 ```
 
 A successful result confirms **only file/container/header structure** and writes a manifest under gitignored `pipeline/data/raw/m00-source-probes/`. It does **not** establish valid CMA rows, data comparability, dataset licensing of individual derived files, or a rent-to-income ratio. Note that the prior failed `--fetch` discards its temporary download; re-download unless you separately saved a publisher ZIP.
+
+## Increment 4 — offline provenance audit of downloaded files (M00-T02)
+
+Once the four `--fetch` commands succeed on a network-enabled workstation, run:
+
+```sh
+python scripts/audit_source_probes.py
+# Optional: audit one source at a time
+python scripts/audit_source_probes.py --source statcan-income
+```
+
+This check makes **no network calls**. It reads the ignored `pipeline/data/raw/m00-source-probes/<source>-manifest.json` and the corresponding downloaded file, recomputes its SHA-256 and byte size, reruns the source-format validation, and compares those results with the recorded inspection metadata. A manifest is accepted only for a known pinned publisher URL and source ID, with `production_ready: false` and `semantic_comparability_verified: false`. Source paths are restricted to simple filenames (no traversal or symlinked files). The JSON report contains only limited source metadata and checksums, **not observations or source-file contents**.
+
+| Status | Interpretation | Next action |
+| --- | --- | --- |
+| `file_verified` | Manifest and local original bytes match and the structural probe passes | Examine real rows/worksheets, geographic definitions, licensing and alignment |
+| `missing_manifest` | No successful probe manifest for the selected source | Run `probe_official_sources.py --source ... --fetch` |
+| `manifest_only` | Manifest exists but original file is not in the probe directory | With `--input` the original may have stayed elsewhere; rerun `--fetch`, or place the *same* verified file under its original basename in the ignored raw directory |
+| `invalid` | Corrupt, altered or untrusted manifest/file, or schema mismatch | Review the source, repeat the publisher probe; do not promote the output |
+
+Exit code **0** means all requested source files pass the *local structural/byte-consistency* check; **1** means incomplete evidence; **2** means at least one invalid artifact. Example of writing the small report in the ignored raw directory:
+
+```sh
+python scripts/audit_source_probes.py > pipeline/data/raw/m00-source-probes/evidence-audit.json
+```
+
+Because the publisher files and manifests remain on your workstation, **passing the audit is not independently verifiable by another developer until they reproduce the download**. The recorded hash proves only consistency between a local file and its local manifest; it is not a publisher-provided authenticity attestation. It does not check row semantics, suppression, the exact CMHC CMA crosswalk, compatible reference periods, matching household populations, or source-data redistribution permission. `metric_comparability_approved` is always `false`. **Do not calculate rent-to-income ratios from the 2020 Census-income and 2025 CMHC-rent examples.**
+
+The next substantive M00 gate is a manual, cited field/worksheet review of the real files and evidence of compatible rent/income concepts, followed by the M00-T03 approved metric contract. A successful structural audit alone does not complete M00-T02 or unlock M01/M02.

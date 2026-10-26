@@ -49,3 +49,13 @@ python scripts/probe_official_sources.py --source boc-overnight --fetch  # Expli
 
 Additional sources: `statcan-income`, `cmhc-vancouver`, `cmhc-toronto`.
 See [`docs/SOURCE_VALIDATION_M00_T02.md`](docs/SOURCE_VALIDATION_M00_T02.md) for URLs, CLI examples, licence requirements and **unresolved** source-data acceptance gates. Successful probes write only to gitignored `pipeline/data/raw/`; source-format tests are synthetic and are **not** evidence that publisher files were actually downloaded or semantically comparable. Normal pushes still trigger **no** CI, Pages or scheduled ETL.
+
+## Audit locally downloaded publisher evidence (M00-T02)
+
+After successfully fetching official samples, run the zero-network audit:
+
+```sh
+python scripts/audit_source_probes.py
+```
+
+It revalidates original files and their manifests, and reports missing/invalid evidence without authorizing an affordability calculation. Exit codes: `0` = all selected **structural** checks pass; `1` = incomplete evidence; `2` = invalid evidence. The source files and reports remain gitignored. Refer to [`docs/SOURCE_VALIDATION_M00_T02.md`](docs/SOURCE_VALIDATION_M00_T02.md) for interpretation and limitations.
