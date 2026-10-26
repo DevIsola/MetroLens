@@ -34,6 +34,10 @@ python scripts/review_cis_income_candidate.py --limit 12 --max-scan 2000000
 
 The new source is an *optional* discovery candidate and is omitted from the original four-source `audit_source_probes.py --source all` default. Source bytes remain ignored by Git. **All compatibility and publication flags remain false**. Full source and reporting requirements: [`docs/CIS_2024_INCOME_CANDIDATE_M00_T02.md`](docs/CIS_2024_INCOME_CANDIDATE_M00_T02.md).
 
+## M00-T02 audited CIS Vancouver candidate extraction (review only)
+
+After the optional CIS source has been downloaded and verified on your workstation, run `python scripts/extract_cis_cma_income.py`. This full-file check pins the **reviewed** Vancouver 2023/2024 `Median after-tax income` series to a specific source SHA-256, DGUID, vector, population type and monetary basis. The output reports 77,700 and 78,900 **2024-constant-dollar** income observations only if the audited publisher file exactly matches. It never treats economic-family units as private households and never approves an affordability join. See [`docs/CIS_VANCOUVER_EXTRACT_REVIEW_M00.md`](docs/CIS_VANCOUVER_EXTRACT_REVIEW_M00.md).
+
 ## Branch, commit, and deployment policy
 
 - Milestone branches: `feat/M00-product-discovery`, `feat/M01-engineering-foundation`, etc.
