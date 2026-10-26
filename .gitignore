@@ -1,0 +1,41 @@
+# OS/editor
+.DS_Store
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+
+# Node/Next
+node_modules/
+.pnpm-store/
+frontend/.next/
+frontend/out/
+frontend/.turbo/
+
+# Pipeline data (do not commit raw or derived datasets)
+pipeline/data/raw/
+pipeline/data/bronze/
+pipeline/data/silver/
+pipeline/data/gold/
+!pipeline/data/**/.gitkeep
+
+# Env and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Diagnostics / artifacts
+coverage/
+test-results/
+playwright-report/
+*.duckdb
+*.parquet
+*.log
