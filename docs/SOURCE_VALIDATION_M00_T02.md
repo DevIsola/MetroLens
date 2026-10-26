@@ -144,3 +144,20 @@ python scripts/sync_roadmap.py --check
 ```
 
 A result of **54 tests, OK (skipped=1)** is expected on Windows systems that deny symlink creation. On platforms where symlink creation is allowed, all 54 run without that skip. The production auditor logic and the manual-only deployment policy are unchanged.
+
+## M00-T02 follow-up — full-file Census trailing-record compatibility (2026-10-26)
+
+The Windows real-data execution of `scripts/extract_statcan_cma_income.py` reported `Malformed Census CSV row 484870` even though the same locally audited StatCan ZIP passed header validation and `review_source_rows.py` located the exact `2021S0503933` / `5381.1.1` aggregate. The earlier synthetic test fixture contained no blank trailing records. **The original row 484870 has not been inspected in this development environment; its precise contents are not known.**
+
+The extractor now tolerates strictly empty CSV records **only at the end of the table**, retaining a complete scan to EOF and duplicate-target detection. Whitespace-only records and records containing no populated fields qualify. If *any* nonempty record follows an empty record, extraction fails rather than silently skipping potentially valid or corrupt observations. Any other unexpected-width nonempty record is still rejected and reports the CSV record number, expected width, and actual width. The result includes `scanned_rows`, `data_rows_scanned`, and `trailing_blank_rows_skipped` for review.
+
+Re-run the CLI against the **same locally audited, unchanged ZIP** (no re-fetch needed):
+
+```powershell
+python scripts/audit_source_probes.py --source statcan-income
+python scripts/extract_statcan_cma_income.py > "C:\Users\hello\Downloads\MetroLens_StatCan_Vancouver_Income_Review.json"
+```
+
+If the source contains only harmless blank terminal records, the review JSON should report `status: extracted_for_review`, DGUID `2021S0503933`, coordinate `5381.1.1`, median total income 90,000 CAD in 2020, median after-tax income 79,500 CAD in 2020, and `trailing_blank_rows_skipped` greater than zero. **If the command still returns `status: invalid`, send the full new error**; a nonblank wrong-width row cannot be approved or bypassed without inspecting its shape. Never modify the publisher ZIP, manifest, SHA-256, or compatibility flags to force a pass.
+
+This is a parser correction, **not** an approval of rent/income comparability, data redistribution, or publication. M00 remains `in_progress`.

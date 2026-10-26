@@ -93,3 +93,7 @@ household count. Preserve original Census dimension codes, quality symbols,
 periods and ZIP checksum. This **does not** align 2020 income to 2024/2025 rent,
 permit cross-source ratios or authorize publishing. See
 [`docs/STATCAN_VANCOUVER_CMA_REVIEW_M00_T02.md`](docs/STATCAN_VANCOUVER_CMA_REVIEW_M00_T02.md).
+
+### Windows Census extraction: unexpected final CSV record
+
+If the audited Census income ZIP passes `review_source_rows.py` but an earlier extractor raised `Malformed Census CSV row 484870`, update to the M00-T02 trailing-record fix. It only ignores fully blank **terminal** records and preserves duplicate and nonblank-row guards. From the repository root, re-run `python scripts/extract_statcan_cma_income.py`. Send the full report, including `trailing_blank_rows_skipped`, or the new field-count diagnostic if extraction still fails. Do not edit or re-download a verified publisher file just to address the parser issue. See `docs/SOURCE_VALIDATION_M00_T02.md`.
