@@ -4,7 +4,7 @@
 
 ## 1. Statistics Canada — household income
 
-- **Confirmed machine-readable table identifier:** [Table 98-10-0058-01 — Household income statistics by household type: Census metropolitan areas, tracted census agglomerations and census tracts](https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810005801). This is an *occasional* 2021 Census table, released 2022-07-13, with a private-household universe. The download format offered by the publisher is CSV; its column schema and downloaded bytes **remain unexamined**.
+- **Confirmed machine-readable table identifier:** [Table 98-10-0058-01 — Household income statistics by household type: Census metropolitan areas, tracted census agglomerations and census tracts](https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810005801). This is an *occasional* 2021 Census table, released 2022-07-13, with a private-household universe. The publisher offers a full-table Census CSV ZIP. Its **2021 Census transposed (wide)** record layout, unlike non-Census long-form CSV, uses one column per household income measure and a separate adjacent `Symbol` column for each measure; it does **not** have a generic `VALUE` field. See the [Statistics Canada Full Table Download (CSV) User Guide](https://www.statcan.gc.ca/en/developers/csv/user-guide). Actual downloaded bytes, CMA observation rows, and their checksums have not been independently examined or archived as evidence in this repository.
 - **Actual sample observations:** [Vancouver CMA 2021 Census Profile](https://www12.statcan.gc.ca/census-recensement/2021/dp-pd/prof/details/page.cfm?DGUIDlist=2021A00055915055%2C2021A00055915046%2C2021A00055915051%2C2021S0503933%2C2021A00055915043&GENDERlist=1&HEADERlist=0&Lang=E&STATISTIClist=1&SearchText=Vancouver) reports **CAD 90,000 median total household income in 2020**; [Toronto CMA profile](https://www12.statcan.gc.ca/census-recensement/2021/dp-pd/prof/details/page.cfm?DGUIDlist=2021S0503535&GENDERlist=1&HEADERlist=0&Lang=E&STATISTIClist=1&SearchText=toronto&wbdisable=true) reports **CAD 97,000** for the same indicator and period. These are **Census Profile HTML** observations; they have **not yet been reconciled against rows from Table 98-10-0058-01**. Do not mark table data as downloaded based on these samples.
 - **Universe/definition:** median *total* annual income among private households; includes households of multiple sizes and housing tenures. This is not median income specifically for renters or for 2-bedroom apartment tenants, and it refers to calendar-year 2020 despite the 2021 Census release.
 - **Permission:** [Statistics Canada Open Licence](https://www.statcan.gc.ca/en/terms-conditions/open-licence) permits reuse and redistribution of covered material (including adapted works) with prescribed attribution; third-party material is excluded. Use the licence's specific attribution form and never imply endorsement.
@@ -47,7 +47,7 @@ A no-dependency, **opt-in** discovery program is now available at `scripts/probe
 
 | CLI `--source` | Pinned publisher download/endpoint | What is verified after an actual download | Still requires human inspection |
 | --- | --- | --- | --- |
-| `statcan-income` | [StatCan full-table CSV ZIP route](https://www150.statcan.gc.ca/n1/en/tbl/csv/98100058-eng.zip), candidate URL pending successful network test | ZIP valid, CSV member labeled `98100058`, header includes `REF_DATE`, `GEO`, `VALUE`; SHA-256 | Actual CMA rows and `DGUID`, income subcategory columns, 2020/2021 period semantics, quality flags; entire cube may exceed default 80 MiB cap |
+| `statcan-income` | [StatCan full-table CSV ZIP route](https://www150.statcan.gc.ca/n1/en/tbl/csv/98100058-eng.zip) | ZIP valid, CSV member labeled `98100058`; 2021 Census **wide** columns including `REF_DATE`, `GEO`, `DGUID`, `Coordinate`, household-type/size dimensions, 2021 household count, 2020 median total/after-tax income, and adjacent `Symbol` columns; SHA-256 | Actual CMA rows and codes, household category selection, suppression status, geographic vintage and equivalence, income reference year, actual downloaded bytes; entire cube may exceed default 80 MiB cap |
 | `cmhc-vancouver` | [Vancouver 2025 RMS XLSX](https://assets.cmhc-schl.gc.ca/sites/cmhc/professional/housing-markets-data-and-research/housing-data-tables/rental-market/rental-market-report-data-tables/2025/rmr-vancouver-2025-en.xlsx?rev=9c12f2db-c0c8-4d06-83e1-cc3e06da8d36) | Valid XLSX workbook container and worksheet list; SHA-256 | Header rows, cell references, numeric tables, reliability flags, CMA boundary vintage |
 | `cmhc-toronto` | [Toronto 2025 RMS XLSX](https://assets.cmhc-schl.gc.ca/sites/cmhc/professional/housing-markets-data-and-research/housing-data-tables/rental-market/rental-market-report-data-tables/2025/rmr-toronto-2025-en.xlsx?rev=f107330e-4620-4462-9027-8c6ff1522f1a) | Same XLSX container check and SHA-256 | Same unresolved checks as Vancouver, in particular survey geography vs. 2021 CMA |
 | `boc-overnight` | [Valet V39079 bounded JSON](https://www.bankofcanada.ca/valet/observations/V39079/json?start_date=2026-10-19&end_date=2026-10-22) | Expected series ID, dated numeric observations in fixed 2026-10-19 through 2026-10-22 window, no duplicate/out-of-range dates; SHA-256 | Publication/revision methodology, application as national context rather than CMA input |
@@ -82,3 +82,23 @@ python scripts/sync_roadmap.py --check
 A successful `--fetch` creates a small JSON manifest in the ignored raw directory with **actual** retrieval-time SHA and format metadata; it does **not** create a production CSV, confirm a semantic definition, or establish compatibility between 2020 income and 2025 rents. No source data or generated raw manifests are committed. Record the applicable Statistics Canada Open Licence attribution and CMHC's required reproduction/value-added notice *before* distributing derived tables; official terms are linked in sections 1–2 above.
 
 **Next gate (still M00-T02):** run each probe with publisher access, review real worksheet/cube values and source geography identifiers, capture evidence without committing large binaries, and resolve (or narrow) the income–rent comparison before selecting any analytics mart. ETL scheduling remains deferred to M09.
+
+## Increment 3 — fix Census CSV schema detection (M00-T02)
+
+The previous `statcan-income` probe mistakenly expected the standard non-Census long-form columns `REF_DATE`, `GEO`, `VALUE`. Statistics Canada's official [Full Table Download (CSV) User Guide](https://www.statcan.gc.ca/en/developers/csv/user-guide) explicitly documents that **2021 Census of Population tables (`98-XXXX-XX`) transpose the final dimension into multiple columns** with paired `Symbol` columns. The user observed this exact layout when running `--fetch` for table `98-10-0058-01` on 2026-10-26. This was a **probe validator bug**, not evidence of a corrupted StatCan download.
+
+The probe now validates the Census-specific `REF_DATE`, `GEO`, `DGUID`, household size/type, and `Coordinate` dimensions, identifies the columns for `Number of households (2021)`, `Median household total income (2020)`, and `Median household after-tax income (2020)`, and checks a `Symbol` field immediately follows each transposed measure. It retains every original column (including repeated `Symbol` headers), reports positional indices, and explicitly labels the income year **2020** rather than **2021**. Regression tests cover this format and fail for a generic `VALUE` schema, missing measures, missing symbols, and invalid dimensions.
+
+Re-run the same explicit fetch:
+
+```sh
+python scripts/probe_official_sources.py --source statcan-income --fetch
+```
+
+Or inspect a source ZIP already saved outside this repository:
+
+```sh
+python scripts/probe_official_sources.py --source statcan-income --input /path/to/98100058-eng.zip
+```
+
+A successful result confirms **only file/container/header structure** and writes a manifest under gitignored `pipeline/data/raw/m00-source-probes/`. It does **not** establish valid CMA rows, data comparability, dataset licensing of individual derived files, or a rent-to-income ratio. Note that the prior failed `--fetch` discards its temporary download; re-download unless you separately saved a publisher ZIP.
