@@ -36,6 +36,16 @@ SOURCES = {
         'url': 'https://www150.statcan.gc.ca/n1/en/tbl/csv/98100058-eng.zip',
         'reference': 'https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810005801',
     },
+    'statcan-cis-income': {
+        'publisher': 'Statistics Canada',
+        'source_id': 'statcan_11100190',
+        'format': 'statcan_standard_zip',
+        'filename': '11100190-eng.zip',
+        'url': 'https://www150.statcan.gc.ca/n1/en/tbl/csv/11100190-eng.zip',
+        'reference': 'https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1110019001',
+        # Discovery candidate: not required for the original four-source audit.
+        'optional_discovery': True,
+    },
     'cmhc-vancouver': {
         'publisher': 'Canada Mortgage and Housing Corporation',
         'source_id': 'cmhc_rms_2025_vancouver',
@@ -127,6 +137,42 @@ def inspect_statcan_zip(path: Path) -> dict:
         raise ProbeError('Statistics Canada file is not a valid CSV ZIP') from error
 
 
+# The Canadian Income Survey table 11-10-0190-01 is a STANDARD (long)
+# StatsCan CSV, unlike 2021 Census tables 98-10-XXXX. Only schema and
+# publisher-file identity are inspected here; never infer population joins.
+STANDARD_REQUIRED_COLUMNS = frozenset({
+    'REF_DATE', 'GEO', 'DGUID', 'Income concept', 'Economic family type',
+    'UOM', 'UOM_ID', 'SCALAR_FACTOR', 'SCALAR_ID', 'VECTOR',
+    'COORDINATE', 'VALUE', 'STATUS', 'SYMBOL', 'TERMINATED', 'DECIMALS',
+})
+
+
+def inspect_statcan_standard_zip(path: Path) -> dict:
+    try:
+        with ZipFile(path) as archive:
+            members = {member.filename: member for member in archive.infolist() if not member.is_dir()}
+            if '11100190.csv' not in members or '11100190_MetaData.csv' not in members:
+                raise ProbeError('CIS archive must contain 11100190.csv and 11100190_MetaData.csv')
+            data = members['11100190.csv']
+            if data.file_size > 2 * 1024 * 1024 * 1024:
+                raise ProbeError('Uncompressed CIS CSV exceeds 2 GiB discovery limit')
+            with archive.open(data) as raw, io.TextIOWrapper(raw, encoding='utf-8-sig', newline='') as stream:
+                header = next(csv.reader(stream), [])
+            if not header or len(header) != len(set(header)):
+                raise ProbeError('CIS long-form CSV missing or duplicate header names')
+            missing = sorted(STANDARD_REQUIRED_COLUMNS - set(header))
+            if missing:
+                raise ProbeError(f'CIS CSV missing standard fields: {missing}')
+            return {
+                'csv_member': data.filename, 'metadata_member': '11100190_MetaData.csv',
+                'columns': header, 'layout': 'standard_statcan_long_form',
+                'source_rows_verified': False, 'population_alignment_verified': False,
+                'cma_crosswalk_verified': False, 'uncompressed_csv_bytes': data.file_size,
+            }
+    except (BadZipFile, EOFError) as error:
+        raise ProbeError('Invalid CIS table ZIP') from error
+
+
 def inspect_cmhc_xlsx(path: Path) -> dict:
     try:
         with ZipFile(path) as archive:
@@ -183,6 +229,7 @@ def inspect_file(path: Path, source: str) -> dict:
     fmt = SOURCES[source]['format']
     details = {
         'statcan_zip': inspect_statcan_zip,
+        'statcan_standard_zip': inspect_statcan_standard_zip,
         'xlsx': inspect_cmhc_xlsx,
         'valet_json': inspect_boc_json,
     }[fmt](path)

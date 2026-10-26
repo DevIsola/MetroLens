@@ -95,7 +95,9 @@ def audit_source(source: str, raw_dir: Path = RAW_DIR) -> dict:
 
 
 def build_report(raw_dir: Path = RAW_DIR, selected: tuple[str, ...] | None = None) -> dict:
-    sources = selected if selected is not None else tuple(SOURCES)
+    sources = selected if selected is not None else tuple(
+        key for key, spec in SOURCES.items() if not spec.get('optional_discovery')
+    )
     results = [audit_source(name, raw_dir) for name in sources]
     return {
         'report_schema_version': 1,
