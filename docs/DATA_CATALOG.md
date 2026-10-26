@@ -44,3 +44,9 @@ Each selected dataset must document the following before an ingestion adapter is
 ## Feasibility acceptance gate
 
 `M00` is **not done** until at least one rental measure and one income measure are demonstrably comparable for a useful sample, with real source identifiers, sample extracts, evidence, and documented limitations. If no compatible intersection exists, revise the scope before any affordability statistic is released. Avoid claiming feasibility based solely on code or on published source landing pages.
+
+## Reproducible download discovery — M00-T02 follow-up (2026-10-26)
+
+An opt-in, bounded publisher-format probe exists at [`scripts/probe_official_sources.py`](../scripts/probe_official_sources.py), with independent synthetic-schema tests in `tests/test_official_probes.py`. It records SHA-256, raw byte length, date of inspection, and partial format evidence into **gitignored raw-data manifests** on successful retrieval. Direct 2025 CMHC Vancouver and Toronto XLSX links are now cataloged in [`SOURCE_VALIDATION_M00_T02.md`](SOURCE_VALIDATION_M00_T02.md), alongside Bank of Canada V39079 and a *not-yet-downloaded* Statistics Canada full-table CSV ZIP candidate.
+
+**Do not interpret a successful format probe as published-source semantic acceptance.** Neither genuine Excel tables nor real StatCan or Valet payloads were downloadable in the current execution environment. Geography crosswalk, raw column definitions, licence notices and aligned rental-income population/period comparisons remain unverified. Milestone M00 stays `in_progress` and **no affordability ratio is authorized**.

@@ -39,3 +39,13 @@ See [`docs/RELEASE_POLICY.md`](docs/RELEASE_POLICY.md) for release/rollback rule
 M00 discovery → M01 developer foundation → M02 ingestion → M03 normalization → M04 verified marts/static contract → M05 overview/site publication → M06 explorer → M07 scenarios → M08 storytelling → M09 controlled ETL schedule → M10 observability → M11 public release.
 
 > Source compatibility, actual data coverage, licenses, commit hashes, issue/PR IDs, and production deployments must be recorded from real evidence, never assumed.
+
+## M00-T02 source reconnaissance (opt-in, offline by default)
+
+```sh
+python scripts/probe_official_sources.py --source boc-overnight          # Preview URL, no network
+python scripts/probe_official_sources.py --source boc-overnight --fetch  # Explicit bounded fetch
+```
+
+Additional sources: `statcan-income`, `cmhc-vancouver`, `cmhc-toronto`.
+See [`docs/SOURCE_VALIDATION_M00_T02.md`](docs/SOURCE_VALIDATION_M00_T02.md) for URLs, CLI examples, licence requirements and **unresolved** source-data acceptance gates. Successful probes write only to gitignored `pipeline/data/raw/`; source-format tests are synthetic and are **not** evidence that publisher files were actually downloaded or semantically comparable. Normal pushes still trigger **no** CI, Pages or scheduled ETL.

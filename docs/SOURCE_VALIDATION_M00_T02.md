@@ -38,3 +38,47 @@ The small sample fixture exists only to test provenance, schema controls and det
 3. Obtain **actual bounded Valet JSON** response for `V39079`, document metadata and SHA-256.
 4. Verify coverage and alignment using real raw columns across at least two candidate CMAs and document formal reuse/attribution notices for each exported data product.
 5. Make an explicit go/no-go decision for a metric pair, with negative test cases. Preserve `M00=in_progress` until the whole M00 acceptance gate is met.
+
+## Increment 2 — reproducible machine-readable source probes (2026-10-26)
+
+**Status: locally implemented and tested, network retrieval NOT completed in this execution environment.** The execution environment cannot resolve publisher hosts to download CSV/JSON/XLSX bytes, so there are **no genuine raw-download hashes or inspected live data rows** to report. Test archives/JSON are synthetically constructed in memory strictly to exercise the format validators; they are not actual StatCan, CMHC, or Valet samples.
+
+A no-dependency, **opt-in** discovery program is now available at `scripts/probe_official_sources.py`. Its default action is URL preview without network I/O. It only makes a request with `--fetch` for a named, pinned official source, enforces HTTPS and the expected publisher host, caps downloads, validates the basic file/container schema, emits `sha256` plus byte size and inspection metadata, and labels every manifest `production_ready: false`, `semantic_comparability_verified: false`. Files are stored only under gitignored `pipeline/data/raw/m00-source-probes/`.
+
+| CLI `--source` | Pinned publisher download/endpoint | What is verified after an actual download | Still requires human inspection |
+| --- | --- | --- | --- |
+| `statcan-income` | [StatCan full-table CSV ZIP route](https://www150.statcan.gc.ca/n1/en/tbl/csv/98100058-eng.zip), candidate URL pending successful network test | ZIP valid, CSV member labeled `98100058`, header includes `REF_DATE`, `GEO`, `VALUE`; SHA-256 | Actual CMA rows and `DGUID`, income subcategory columns, 2020/2021 period semantics, quality flags; entire cube may exceed default 80 MiB cap |
+| `cmhc-vancouver` | [Vancouver 2025 RMS XLSX](https://assets.cmhc-schl.gc.ca/sites/cmhc/professional/housing-markets-data-and-research/housing-data-tables/rental-market/rental-market-report-data-tables/2025/rmr-vancouver-2025-en.xlsx?rev=9c12f2db-c0c8-4d06-83e1-cc3e06da8d36) | Valid XLSX workbook container and worksheet list; SHA-256 | Header rows, cell references, numeric tables, reliability flags, CMA boundary vintage |
+| `cmhc-toronto` | [Toronto 2025 RMS XLSX](https://assets.cmhc-schl.gc.ca/sites/cmhc/professional/housing-markets-data-and-research/housing-data-tables/rental-market/rental-market-report-data-tables/2025/rmr-toronto-2025-en.xlsx?rev=f107330e-4620-4462-9027-8c6ff1522f1a) | Same XLSX container check and SHA-256 | Same unresolved checks as Vancouver, in particular survey geography vs. 2021 CMA |
+| `boc-overnight` | [Valet V39079 bounded JSON](https://www.bankofcanada.ca/valet/observations/V39079/json?start_date=2026-10-19&end_date=2026-10-22) | Expected series ID, dated numeric observations in fixed 2026-10-19 through 2026-10-22 window, no duplicate/out-of-range dates; SHA-256 | Publication/revision methodology, application as national context rather than CMA input |
+
+The direct CMHC XLSX URLs were recovered from the official **2025 Rental Market Report** 'download Excel' links on 2026-10-26, not guessed from filenames. Statistics Canada's official table page confirms the CSV download option but the *entire-table ZIP endpoint* used by the CLI remains a **conventional candidate URL**, not evidence that its download currently succeeds. On a connected workstation, validate that candidate endpoint before assuming its availability.
+
+### Reproducible local run (no CI, no hosting)
+
+```sh
+# Preview all official source URLs without network requests:
+python scripts/probe_official_sources.py --source statcan-income
+python scripts/probe_official_sources.py --source cmhc-vancouver
+python scripts/probe_official_sources.py --source cmhc-toronto
+python scripts/probe_official_sources.py --source boc-overnight
+
+# One deliberate, bounded download per command (run locally with internet):
+python scripts/probe_official_sources.py --source boc-overnight --fetch
+python scripts/probe_official_sources.py --source cmhc-vancouver --fetch
+python scripts/probe_official_sources.py --source cmhc-toronto --fetch
+python scripts/probe_official_sources.py --source statcan-income --fetch
+
+# Large StatCan ZIP, ONLY if verified to need more space and within project budget:
+python scripts/probe_official_sources.py --source statcan-income --fetch --max-mib 250
+
+# Alternatively, inspect a manually downloaded publisher file without network:
+python scripts/probe_official_sources.py --source cmhc-vancouver --input /path/to/publisher-file.xlsx
+
+python -m unittest discover -s tests -v
+python scripts/sync_roadmap.py --check
+```
+
+A successful `--fetch` creates a small JSON manifest in the ignored raw directory with **actual** retrieval-time SHA and format metadata; it does **not** create a production CSV, confirm a semantic definition, or establish compatibility between 2020 income and 2025 rents. No source data or generated raw manifests are committed. Record the applicable Statistics Canada Open Licence attribution and CMHC's required reproduction/value-added notice *before* distributing derived tables; official terms are linked in sections 1–2 above.
+
+**Next gate (still M00-T02):** run each probe with publisher access, review real worksheet/cube values and source geography identifiers, capture evidence without committing large binaries, and resolve (or narrow) the income–rent comparison before selecting any analytics mart. ETL scheduling remains deferred to M09.

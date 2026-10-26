@@ -12,7 +12,7 @@
       "merged_commit": null,
       "evidence": [],
       "accepted_at": null,
-      "notes": "Eight CMA candidates; draft metric contract; official source IDs/licences and manually transcribed HTML observations recorded under M00-T02. CSV/XLSX/Valet payloads, boundary crosswalk and cross-source acceptance pending; no production ratio."
+      "notes": "Candidate CMAs and metrics drafted; official HTML observations documented; M00-T02 opt-in binary-format probe and synthetic tests added. No live machine-readable payload hashes or cross-source comparability accepted; M00 in progress."
     },
     {
       "id": "M01",
