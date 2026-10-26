@@ -54,8 +54,9 @@ class ProbeAuditTests(unittest.TestCase):
                 self.assertEqual(audit.audit_source(key, self.raw_dir)['status'], 'file_verified')
 
     def test_report_all_verified_still_not_comparable(self):
-        for key in probe.SOURCES:
-            self.seed(key)
+        for key, spec in probe.SOURCES.items():
+            if not spec.get('optional_discovery'):
+                self.seed(key)
         report = audit.build_report(self.raw_dir)
         self.assertTrue(report['all_files_verified'])
         self.assertEqual(len(report['sources']), 4)
