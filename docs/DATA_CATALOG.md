@@ -1,6 +1,6 @@
 # M00 — data source and geography feasibility catalog
 
-**State:** Initial discovery, **not an approved production catalog**. Updated 2026-10-26. Scope: `M00-T01` with source-discovery groundwork for `M00-T02`.
+**State:** Discovery catalog, **not an approved production catalog**. Updated 2026-10-26. Scope: `M00-T01` and partial official HTML source sampling in `M00-T02`. See [`SOURCE_VALIDATION_M00_T02.md`](SOURCE_VALIDATION_M00_T02.md) and [`samples/official-page-observations.csv`](samples/official-page-observations.csv). No raw CSV/XLSX/API sample has been downloaded or accepted.
 
 ## Candidate CMA scope
 
@@ -25,11 +25,11 @@ Eight candidate Census Metropolitan Areas are registered in [`cma-candidates.csv
 
 | Source | Official entry point | Potential measure | Ingestion format | Known versus pending |
 | --- | --- | --- | --- | --- |
-| Statistics Canada | [Web Data Service](https://www.statcan.gc.ca/en/developers/wds) | Income series (exact household definition **not selected**) | WDS API / table CSV | API exists; candidate table ID, definition, vintage, frequency, license, and extracts pending |
-| CMHC | [Rental Market Survey data tables](https://www.cmhc-schl.gc.ca/professionals/housing-markets-data-and-research/housing-data/data-tables/rental-market/rental-market-report-data-tables) | Average rent, vacancy, universe counts | Workbook/Excel | 2025 survey edition exists (published Dec 11, 2025); exact tables/sheets/field semantics and coverage pending |
-| Bank of Canada | [Valet API documentation](https://www.bankofcanada.ca/valet-api-how-to/) | Interest rates, macro context | API/JSON | API documented; series selection, applicability and temporal alignment pending |
+| Statistics Canada | [Web Data Service](https://www.statcan.gc.ca/en/developers/wds) | Income series (exact household definition **not selected**) | WDS API / table CSV | CMA household-income table `98-10-0058-01` identified; 2020 median total household income verified in Census Profile HTML (Toronto/Vancouver); CSV/schema pending; licence reviewed |
+| CMHC | [Rental Market Survey data tables](https://www.cmhc-schl.gc.ca/professionals/housing-markets-data-and-research/housing-data/data-tables/rental-market/rental-market-report-data-tables) | Average rent, vacancy, universe counts | Workbook/Excel | 2025 report shows average 2-bedroom *turnover* rent for Vancouver/Toronto, October 2025; workbook/sheets/geo vintage pending; CMHC data licence reviewed |
+| Bank of Canada | [Valet API documentation](https://www.bankofcanada.ca/valet-api-how-to/) | Interest rates, macro context | API/JSON | `V39079` target for overnight rate verified from official lookup (2026-10-22 sample); Valet JSON payload/schema uninspected; national context only |
 
-No data have yet been ingested into this repository. Do not assume that current publications share period, rent class, survey population, or geographic boundary definitions. **Do not invent source table IDs.**
+Five **manually transcribed official-page observations** are checked in strictly as a discovery/test fixture, **not** source extracts or production data. No CSV/XLSX/Valet API payload has yet been ingested. The 2020 income and 2025 rent observations are **not directly comparable**; geography boundaries and statistical populations also remain unverified. Never present an affordability percentage from these samples.
 
 ## Required catalog row (M00-T02)
 
