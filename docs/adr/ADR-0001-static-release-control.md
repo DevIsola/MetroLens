@@ -1,6 +1,6 @@
 # ADR-0001 — Static pipeline, storage and controlled release
 
-- **Status:** proposed for maintainer acceptance (revised M00-T05; no production activation)
+- **Status:** accepted for architectural planning by maintainer on 2026-10-26; no production activation
 - **Date:** 2026-10-26
 - **Related roadmap:** M00-T05, M01-T07, M02–M05, M06, M09–M10
 - **Companion machine-readable policy:** [`../architecture/static_pipeline_policy.json`](../architecture/static_pipeline_policy.json)
@@ -11,7 +11,7 @@ MetroLens is a bilingual, static-first data observatory. We have locally audited
 
 M00-T04 design was accepted by the maintainer on 2026-10-26: two **unjoined** rent and income series, paired light/dark/mobile design and two explanatory story concepts. The maintainer also requested substantially more interactive charts/maps in future milestones. This ADR makes that possible without requiring a paid server or silently broadening the approved indicator scope.
 
-## Proposed architecture decision
+## Accepted planning architecture decision
 
 **Choose local/ephemeral raw source files + manifests, offline Parquet intermediate datasets, DuckDB/dbt analytics, and *only approved versioned JSON/static geodata* for browser delivery.** Do not place raw source archives, Parquet datasets, DuckDB databases or unapproved data samples under the frontend's public directory. Nothing in this ADR grants a source redistribution licence or activates publication.
 
@@ -93,4 +93,4 @@ Generation and validation must finish in a separate staging directory before any
 
 ## Review and decision record
 
-**Awaiting maintainer acceptance of this revised ADR-0001** (M00-T05). The user previously accepted the M00-T04 visual/scope/story direction, **not** this architectural choice. This ADR is therefore proposed, and no pipeline storage, Parquet transformation, publication, Cloudflare migration, auto-deploy or cron behavior is activated by this change. M00-T06 naming/identity and the unrelated source licences/geography/statistical compatibility gates still need resolution before M00 completion.
+**Maintainer ACCEPTED ADR-0001 on 2026-10-26** after 251 tests passed (1 Windows symlink skip), roadmap synchronization passed and the local validator returned `architecture_proposal_validated`. See `docs/architecture/M00_T05_REVIEW_DECISION.md`. Acceptance approves the architectural direction **only**: it does not activate Parquet transformations, publication, Cloudflare migration, auto-deploy or scheduled ETL. M00-T06 identity and the separate source-licensing, geography and statistical compatibility gates remain open.

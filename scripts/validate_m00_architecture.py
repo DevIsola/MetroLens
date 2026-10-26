@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the proposed M00-T05 architecture policy; NEVER build or publish data."""
+"""Validate accepted-for-planning M00-T05 architecture; NEVER build or publish data."""
 from __future__ import annotations
 
 import json
@@ -19,8 +19,8 @@ def validate_policy(policy: dict, *, root: Path = ROOT) -> dict:
     """Assert the reviewed discovery boundaries remain fail-closed."""
     if not isinstance(policy, dict) or policy.get('schema_version') != 1 or policy.get('milestone') != 'M00-T05':
         raise ArchitectureError('Unsupported M00-T05 policy schema or milestone')
-    if policy.get('decision_status') != 'proposed_for_review' or policy.get('implementation_active') is not False:
-        raise ArchitectureError('M00-T05 decision must remain proposed and inactive')
+    if policy.get('decision_status') != 'accepted_for_planning' or policy.get('implementation_active') is not False:
+        raise ArchitectureError('M00-T05 must remain accepted for planning only; no implementation activation')
     storage = policy.get('storage')
     if not isinstance(storage, dict):
         raise ArchitectureError('Storage contract missing')
@@ -73,17 +73,21 @@ def validate_policy(policy: dict, *, root: Path = ROOT) -> dict:
         'rent_income_join_approved', 'public_data_export_approved',
     } or any(value is not False for value in gates.values()):
         raise ArchitectureError('Publication and comparison gates must remain false')
-    for filename in (policy.get('review_record'), policy.get('adr')):
+    for filename in (policy.get('review_record'), policy.get('adr'), policy.get('maintainer_decision_record')):
         if not isinstance(filename, str) or not filename.startswith('docs/') or '..' in Path(filename).parts or not (root / filename).is_file():
             raise ArchitectureError('Missing or invalid architecture/design review document')
     adr = (root / policy['adr']).read_text(encoding='utf-8')
     decision = (root / policy['review_record']).read_text(encoding='utf-8')
-    if 'proposed for maintainer acceptance' not in adr or 'M05' not in decision or 'M06' not in decision:
-        raise ArchitectureError('ADR proposal or interactive UX acceptance record missing')
+    maintainer = (root / policy['maintainer_decision_record']).read_text(encoding='utf-8')
+    if ('accepted for architectural planning' not in adr or
+            'ACCEPT ADR-0001' not in maintainer or
+            '2026-10-26' not in maintainer or
+            'M05' not in decision or 'M06' not in decision):
+        raise ArchitectureError('ADR acceptance or UX decision record missing')
     return {
         'milestone': 'M00-T05',
-        'status': 'architecture_proposal_validated',
-        'decision_status': 'proposed_for_review',
+        'status': 'architecture_decision_validated',
+        'decision_status': 'accepted_for_planning',
         'reviewed_M00_T04_design_decisions': 3,
         'raw_storage': 'gitignored_source_originals_and_manifests',
         'silver_format': 'parquet',
@@ -95,7 +99,8 @@ def validate_policy(policy: dict, *, root: Path = ROOT) -> dict:
         'production_ready': False,
         'publication_approved': False,
         'rent_to_income_ratio': None,
-        'maintainer_acceptance_required': True,
+        'maintainer_acceptance_required': False,
+        'implementation_active': False,
     }
 
 

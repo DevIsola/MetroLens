@@ -1,4 +1,4 @@
-"""M00-T05 review proposal must not accidentally activate publication or automation."""
+"""M00-T05 planning acceptance must not activate publication or automation."""
 import copy
 import json
 from pathlib import Path
@@ -24,10 +24,11 @@ class StaticPipelinePolicyTests(unittest.TestCase):
         at[path[-1]] = value
         return data
 
-    def test_proposed_contract_validates(self):
+    def test_accepted_planning_contract_validates(self):
         result = validate_policy(self.policy)
-        self.assertEqual(result['status'], 'architecture_proposal_validated')
-        self.assertTrue(result['maintainer_acceptance_required'])
+        self.assertEqual(result['status'], 'architecture_decision_validated')
+        self.assertFalse(result['maintainer_acceptance_required'])
+        self.assertFalse(result['implementation_active'])
         self.assertIsNone(result['rent_to_income_ratio'])
         self.assertFalse(result['publication_approved'])
 
@@ -35,7 +36,7 @@ class StaticPipelinePolicyTests(unittest.TestCase):
         proc = subprocess.run([sys.executable, str(ROOT / 'scripts/validate_m00_architecture.py')], cwd=ROOT,
                               capture_output=True, text=True, check=False)
         self.assertEqual(proc.returncode, 0, proc.stderr)
-        self.assertEqual(json.loads(proc.stdout)['decision_status'], 'proposed_for_review')
+        self.assertEqual(json.loads(proc.stdout)['decision_status'], 'accepted_for_planning')
 
     def test_rejects_automatic_deploy(self):
         with self.assertRaises(ArchitectureError):
@@ -85,9 +86,17 @@ class StaticPipelinePolicyTests(unittest.TestCase):
         with self.assertRaises(ArchitectureError):
             validate_policy(self.modify('runtime', 'interactive_requirements_milestones', value=['M05']))
 
-    def test_rejects_missing_policy_decision(self):
+    def test_rejects_unreviewed_policy_decision(self):
         with self.assertRaises(ArchitectureError):
-            validate_policy(self.modify('decision_status', value='accepted'))
+            validate_policy(self.modify('decision_status', value='proposed_for_review'))
+
+    def test_rejects_implementation_activation(self):
+        with self.assertRaises(ArchitectureError):
+            validate_policy(self.modify('implementation_active', value=True))
+
+    def test_rejects_missing_acceptance_record(self):
+        with self.assertRaises(ArchitectureError):
+            validate_policy(self.modify('maintainer_decision_record', value='docs/architecture/missing.md'))
 
     def test_rejects_unreviewed_top_level_schema(self):
         with self.assertRaises(ArchitectureError):
