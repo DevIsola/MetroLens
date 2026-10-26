@@ -14,6 +14,7 @@ import hashlib
 import io
 import json
 import math
+import re
 from pathlib import Path
 import sys
 import tempfile
@@ -66,6 +67,21 @@ class ProbeError(ValueError):
     """A download or machine-readable source violated the discovery contract."""
 
 
+# Table 98-10-0058-01 is a 2021 Census cube. Unlike non-Census CSVs,
+# its final dimension is transposed into named measure columns, each followed
+# by a separate (repeated) Symbol column. There is no standalone VALUE field.
+# https://www.statcan.gc.ca/en/developers/csv/user-guide
+CENSUS_BASE_COLUMNS = {
+    'REF_DATE', 'GEO', 'DGUID', 'Coordinate',
+    'Household size (7)', 'Household type including census family structure (11)',
+}
+CENSUS_INCOME_PATTERNS = {
+    'household_count_2021': re.compile(r'^Household income statistics \(6\):Number of households \(2021\)\[\d+\]$'),
+    'median_total_income_2020': re.compile(r'^Household income statistics \(6\):Median household total income \(2020\) \(2020 constant dollars\)\[\d+\]$'),
+    'median_after_tax_income_2020': re.compile(r'^Household income statistics \(6\):Median household after-tax income \(2020\) \(2020 constant dollars\)\[\d+\]$'),
+}
+
+
 def inspect_statcan_zip(path: Path) -> dict:
     try:
         with ZipFile(path) as archive:
@@ -76,10 +92,37 @@ def inspect_statcan_zip(path: Path) -> dict:
             member = sorted(csv_files, key=lambda x: x.file_size, reverse=True)[0]
             with archive.open(member) as raw, io.TextIOWrapper(raw, encoding='utf-8-sig', errors='replace', newline='') as reader:
                 header = next(csv.reader(reader), [])
-            if not {'REF_DATE', 'GEO', 'VALUE'}.issubset(header):
-                raise ProbeError(f'Statistics Canada CSV missing expected columns: {header[:20]}')
-            return {'csv_member': member.filename, 'columns': header,
-                    'uncompressed_csv_bytes': member.file_size, 'source_rows_verified': False}
+
+            # Normalize irregular whitespace for comparison, but preserve the
+            # unmodified header and positional Symbol fields in the manifest.
+            normalized = [' '.join(column.strip().split()) for column in header]
+            missing = sorted(CENSUS_BASE_COLUMNS - set(normalized))
+            if missing:
+                raise ProbeError(f'Statistics Canada 2021 Census CSV missing dimension columns: {missing}')
+            measures = [(index, column) for index, column in enumerate(normalized)
+                        if column.startswith('Household income statistics (6):')]
+            if not measures:
+                raise ProbeError('Statistics Canada 2021 Census CSV missing transposed household income measures')
+            matched = {}
+            for key, pattern in CENSUS_INCOME_PATTERNS.items():
+                locations = [index for index, column in measures if pattern.fullmatch(column)]
+                if len(locations) != 1:
+                    raise ProbeError(f'Statistics Canada 2021 Census CSV missing or duplicate measure: {key}')
+                matched[key] = locations[0]
+            for index, _ in measures:
+                if index + 1 >= len(normalized) or normalized[index + 1] != 'Symbol':
+                    raise ProbeError(f'Statistics Canada 2021 Census CSV missing adjacent Symbol field after column {index + 1}')
+            return {
+                'csv_member': member.filename,
+                'columns': header,
+                'layout': '2021_census_transposed',
+                'measure_column_indices': matched,
+                'symbol_column_indices': [index + 1 for index, _ in measures],
+                'income_reference_year': 2020,
+                'census_reference_year': 2021,
+                'uncompressed_csv_bytes': member.file_size,
+                'source_rows_verified': False,
+            }
     except (BadZipFile, EOFError) as error:
         raise ProbeError('Statistics Canada file is not a valid CSV ZIP') from error
 

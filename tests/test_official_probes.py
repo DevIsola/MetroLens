@@ -17,9 +17,28 @@ XLSX_XML = (b'<?xml version="1.0" encoding="UTF-8"?>'
             b'<sheets><sheet name="1.1.1" sheetId="1"/></sheets></workbook>')
 
 
-def make_statcan(path, *, columns='REF_DATE,GEO,VALUE'):
+# Synthetic reproduction of Statistics Canada's published 2021 Census CSV
+# header structure (98-10-0058-01), NOT an official data extract.
+CENSUS_HEADER = [
+    'REF_DATE', 'GEO', 'DGUID', 'Household size (7)',
+    'Household type including census family structure  (11)', 'Coordinate',
+    'Household income statistics (6):Number of households (2021)[1]', 'Symbol',
+    'Household income statistics (6):Number of households (2016)[2]', 'Symbol',
+    'Household income statistics (6):Median household total income (2020) (2020 constant dollars)[3]', 'Symbol',
+    'Household income statistics (6):Median household total income (2015) (2020 constant dollars)[4]', 'Symbol',
+    'Household income statistics (6):Median household after-tax income (2020) (2020 constant dollars)[5]', 'Symbol',
+    'Household income statistics (6):Median household after-tax income (2015) (2020 constant dollars)[6]', 'Symbol',
+]
+
+
+def make_statcan(path, *, columns=None):
+    import csv
+    import io
+    output = io.StringIO(newline='')
+    writer = csv.writer(output)
+    writer.writerow(CENSUS_HEADER if columns is None else columns)
     with ZipFile(path, 'w') as z:
-        z.writestr('98100058.csv', columns + '\n2021,"Vancouver",100\n')
+        z.writestr('98100058.csv', output.getvalue())
 
 
 def make_cmhc(path, *, names_xml=XLSX_XML):
@@ -45,14 +64,47 @@ class OfficialProbeTests(unittest.TestCase):
     def test_synthetic_statcan_csv_zip_schema(self):
         make_statcan(self.path)
         report = probe.inspect_file(self.path, 'statcan-income')
-        self.assertEqual(report['inspection']['columns'], ['REF_DATE', 'GEO', 'VALUE'])
+        self.assertEqual(report['inspection']['columns'], CENSUS_HEADER)
+        self.assertEqual(report['inspection']['layout'], '2021_census_transposed')
+        self.assertEqual(report['inspection']['income_reference_year'], 2020)
+        self.assertEqual(report['inspection']['measure_column_indices']['median_total_income_2020'], 10)
+        self.assertEqual(report['inspection']['symbol_column_indices'], [7, 9, 11, 13, 15, 17])
         self.assertEqual(len(report['sha256']), 64)
         self.assertFalse(report['semantic_comparability_verified'])
 
     def test_statcan_rejects_bad_header(self):
-        make_statcan(self.path, columns='REF_DATE,GEO,INCORRECT')
-        with self.assertRaisesRegex(probe.ProbeError, 'expected columns'):
+        make_statcan(self.path, columns=['REF_DATE', 'GEO', 'INCORRECT'])
+        with self.assertRaisesRegex(probe.ProbeError, 'missing dimension columns'):
             probe.inspect_file(self.path, 'statcan-income')
+
+    def test_statcan_rejects_generic_non_census_long_format(self):
+        make_statcan(self.path, columns=['REF_DATE', 'GEO', 'VALUE'])
+        with self.assertRaisesRegex(probe.ProbeError, 'missing dimension columns'):
+            probe.inspect_file(self.path, 'statcan-income')
+
+    def test_statcan_rejects_missing_income_statistic(self):
+        cols = [c for c in CENSUS_HEADER if 'Median household total income (2020)' not in c]
+        make_statcan(self.path, columns=cols)
+        with self.assertRaisesRegex(probe.ProbeError, 'median_total_income_2020'):
+            probe.inspect_file(self.path, 'statcan-income')
+
+    def test_statcan_rejects_missing_measure_symbol(self):
+        cols = CENSUS_HEADER.copy()
+        cols[11] = 'Not a symbol'
+        make_statcan(self.path, columns=cols)
+        with self.assertRaisesRegex(probe.ProbeError, 'adjacent Symbol'):
+            probe.inspect_file(self.path, 'statcan-income')
+
+    def test_statcan_accepts_utf8_bom_and_variable_whitespace(self):
+        import csv
+        import io
+        cols = CENSUS_HEADER.copy()
+        cols[4] = 'Household type including census family structure (11)'
+        output = io.StringIO(newline='')
+        csv.writer(output).writerow(cols)
+        with ZipFile(self.path, 'w') as z:
+            z.writestr('98100058.csv', '\ufeff' + output.getvalue())
+        self.assertEqual(probe.inspect_statcan_zip(self.path)['layout'], '2021_census_transposed')
 
     def test_statcan_rejects_foreign_dataset_member(self):
         with ZipFile(self.path, 'w') as z:
