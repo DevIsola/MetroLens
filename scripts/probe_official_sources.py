@@ -15,11 +15,10 @@ import io
 import json
 import math
 from pathlib import Path
-import re
-import shutil
 import sys
 import tempfile
 from urllib.request import Request, urlopen
+from urllib.parse import urlsplit
 from xml.etree import ElementTree
 from zipfile import BadZipFile, ZipFile
 
@@ -104,11 +103,13 @@ def inspect_cmhc_xlsx(path: Path) -> dict:
 
 
 def inspect_boc_json(path: Path) -> dict:
+    if path.stat().st_size > 5 * 1024 * 1024:
+        raise ProbeError('Bounded Valet JSON cannot exceed 5 MiB')
     try:
         data = json.loads(path.read_text(encoding='utf-8-sig'))
     except (ValueError, UnicodeError) as error:
         raise ProbeError('Bank of Canada response is not valid JSON') from error
-    if not isinstance(data, dict) or 'V39079' not in data.get('seriesDetail', {}):
+    if not isinstance(data, dict) or not isinstance(data.get('seriesDetail'), dict) or 'V39079' not in data['seriesDetail']:
         raise ProbeError('Expected V39079 metadata in seriesDetail')
     entries = data.get('observations')
     if not isinstance(entries, list) or not entries:
@@ -160,8 +161,13 @@ def fetch_to_file(source: str, dest: Path, limit: int = DEFAULT_LIMIT) -> None:
     try:
         with urlopen(req, timeout=30) as response, tempfile.NamedTemporaryFile('wb', dir=dest.parent, delete=False) as out:
             tmp_path = Path(out.name)
-            if not response.geturl().startswith('https://'):
-                raise ProbeError('Source redirected away from HTTPS')
+            final_url = urlsplit(response.geturl())
+            expected_host = urlsplit(spec['url']).hostname
+            if final_url.scheme != 'https' or final_url.hostname != expected_host:
+                raise ProbeError('Source redirected away from the pinned official HTTPS host')
+            length = response.headers.get('Content-Length')
+            if length is not None and int(length) > limit:
+                raise ProbeError('Advertised source exceeds the explicit download cap')
             count = 0
             while True:
                 chunk = response.read(1024 * 1024)
@@ -209,6 +215,8 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     path = args.input if args.input is not None else RAW_DIR / spec['filename']
     try:
+        if args.input is not None and path.stat().st_size > args.max_mib * 1024 * 1024:
+            raise ProbeError('Local file exceeds the explicit input size cap')
         if args.fetch:
             fetch_to_file(args.source, path, args.max_mib * 1024 * 1024)
         manifest = build_manifest(args.source, path)
