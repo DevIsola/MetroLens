@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest import mock
 
 from test_official_probes import make_boc, make_cmhc, make_statcan
 
@@ -108,12 +109,33 @@ class ProbeAuditTests(unittest.TestCase):
                 file.write_text(json.dumps(manifest), encoding='utf-8')
                 self.assertEqual(audit.audit_source('boc-overnight', self.raw_dir)['status'], 'invalid')
 
-    def test_rejects_symlinked_source(self):
+    def test_rejects_symlinked_source_without_os_privileges(self):
+        """Always exercise the audit guard, even if Windows forbids symlinks."""
+        path, _, _ = self.seed('statcan-income')
+        # Only the source file appears to be a symlink. In particular, the
+        # manifest must still appear regular so we reach the source guard.
+        with mock.patch.object(
+            Path, 'is_symlink', autospec=True,
+            side_effect=lambda candidate: candidate == path,
+        ):
+            record = audit.audit_source('statcan-income', self.raw_dir)
+        self.assertEqual(record['status'], 'invalid')
+        self.assertIn('symlink', record['reason'])
+
+    def test_rejects_real_symlinked_source_when_supported(self):
+        """Integration check: Windows can require Developer Mode or privilege."""
         path, _, _ = self.seed('statcan-income')
         other = self.raw_dir / 'elsewhere.bin'
         path.rename(other)
-        path.symlink_to(other)
-        self.assertEqual(audit.audit_source('statcan-income', self.raw_dir)['status'], 'invalid')
+        try:
+            path.symlink_to(other)
+        except OSError as error:
+            if getattr(error, 'winerror', None) == 1314:
+                self.skipTest('Windows symlink creation requires additional privileges')
+            raise
+        record = audit.audit_source('statcan-income', self.raw_dir)
+        self.assertEqual(record['status'], 'invalid')
+        self.assertIn('symlink', record['reason'])
 
     def test_invalid_json_manifest_does_not_crash(self):
         self.seed('boc-overnight')
