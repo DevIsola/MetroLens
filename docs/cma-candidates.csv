@@ -1,0 +1,9 @@
+region_id,cma_code_2021,name_en,province,statcan_code_verified,cmhc_geography_match,scope_status
+halifax,205,Halifax,NS,yes,pending,candidate
+montreal,462,Montréal,QC,yes,pending,candidate
+toronto,535,Toronto,ON,yes,pending,candidate
+winnipeg,602,Winnipeg,MB,yes,pending,candidate
+calgary,825,Calgary,AB,yes,pending,candidate
+edmonton,835,Edmonton,AB,yes,pending,candidate
+vancouver,933,Vancouver,BC,yes,pending,candidate
+victoria,935,Victoria,BC,yes,pending,candidate

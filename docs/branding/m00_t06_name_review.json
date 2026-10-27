@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "milestone": "M00-T06",
+  "research_date": "2026-10-26",
+  "decision_status": "maintainer_selected_repository_project_name_with_known_risk",
+  "working_codename": "MetroLens",
+  "selected_name": "UrbanGauge",
+  "brand_identity_approved": false,
+  "repository_rename_approved": true,
+  "domain_availability_verified": false,
+  "trademark_clearance_verified": false,
+  "app_store_clearance_verified": false,
+  "migration_performed": true,
+  "public_rebrand_performed": false,
+  "production_ready": false,
+  "candidates": [
+    {
+      "name": "CityMargin",
+      "editorial_fit": "Explicit city finances, cost-of-living questions and future scenario tools",
+      "tradeoff": "Margin sounds like profit and can incorrectly suggest a validated rent-income calculation",
+      "public_use_signal": "not_concluded",
+      "evidence_urls": [],
+      "clearance_status": "unverified"
+    },
+    {
+      "name": "UrbanGauge",
+      "editorial_fit": "Measured civic indicators, charts and exploration",
+      "tradeoff": "May underrepresent nonurban regions; a 2007-2009 urban-indicator research system used the exact name, and a software publisher used UrbanGauge Studio; the matching .com is marketplace-listed at a premium.",
+      "public_use_signal": "observed_other_products",
+      "evidence_urls": [
+        "https://uosarch.ac.kr/uosarch_people/%ED%99%A9%EC%A7%80%EC%9D%80/",
+        "https://www.classification.gov.au/titles/word-play-city-edition"
+      ],
+      "clearance_status": "unverified",
+      "domain_marketplace_evidence": {
+        "domain": "urbangauge.com",
+        "url": "https://www.brandzilla.io/name/UrbanGauge.com",
+        "observed_asking_price_usd": 2695,
+        "observed_on": "2026-10-26",
+        "verification": "marketplace_listing_only_not_registry_or_ownership_clearance"
+      }
+    },
+    {
+      "name": "Living Ledger",
+      "editorial_fit": "Public-data accountability and transparent evidence",
+      "tradeoff": "Existing distinct software brands use the phrase, including financial planning; higher confusion risk",
+      "public_use_signal": "observed_other_products",
+      "evidence_urls": [
+        "https://livingledger.net/",
+        "https://www.livingledger.com/"
+      ],
+      "clearance_status": "unverified"
+    },
+    {
+      "name": "MetroLens",
+      "editorial_fit": "Memorable metropolitan analytics, strong match to planned interactive maps",
+      "tradeoff": "Several distinct public services use the same/similar wording, including a transport/property data product",
+      "public_use_signal": "observed_other_products",
+      "evidence_urls": [
+        "https://metrolens.fyi/developers/",
+        "https://metrolens--prototype.vercel.app/about",
+        "https://www.metro-lens.com/"
+      ],
+      "clearance_status": "unverified"
+    },
+    {
+      "name": "Civic Ledger",
+      "editorial_fit": "Public interest, governance and reproducible datasets",
+      "tradeoff": "Could imply official government sponsorship; less geographic specificity",
+      "public_use_signal": "not_concluded",
+      "evidence_urls": [],
+      "clearance_status": "unverified"
+    }
+  ],
+  "required_clearance_steps": [
+    "Canadian CIPO trademark database: exact, similar and phonetic forms",
+    "Relevant international jurisdictions and WIPO trademark collections",
+    ".ca and .com availability via registrar/RDAP plus renewal cost",
+    "GitHub organization/repository names and App Store/Google Play",
+    "Web and social-name searches, bilingual EN/PT-BR pronunciation and readability",
+    "Maintainer selects identity and approves code/document migration plan"
+  ],
+  "nonapprovals": [
+    "Project naming approval is limited to this public research repository, not trademark registration, exclusivity, or freedom-to-operate advice",
+    "Domain ownership/availability, trademark status, and app-store clearance remain unverified",
+    "The GitHub repository slug was renamed to DevIsola/UrbanGauge; Pages publication, domains, trademarks, and public brand rollout are not authorized",
+    "Public source-data publication, rent/income joins, and production releases remain separately blocked"
+  ],
+  "preferred_name": "UrbanGauge",
+  "preference_date": "2026-10-26",
+  "identity_migration_approved": false,
+  "final_identity_decision_required": false,
+  "project_name_approved": true,
+  "project_name_scope": "public_research_repository_not_service_or_app",
+  "known_public_use_risk_acknowledged": true,
+  "no_exclusive_trademark_rights_claimed": true,
+  "project_readme_name_updated": true,
+  "future_commercial_brand_clearance_required": true,
+  "selection_date": "2026-10-26",
+  "repository_migration": {
+    "status": "verified_completed",
+    "scope": "github_repository_slug_only",
+    "old_repository": "DevIsola/MetroLens",
+    "new_repository": "DevIsola/UrbanGauge",
+    "verified_on": "2026-10-27",
+    "evidence": "GitHub repository metadata and maintainer git fetch/status/push",
+    "deployment_authorized": false
+  }
+}

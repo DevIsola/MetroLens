@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MetroLens M00-T04 · Vancouver UX review (local only)</title>
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#e8e9e8;color:#202328;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.45}
+button,select{font:inherit}button{cursor:pointer}a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid #315e9c;outline-offset:3px}
+.review{max-width:1680px;margin:auto;padding:22px clamp(12px,3vw,50px) 60px}.review-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;border-bottom:1px solid #c8cccb;padding-bottom:15px}.review-top h1{font-size:clamp(20px,2vw,27px);margin:0;letter-spacing:-.04em}.review-top p{margin:5px 0 0;font-size:13px;color:#535b61}.layout-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.layout-controls button{border:1px solid #a7adad;background:white;color:#202328;padding:9px 14px;border-radius:8px;font-weight:700;font-size:13px}.layout-controls button[aria-pressed=true]{background:#202328;color:#fff}.privacy{background:#fff5dc;border:1px solid #c5a96d;border-radius:8px;padding:10px 14px;margin:20px 0;font-size:13px;color:#554125}
+.frames{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}.frames[data-layout="mobile"]{grid-template-columns:repeat(2,minmax(0,410px));justify-content:center}.frame{min-width:0;border:1px solid #aaa;border-radius:14px;overflow:hidden}.frame-label{background:#333941;color:#fff;font-weight:700;font-size:12px;padding:8px 13px;display:flex;justify-content:space-between}
+.site{--canvas:#f7f7f5;--surface:#fff;--text:#202328;--muted:#606773;--border:#dde0df;--accent:#bc453b;--foc:#315e9c;--track:#edeeed;--bar:#bc453b;min-height:740px;padding:0 clamp(14px,2.3vw,34px) 36px;background:var(--canvas);color:var(--text)}
+.dark .site{--canvas:#0d0f12;--surface:#181b20;--text:#f5f6f7;--muted:#adb3bc;--border:#333840;--accent:#f46d5f;--foc:#97beff;--track:#333840;--bar:#f46d5f}
+.site a{color:var(--accent)}.site :is(a,button,select):focus-visible{outline-color:var(--foc)}.site-header{display:flex;justify-content:space-between;align-items:center;gap:9px;padding:22px 0;border-bottom:1px solid var(--border)}.wordmark{font-size:15px;font-weight:800;letter-spacing:-.04em}.logo-mark{display:inline-block;background:var(--accent);width:16px;height:16px;border-radius:4px;margin-right:7px;vertical-align:middle}.site-nav{display:flex;gap:11px;flex-wrap:wrap;color:var(--muted);font-size:11px}.site-nav span{white-space:nowrap}.eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:.16em;font-weight:800;color:var(--accent)}.site-hero{padding:35px 0 21px}.site-hero h2{font-size:clamp(25px,2.9vw,42px);line-height:1.05;letter-spacing:-.055em;max-width:550px;margin:10px 0 13px}.site-hero p{max-width:580px;color:var(--muted);font-size:13px}.geo{font-size:12px;color:var(--muted);margin:0 0 15px}.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:19px;margin:13px 0}.card h3{font-size:17px;line-height:1.25;margin:6px 0 8px;letter-spacing:-.025em}.card .description{font-size:12px;color:var(--muted);margin:0 0 15px}.card .meta{color:var(--muted);font-size:11px;margin-top:12px}.card .meta strong{color:var(--text)}.card label{font-size:12px;font-weight:700;display:inline-block;margin-right:7px}.card select{background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:7px 9px;max-width:100%}.data-rows{display:grid;gap:12px;margin-top:17px}.data-row{display:grid;grid-template-columns:70px minmax(0,1fr) auto;gap:10px;align-items:center;font-size:12px}.data-row strong{font-size:16px;font-variant-numeric:tabular-nums;white-space:nowrap}.bar-track{background:var(--track);height:9px;border-radius:20px;overflow:hidden}.bar{display:block;height:100%;background:var(--bar);border-radius:20px}.status{font-size:12px;border-left:4px solid var(--accent);padding:10px 13px;background:var(--surface);border-radius:4px}.status strong{display:block;margin-bottom:3px}.status p{color:var(--muted);margin:0}.source{display:block;margin-top:9px;overflow-wrap:anywhere;font-size:11px}.quality{font-size:11px;color:var(--muted);margin-top:11px}.site-footer{border-top:1px solid var(--border);margin-top:20px;padding-top:17px;font-size:11px;color:var(--muted)}
+.frames[data-layout="mobile"] .site{padding-left:16px;padding-right:16px}.frames[data-layout="mobile"] .site-nav{font-size:10px;gap:7px}.frames[data-layout="mobile"] .site-hero{padding:30px 0 15px}.frames[data-layout="mobile"] .site-hero h2{font-size:30px}.frames[data-layout="mobile"] .card{padding:14px}.frames[data-layout="mobile"] .data-row{grid-template-columns:58px minmax(0,1fr) auto;gap:5px}.frames[data-layout="mobile"] .data-row strong{font-size:13px}
+@media(max-width:850px){.frames{grid-template-columns:1fr}.frames[data-layout="mobile"]{grid-template-columns:1fr;justify-items:center}.frame{width:100%}.frames[data-layout="mobile"] .frame{max-width:390px}}
+@media(max-width:480px){.review{padding-left:8px;padding-right:8px}.review-top{padding:8px}.layout-controls{width:100%}.layout-controls button{flex:1}.site-nav{gap:7px}.site{padding:0 14px 24px}.site-hero h2{font-size:30px}.data-row strong{font-size:13px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="review">
+<header class="review-top"><div><h1>MetroLens · Paired UX baseline</h1><p>M00-T04 visual discovery · separate indicators · Vancouver CMA</p></div><div class="layout-controls" role="group" aria-label="Wireframe layout"><button id="desktop" type="button" aria-pressed="true">Desktop pair</button><button id="mobile" type="button" aria-pressed="false">Mobile pair (390 px)</button></div></header>
+<div class="privacy" role="note"><strong>Local non-public review.</strong> Source-derived values are shown only to evaluate copy and layout. Cross-source affordability comparisons and public distribution are not approved.</div>
+<main class="frames" id="frames" data-layout="desktop">
+<section class="frame light" aria-label="Light theme concept"><div class="frame-label"><span>01 · LIGHT</span><span class="frame-layout">DESKTOP</span></div><div class="site">
+<header class="site-header"><div class="wordmark"><span class="logo-mark" aria-hidden="true"></span>MetroLens <small>(working)</small></div><nav class="site-nav" aria-label="Proposed routes"><span>Overview</span><span>Explore</span><span>Methodology</span></nav></header>
+<section class="site-hero"><div class="eyebrow">CMA DATA • VANCOUVER</div><h2>What do the numbers actually measure?</h2><p>Explore independently sourced rent and income indicators. These are not matched household expenses and earnings.</p></section>
+<div class="geo">Vancouver CMA · 2021 Census geographic definitions · Cross-publisher boundary review pending</div>
+<article class="card"><div class="eyebrow">RENTAL MARKET</div><h3>Average purpose-built apartment rent</h3><p class="description">CMHC Rental Market Survey · weighted mean, including vacant and occupied apartments · CAD/month.</p><label for="bedrooms-light">Bedroom type</label><select id="bedrooms-light" class="bedroom-select" data-target="light"><option value="two_bedroom">2 bedrooms</option><option value="studio">Studio</option><option value="one_bedroom">1 bedroom</option><option value="three_plus_bedroom">3+ bedrooms</option><option value="all_bedrooms">All bedroom types</option></select><div class="data-rows rent-rows" id="rent-light" aria-live="polite"></div><div class="quality">Quality: a (Excellent) · October snapshots · Not asking or turnover-only rent</div><a class="source" id="rent-source-light" target="_blank" rel="noopener noreferrer">CMHC · Table 1.1.2 (official source)</a></article>
+<article class="card"><div class="eyebrow">INCOME SURVEY</div><h3>Median after-tax income</h3><p class="description">Economic families and people not in an economic family · annual CAD in 2024 constant dollars. Not median private-household or tenant income.</p><div class="data-rows income-rows" id="income-light"></div><div class="quality">Status A · Statistics Canada CIS · annual reference periods</div><a class="source" id="income-source-light" target="_blank" rel="noopener noreferrer">Statistics Canada · Table 11-10-0190-01</a></article>
+<section class="status" aria-label="Comparison availability"><strong>Affordability ratio unavailable</strong><p>The rent series measures apartments; the income series measures economic-family units. A rent-to-income percentage is not supported by these sources.</p></section>
+<footer class="site-footer">Design concept only · Sources and periods shown beside each measure · EN/PT-BR proposed for production</footer></div></section>
+<section class="frame dark" aria-label="Dark theme concept"><div class="frame-label"><span>02 · DARK</span><span class="frame-layout">DESKTOP</span></div><div class="site">
+<header class="site-header"><div class="wordmark"><span class="logo-mark" aria-hidden="true"></span>MetroLens <small>(working)</small></div><nav class="site-nav" aria-label="Proposed routes"><span>Overview</span><span>Explore</span><span>Methodology</span></nav></header>
+<section class="site-hero"><div class="eyebrow">CMA DATA • VANCOUVER</div><h2>What do the numbers actually measure?</h2><p>Explore independently sourced rent and income indicators. These are not matched household expenses and earnings.</p></section>
+<div class="geo">Vancouver CMA · 2021 Census geographic definitions · Cross-publisher boundary review pending</div>
+<article class="card"><div class="eyebrow">RENTAL MARKET</div><h3>Average purpose-built apartment rent</h3><p class="description">CMHC Rental Market Survey · weighted mean, including vacant and occupied apartments · CAD/month.</p><label for="bedrooms-dark">Bedroom type</label><select id="bedrooms-dark" class="bedroom-select" data-target="dark"><option value="two_bedroom">2 bedrooms</option><option value="studio">Studio</option><option value="one_bedroom">1 bedroom</option><option value="three_plus_bedroom">3+ bedrooms</option><option value="all_bedrooms">All bedroom types</option></select><div class="data-rows rent-rows" id="rent-dark" aria-live="polite"></div><div class="quality">Quality: a (Excellent) · October snapshots · Not asking or turnover-only rent</div><a class="source" id="rent-source-dark" target="_blank" rel="noopener noreferrer">CMHC · Table 1.1.2 (official source)</a></article>
+<article class="card"><div class="eyebrow">INCOME SURVEY</div><h3>Median after-tax income</h3><p class="description">Economic families and people not in an economic family · annual CAD in 2024 constant dollars. Not median private-household or tenant income.</p><div class="data-rows income-rows" id="income-dark"></div><div class="quality">Status A · Statistics Canada CIS · annual reference periods</div><a class="source" id="income-source-dark" target="_blank" rel="noopener noreferrer">Statistics Canada · Table 11-10-0190-01</a></article>
+<section class="status" aria-label="Comparison availability"><strong>Affordability ratio unavailable</strong><p>The rent series measures apartments; the income series measures economic-family units. A rent-to-income percentage is not supported by these sources.</p></section>
+<footer class="site-footer">Design concept only · Sources and periods shown beside each measure · EN/PT-BR proposed for production</footer></div></section>
+</main>
+</div>
+<script>
+'use strict';
+const PREVIEW = /*__M00_DATA_JSON__*/;
+// All data are embedded by the local Python script after source verification.
+const frames = document.getElementById('frames');
+for (const layout of ['desktop','mobile']) {
+  document.getElementById(layout).addEventListener('click', () => {
+    frames.dataset.layout = layout;
+    for (const option of ['desktop','mobile']) {
+      document.getElementById(option).setAttribute('aria-pressed', String(layout === option));
+    }
+    for (const label of document.querySelectorAll('.frame-layout')) label.textContent = layout.toUpperCase();
+  });
+}
+function money(value){ return '$' + value.toLocaleString('en-CA'); }
+function dataRow(period, value, maxValue, quality){
+  const row = document.createElement('div'); row.className = 'data-row';
+  const date = document.createElement('span'); date.textContent = period;
+  const track = document.createElement('span'); track.className = 'bar-track'; track.setAttribute('aria-hidden','true');
+  const bar = document.createElement('span'); bar.className = 'bar'; bar.style.width = String(value/maxValue*100)+'%'; track.appendChild(bar);
+  const amount = document.createElement('strong'); amount.textContent = money(value); amount.title = 'Source quality '+quality;
+  row.append(date,track,amount); return row;
+}
+const rents = PREVIEW.rent;
+function renderRents(bedrooms) {
+  const rows = rents.filter(r => r.bedroom_type === bedrooms).sort((a,b) => a.period.localeCompare(b.period));
+  const max = Math.max(...rows.map(r => r.value));
+  for (const theme of ['light','dark']) {
+    const target = document.getElementById('rent-'+theme); target.replaceChildren();
+    rows.forEach(r => target.appendChild(dataRow('Oct '+r.period.slice(0,4), r.value, max, r.quality)));
+    document.getElementById('bedrooms-'+theme).value = bedrooms;
+  }
+}
+for (const select of document.querySelectorAll('.bedroom-select')) {
+  select.addEventListener('change', () => renderRents(select.value));
+}
+renderRents('two_bedroom');
+const maxIncome = Math.max(...PREVIEW.income.map(r => r.value));
+for (const theme of ['light','dark']) {
+  const target = document.getElementById('income-'+theme);
+  PREVIEW.income.forEach(r => target.appendChild(dataRow(r.period, r.value, maxIncome, r.quality)));
+  document.getElementById('rent-source-'+theme).href = PREVIEW.source_links.rent;
+  document.getElementById('income-source-'+theme).href = PREVIEW.source_links.income;
+}
+</script>
+</body>
+</html>

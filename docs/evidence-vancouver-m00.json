@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-10-26",
+  "review_stage": "source_specific_technical_evidence_only",
+  "approved_for_publication": false,
+  "metric_comparability_approved": false,
+  "region_id": "vancouver_cma_2021",
+  "income": {
+    "source_id": "statcan_98100058",
+    "sha256": "f29f937b97c18a227a25c8cc32fe361fc5d251f0aab41699c0713a4b8f3d3a81",
+    "dguid": "2021S0503933",
+    "coordinate": "5381.1.1",
+    "reference_year": "2020",
+    "household_count_2021": 1043315,
+    "median_total_income_2020": 90000,
+    "median_after_tax_income_2020": 79500
+  },
+  "rent": {
+    "source_id": "cmhc_rms_2025_vancouver",
+    "sha256": "2fda7bea9ad42787c1820dd4d60f11091ff2455c4eec1732b14acc97660c3258",
+    "worksheet": "Table 1.1.2",
+    "source_row": 36,
+    "reference_periods": ["2024-10", "2025-10"],
+    "two_bedroom_2024": 2314,
+    "two_bedroom_2025": 2363
+  },
+  "evidence_basis": "User-provided JSON outputs of locally audited publisher files and worksheet review; raw files remain local and are not committed.",
+  "review_gates_remaining": [
+    "independently reviewed income/rent temporal alignment",
+    "reconciled publisher CMA crosswalk beyond matching 2021 Census vintage",
+    "methodologically defensible income/rent population pairing",
+    "reuse notices and publication approval"
+  ]
+}

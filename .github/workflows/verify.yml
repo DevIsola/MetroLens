@@ -1,0 +1,25 @@
+name: Verify milestone (manual)
+
+# Intentionally no push, pull_request, merge, release, or schedule triggers.
+# Execute once for a review checkpoint / major milestone acceptance.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Checkout milestone ref
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Unit and policy tests
+        run: python -m unittest discover -s tests -v
+      - name: Roadmap synchronization
+        run: python scripts/sync_roadmap.py --check

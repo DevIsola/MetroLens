@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "project_version": "0.2.0",
+  "updated_at": "2026-10-26",
+  "milestones": [
+    {
+      "id": "M00",
+      "title": "Discovery e contrato do produto",
+      "status": "in_progress",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "M00-T04 maintainer design acceptance received 2026-10-26: ADR-0002 separate rent/income series, paired light/dark responsive direction and two editorial concepts. More interactive ECharts/MapLibre graphs/maps required in M05/M06/M08 UX backlog. Three Vancouver source extractors and M00-T03 local nonpublic preview technically verified; M00-T05 ADR-0001 architecture accepted for planning by maintainer 2026-10-26 after 251 tests and policy validation; implementation and publication remain inactive. CMHC cross-publisher crosswalk, population/period joins, source reuse/publication gates and M00-T06 repository project name UrbanGauge selected by maintainer 2026-10-26 with known name-use risk accepted for this public repository; GitHub repository renamed from DevIsola/MetroLens to DevIsola/UrbanGauge and local remote verified 2026-10-27; domain/trademark clearance not claimed. M00 acceptance/PR evidence remains pending. No production or affordability approval; M00 stays in progress."
+    },
+    {
+      "id": "M01",
+      "title": "Foundation + CI + governança",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M02",
+      "title": "Ingestão das fontes oficiais",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M03",
+      "title": "Bronze / Silver + qualidade",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M04",
+      "title": "Gold marts + dbt + export",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M05",
+      "title": "Design system, i18n e Overview",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M06",
+      "title": "City Explorer + mapas",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M07",
+      "title": "Affordability Lab",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M08",
+      "title": "Insights, EDA e storytelling",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M09",
+      "title": "Refresh automático + deploy",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M10",
+      "title": "Data transparency + observability",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    },
+    {
+      "id": "M11",
+      "title": "Hardening + lançamento + case study",
+      "status": "not_started",
+      "prs": [],
+      "issues": [],
+      "merged_commit": null,
+      "evidence": [],
+      "accepted_at": null,
+      "notes": "No verified implementation evidence yet."
+    }
+  ]
+}
