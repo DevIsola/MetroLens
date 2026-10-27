@@ -2,7 +2,7 @@
   "schema_version": 1,
   "milestone": "M00-T06",
   "research_date": "2026-10-26",
-  "decision_status": "awaiting_maintainer_selection",
+  "decision_status": "maintainer_preference_recorded_pending_clearance",
   "working_codename": "MetroLens",
   "selected_name": null,
   "brand_identity_approved": false,
@@ -25,17 +25,30 @@
     {
       "name": "UrbanGauge",
       "editorial_fit": "Measured civic indicators, charts and exploration",
-      "tradeoff": "Urban positioning may obscure province-wide and nonmetro expansion",
-      "public_use_signal": "not_concluded",
-      "evidence_urls": [],
-      "clearance_status": "unverified"
+      "tradeoff": "May underrepresent nonurban regions; a 2007-2009 urban-indicator research system used the exact name, and a software publisher used UrbanGauge Studio; the matching .com is marketplace-listed at a premium.",
+      "public_use_signal": "observed_other_products",
+      "evidence_urls": [
+        "https://uosarch.ac.kr/uosarch_people/%ED%99%A9%EC%A7%80%EC%9D%80/",
+        "https://www.classification.gov.au/titles/word-play-city-edition"
+      ],
+      "clearance_status": "unverified",
+      "domain_marketplace_evidence": {
+        "domain": "urbangauge.com",
+        "url": "https://www.brandzilla.io/name/UrbanGauge.com",
+        "observed_asking_price_usd": 2695,
+        "observed_on": "2026-10-26",
+        "verification": "marketplace_listing_only_not_registry_or_ownership_clearance"
+      }
     },
     {
       "name": "Living Ledger",
       "editorial_fit": "Public-data accountability and transparent evidence",
       "tradeoff": "Existing distinct software brands use the phrase, including financial planning; higher confusion risk",
       "public_use_signal": "observed_other_products",
-      "evidence_urls": ["https://livingledger.net/", "https://www.livingledger.com/"],
+      "evidence_urls": [
+        "https://livingledger.net/",
+        "https://www.livingledger.com/"
+      ],
       "clearance_status": "unverified"
     },
     {
@@ -43,7 +56,11 @@
       "editorial_fit": "Memorable metropolitan analytics, strong match to planned interactive maps",
       "tradeoff": "Several distinct public services use the same/similar wording, including a transport/property data product",
       "public_use_signal": "observed_other_products",
-      "evidence_urls": ["https://metrolens.fyi/developers/", "https://metrolens--prototype.vercel.app/about", "https://www.metro-lens.com/"],
+      "evidence_urls": [
+        "https://metrolens.fyi/developers/",
+        "https://metrolens--prototype.vercel.app/about",
+        "https://www.metro-lens.com/"
+      ],
       "clearance_status": "unverified"
     },
     {
@@ -66,6 +83,11 @@
   "nonapprovals": [
     "No candidate is legally cleared or confirmed available as a domain",
     "No trademark search result or registration is asserted",
-    "No name or repository change is authorized by this research"
-  ]
+    "No name or repository change is authorized by this research",
+    "Maintainer preference UrbanGauge does not authorize repository rename, DNS/domain purchase or public brand deployment"
+  ],
+  "preferred_name": "UrbanGauge",
+  "preference_date": "2026-10-26",
+  "identity_migration_approved": false,
+  "final_identity_decision_required": true
 }

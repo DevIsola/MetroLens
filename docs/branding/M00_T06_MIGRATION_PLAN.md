@@ -1,6 +1,6 @@
 # M00-T06 — Controlled naming migration plan (not executed)
 
-**Status:** proposed checklist only. No name selected, domain cleared, file renamed or GitHub settings modified as of 2026-10-26.
+**Status:** proposed checklist only. UrbanGauge preferred on 2026-10-26, but not legally/domain cleared or finally approved. No file, repository, domain or GitHub settings renamed.
 
 ## Inventory and dependencies
 
@@ -25,4 +25,4 @@ Use `python scripts/review_m00_naming.py` to obtain a bounded, read-only invento
 5. Run local tests, static export and link check. Hold all deployment buttons until maintainer explicitly authorizes a separate release.
 6. If the repo name or domain changes, verify remotes, README badge links, GitHub Pages project path, external links and rollback path **before** any public publication.
 
-**Explicit stop:** no chosen name or unresolved conflicts -> no migration or public assets. M00/M01 must not fabricate trademark clearance or production status. Do not enable push CI, scheduled ETL or deploy hooks while changing names.
+**Explicit stop:** preference without cleared/accepted final name, or unresolved conflicts -> no migration or public assets. M00/M01 must not fabricate trademark clearance or production status. Do not enable push CI, scheduled ETL or deploy hooks while changing names.

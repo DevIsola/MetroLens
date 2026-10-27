@@ -49,6 +49,8 @@ A expressão _Canada Affordability Observatory_ funciona como descriptor do prod
 
 **Shortlist editorial proposta:** `CityMargin` (marca mais distintiva), `UrbanGauge` (mais analítica) e `Living Ledger` (melhor relação com transparência). Recomendação inicial: **CityMargin**, condicionada a checagens de conflito, preferência do mantenedor e possibilidade de comunicação bilíngue. Isto **não** é decisão final nem verificação de disponibilidade jurídica/domínios/usuários.
 
+**Atualização de decisão (2026-10-26):** O mantenedor indicou **UrbanGauge** como preferência preliminar. Uma pesquisa web adicional encontrou uso histórico do nome em um projeto de indicadores urbanos, além de UrbanGauge Studio e um anúncio premium de `urbangauge.com`. A preferência **não aprova** marca, domínio, renomeação ou publicação. A ADR-0003 mantém o gate de investigação e aceite final.
+
 **Critérios objetivos M00-T06:** pesquisar GitHub, domínios `.com`/`.ca`, lojas de apps, buscas e marcas registradas; avaliar pronúncia em inglês/PT-BR, leitura sem contexto, escalabilidade de marca, legibilidade em mobile, distintividade e cobertura do escopo (cidade × província); registrar alternativas rejeitadas e ADR de decisão. A atualização do nome deverá modificar README, metadata, título, asset manifest, textos de UI e caminhos de docs com redirecionamento/compatibilidade de links históricos quando necessário.
 
 ## 1.1 Outcomes e não objetivos

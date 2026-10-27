@@ -1,6 +1,6 @@
 # ADR-0003 — Product naming and identity decision (M00-T06)
 
-- **Status:** under review; **no brand selected or rename authorized**
+- **Status:** UrbanGauge preferred by maintainer (2026-10-26); **not cleared, no final brand selected or rename authorized**
 - **Research date:** 2026-10-26
 - **Decision owner:** project maintainer
 - **Codename:** MetroLens; legacy planning nickname Northstar and canonical document path `docs/NORTHSTAR_MASTER_ROADMAP.md` are retained for continuity.
@@ -18,7 +18,7 @@ The project is a bilingual Canadian data observatory with public statistics, int
 | Candidate | Product story | Main concern | Observed independent uses / verification |
 | --- | --- | --- | --- |
 | **CityMargin** | Financial margin when comparing places, potential scenario tools | Sounds like profit or a *validated* rent-to-income metric, which we do not yet have | No reliable clearance conclusion; trademark/domains/apps unverified |
-| **UrbanGauge** | Public data instrumentation and clear visual comparisons | May underrepresent provinces and nonurban coverage | No reliable clearance conclusion; trademark/domains/apps unverified |
+| **UrbanGauge** | Public data instrumentation and clear visual comparisons | May underrepresent nonurban coverage; exact-name urban-indicator research and related software-publisher uses | Historical UrbanGauge research system (2007–2009); UrbanGauge Studio game-publisher attribution (2020); .com premium-marketplace listing. Not legally cleared |
 | **Living Ledger** | Civic accountability and source traceability | Similar name used by existing home-inventory and retirement-planning software | Existing examples: https://livingledger.net/ and https://www.livingledger.com/ ; no legal conclusion |
 | **MetroLens** | Metropolitan exploration and interactive spatial data | Existing independent `Metro Lens` services; transportation/real estate use is a relevant proximity signal | https://metrolens.fyi/developers/ ; https://metrolens--prototype.vercel.app/about ; https://www.metro-lens.com/ ; no legal conclusion |
 | **Civic Ledger** | Public-good data, transparency | Could imply official government affiliation | No reliable clearance conclusion; trademark/domains/apps unverified |
@@ -31,6 +31,18 @@ Review **UrbanGauge** and **CityMargin** first for brand fit; retain **MetroLens
 
 Use descriptive, non-governmental metadata such as **“Independent Canadian housing, income and opportunity data”**; never impersonate Statistics Canada, CMHC, a public agency or a trademark owner. Evaluate pronunciation and reading in EN and PT-BR with the chosen name.
 
+## Maintainer preference recorded — 2026-10-26
+
+The maintainer has chosen **UrbanGauge** as the **preferred candidate**, not an authorization to use it as a public brand. The selected public name remains null in the review contract until clearance evidence and a final maintainer decision are recorded.
+
+Additional public-web preflight evidence specifically for UrbanGauge:
+
+- A 2007–2009 project titled **“UrbanGauge: A real-time indicator system for urban design decision making”** appears in a researcher's profile at https://uosarch.ac.kr/uosarch_people/%ED%99%A9%EC%9D%80/ . The prior use is **closely related in subject matter** to our proposed geographic indicators and visualizations. This is not proof of continuing use or of trademark rights.
+- Australia's public classification record for *Word Play: City Edition* (2020) identifies **UrbanGauge Studio** as developer/publisher: https://www.classification.gov.au/titles/word-play-city-edition . The publisher identity may be unrelated to our proposed field of use but requires consideration.
+- A marketplace page advertises **UrbanGauge.com** for **US$2,695**, observed October 26, 2026: https://www.brandzilla.io/name/UrbanGauge.com . This is a third-party asking price subject to change, **not registry availability** or an offer the project has accepted. No budget is approved for this purchase.
+
+**Risk:** discoverability and potential confusion, especially given the historical urban-indicators project. Neither no visible CIPO matches in web search nor the domain marketplace listing constitutes trademark clearance. We have **not** completed an official CIPO results review, an official .ca registry lookup, social/app-store inventories or legal risk assessment. If the exact-name historical use is concerning, consider a more distinctive name before committing design assets.
+
 ## Required checks before an identity decision
 
 1. Search the **Canadian Intellectual Property Office (CIPO)** database for exact, variant, plural and phonetically similar names, considering the relevant goods/services classes; record dated results. Official search guidance: https://www.ised-isde.canada.ca/site/canadian-intellectual-property-office/en/trademarks/basic-search and https://ised-isde.canada.ca/cipo/trademark-search/ . This project has **not** completed that formal search.
@@ -41,7 +53,8 @@ Use descriptive, non-governmental metadata such as **“Independent Canadian hou
 
 ## Decision pending
 
-- **Selected public name:** _not selected_.
+- **Preferred candidate:** UrbanGauge (maintainer, 2026-10-26).
+- **Selected public name:** _not selected; pending clearance and final maintainer approval_.
 - **Domain/trademark status:** _not verified_.
 - **Brand logo, navigation label, app metadata:** _not authorized for renaming_.
 - **Output of M00-T06:** reviewed name + evidence + maintainer approval + migration plan. The user can also **defer** naming; in that case, M00-T06 remains open, and M01 can only be considered under explicit risk acceptance and temporary codename metadata.
