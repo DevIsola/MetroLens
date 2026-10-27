@@ -1,6 +1,6 @@
-# UrbanGauge — M00 discovery exit review (pending maintainer/PR acceptance)
+# UrbanGauge — M00 discovery accepted, PR #1 merged
 
-**State:** Review package, **not** evidence that M00 is merged or done. The M00 feature branch remains `feat/M00-product-discovery`; M01 remains not started.
+**State:** M00 discovery approved by the maintainer and merged in [PR #1](https://github.com/DevIsola/UrbanGauge/pull/1) at 2026-10-27T23:05:21Z. Verified merge commit: `87e9d035dfbc841c0282ec35da7a3d29707f7ff1`. This closes discovery planning, **not** data publication; M01 remains not started.
 
 ## Scope accepted for planning
 
@@ -16,7 +16,7 @@
 1. CMHC publisher CMA crosswalk and source-geography comparison require independently reviewed evidence.
 2. Rent and income populations, reference periods and mean-versus-median aggregation do not support a household rent burden calculation.
 3. Source-specific attribution, redistribution and publishing permissions must be reviewed before public export.
-4. M00 completion requires a maintainer-reviewed pull request merged to `main` and an actual merge SHA and acceptance timestamp. `docs/roadmap-status.json` must remain `in_progress` until those facts exist.
+4. M00 discovery was accepted/merged in PR #1, and the real merge SHA and accepted timestamp are now recorded. Separate publisher-reuse, geographic-comparability and production-publication restrictions remain unresolved.
 
 ## Review commands (no network, no deployment)
 
@@ -28,6 +28,6 @@ python scripts/validate_m00_architecture.py
 python scripts/review_m00_exit.py
 ```
 
-Expected exit report: `discovery_evidence_ready_for_manual_exit_review`, `repository_rename_verified: true`, `publication_approved: false`, `rent_to_income_ratio: null`, `m00_marked_done: false`.
+Expected exit report: `discovery_accepted_post_merge`, `repository_rename_verified: true`, `publication_approved: false`, `rent_to_income_ratio: null`, `m00_marked_done: true`, `m01_started: false`.
 
-After these pass, inspect the M00 feature branch diff, open a PR targeting `main`, and review approval/merge evidence. Do not turn on CI on push, Pages publishing, schedules or any raw-data publication. The repository rename **alone** does not authorize a GitHub Pages base-path change or a domain purchase.
+After local validation, merge the post-merge bookkeeping closeout by PR and only then start `feat/M01-engineering-foundation` from updated `main`. Do not turn on CI on push, Pages publishing, schedules or any raw-data publication. The repository rename **alone** does not authorize a GitHub Pages base-path change or a domain purchase.

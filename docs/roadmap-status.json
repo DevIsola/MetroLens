@@ -1,18 +1,25 @@
 {
   "schema_version": 1,
   "project_version": "0.2.0",
-  "updated_at": "2026-10-26",
+  "updated_at": "2026-10-27",
   "milestones": [
     {
       "id": "M00",
       "title": "Discovery e contrato do produto",
-      "status": "in_progress",
-      "prs": [],
+      "status": "done",
+      "prs": [
+        "https://github.com/DevIsola/UrbanGauge/pull/1"
+      ],
       "issues": [],
-      "merged_commit": null,
-      "evidence": [],
-      "accepted_at": null,
-      "notes": "M00-T04 maintainer design acceptance received 2026-10-26: ADR-0002 separate rent/income series, paired light/dark responsive direction and two editorial concepts. More interactive ECharts/MapLibre graphs/maps required in M05/M06/M08 UX backlog. Three Vancouver source extractors and M00-T03 local nonpublic preview technically verified; M00-T05 ADR-0001 architecture accepted for planning by maintainer 2026-10-26 after 251 tests and policy validation; implementation and publication remain inactive. CMHC cross-publisher crosswalk, population/period joins, source reuse/publication gates and M00-T06 repository project name UrbanGauge selected by maintainer 2026-10-26 with known name-use risk accepted for this public repository; GitHub repository renamed from DevIsola/MetroLens to DevIsola/UrbanGauge and local remote verified 2026-10-27; domain/trademark clearance not claimed. M00 acceptance/PR evidence remains pending. No production or affordability approval; M00 stays in progress."
+      "merged_commit": "87e9d035dfbc841c0282ec35da7a3d29707f7ff1",
+      "evidence": [
+        "docs/M00_EXIT_REVIEW.md",
+        "docs/design/M00_T04_REVIEW_DECISION.md",
+        "docs/architecture/M00_T05_REVIEW_DECISION.md",
+        "https://github.com/DevIsola/UrbanGauge/commit/87e9d035dfbc841c0282ec35da7a3d29707f7ff1"
+      ],
+      "accepted_at": "2026-10-27T23:05:21Z",
+      "notes": "M00-T04 maintainer design acceptance received 2026-10-26: ADR-0002 separate rent/income series, paired light/dark responsive direction and two editorial concepts. More interactive ECharts/MapLibre graphs/maps required in M05/M06/M08 UX backlog. Three Vancouver source extractors and M00-T03 local nonpublic preview technically verified; M00-T05 ADR-0001 architecture accepted for planning by maintainer 2026-10-26 after 251 tests and policy validation; implementation and publication remain inactive. CMHC cross-publisher crosswalk, population/period joins, source reuse/publication gates and M00-T06 repository project name UrbanGauge selected by maintainer 2026-10-26 with known name-use risk accepted for this public repository; GitHub repository renamed from DevIsola/MetroLens to DevIsola/UrbanGauge and local remote verified 2026-10-27; domain/trademark clearance not claimed. M00 discovery baseline approved and merged in PR #1 at 2026-10-27T23:05:21Z (merge SHA 87e9d035dfbc841c0282ec35da7a3d29707f7ff1). No production or affordability approval; source-reuse and cross-source methodology remain gated."
     },
     {
       "id": "M01",

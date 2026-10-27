@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Offline M00 acceptance readiness: no PR/merge/publication authorization."""
+"""Offline M00 post-merge acceptance: never authorizes publication."""
 from __future__ import annotations
 
 import json
@@ -58,10 +58,14 @@ def review(*, root: Path = ROOT) -> dict:
     if not isinstance(items, list) or len(items) != 12 or [m.get("id") for m in items] != [f"M{i:02d}" for i in range(12)]:
         raise ExitReviewError("Roadmap milestones M00–M11 changed")
     m00, m01 = items[:2]
-    if m00.get("status") != "in_progress" or m01.get("status") != "not_started":
-        raise ExitReviewError("M00 may not be marked done or M01 started before acceptance")
-    if m00.get("merged_commit") is not None or m00.get("accepted_at") is not None:
-        raise ExitReviewError("Cannot fabricate M00 merge/acceptance evidence")
+    if m00.get("status") != "done" or m01.get("status") != "not_started":
+        raise ExitReviewError("M00 must have accepted discovery evidence; M01 must remain not started")
+    if (m00.get("prs") != ["https://github.com/DevIsola/UrbanGauge/pull/1"] or
+        m00.get("merged_commit") != "87e9d035dfbc841c0282ec35da7a3d29707f7ff1" or
+        m00.get("accepted_at") != "2026-10-27T23:05:21Z" or
+        not isinstance(m00.get("evidence"), list) or
+        "docs/M00_EXIT_REVIEW.md" not in m00["evidence"]):
+        raise ExitReviewError("Verified GitHub PR #1 merge SHA, acceptance time or evidence is missing")
     if policy.get("decision_status") != "accepted_for_planning" or policy.get("implementation_active") is not False:
         raise ExitReviewError("ADR-0001 is not accepted only as a plan")
     execution = policy.get("execution", {})
@@ -87,7 +91,7 @@ def review(*, root: Path = ROOT) -> dict:
 
     return {
         "milestone": "M00",
-        "status": "discovery_evidence_ready_for_manual_exit_review",
+        "status": "discovery_accepted_post_merge",
         "project_name": "UrbanGauge",
         "github_repository": "DevIsola/UrbanGauge",
         "repository_rename_verified": True,
@@ -97,14 +101,16 @@ def review(*, root: Path = ROOT) -> dict:
         "automatic_deployment_enabled": False,
         "publication_approved": False,
         "rent_to_income_ratio": None,
-        "m00_marked_done": False,
+        "m00_marked_done": True,
         "m01_started": False,
+        "merged_pr": "https://github.com/DevIsola/UrbanGauge/pull/1",
+        "merged_commit": "87e9d035dfbc841c0282ec35da7a3d29707f7ff1",
+        "accepted_at": "2026-10-27T23:05:21Z",
         "remaining_gates": [
-            "Maintainer M00 acceptance review and merged PR with actual merge SHA",
-            "Record source reuse/attribution disposition; do not publish source data meanwhile",
+            "Review publisher reuse and attribution before any public data export",
             "Cross-publisher CMA crosswalk and income/rent comparability remain unapproved",
         ],
-        "next_step": "Review M00 evidence, open PR from feat/M00-product-discovery to main, and only mark done after actual acceptance/merge evidence",
+        "next_step": "Merge the M00 bookkeeping closeout, then create feat/M01-engineering-foundation from main",
     }
 
 

@@ -1,4 +1,4 @@
-"""M00 exit gate: evidence ready for review is not merged acceptance."""
+"""M00 exit gate: actual PR merge accepted; publication still forbidden."""
 from __future__ import annotations
 
 import copy
@@ -18,12 +18,12 @@ class ExitReviewTests(unittest.TestCase):
     def setUpClass(cls):
         cls.result = review()
 
-    def test_review_is_not_publication_or_completion(self):
+    def test_post_merge_completion_is_not_publication(self):
         report = self.result
-        self.assertEqual(report["status"], "discovery_evidence_ready_for_manual_exit_review")
+        self.assertEqual(report["status"], "discovery_accepted_post_merge")
         self.assertTrue(report["repository_rename_verified"])
         self.assertFalse(report["publication_approved"])
-        self.assertFalse(report["m00_marked_done"])
+        self.assertTrue(report["m00_marked_done"])
         self.assertFalse(report["m01_started"])
         self.assertIsNone(report["rent_to_income_ratio"])
 
@@ -33,11 +33,12 @@ class ExitReviewTests(unittest.TestCase):
         self.assertEqual(naming["repository_migration"]["status"], "verified_completed")
         self.assertFalse(naming["trademark_clearance_verified"])
 
-    def test_roadmap_has_no_fabricated_merge(self):
+    def test_roadmap_records_actual_github_merge(self):
         roadmap = json.loads((ROOT / "docs/roadmap-status.json").read_text())
-        self.assertEqual(roadmap["milestones"][0]["status"], "in_progress")
-        self.assertIsNone(roadmap["milestones"][0]["merged_commit"])
-        self.assertIsNone(roadmap["milestones"][0]["accepted_at"])
+        self.assertEqual(roadmap["milestones"][0]["status"], "done")
+        self.assertEqual(roadmap["milestones"][0]["prs"], ["https://github.com/DevIsola/UrbanGauge/pull/1"])
+        self.assertEqual(roadmap["milestones"][0]["merged_commit"], "87e9d035dfbc841c0282ec35da7a3d29707f7ff1")
+        self.assertEqual(roadmap["milestones"][0]["accepted_at"], "2026-10-27T23:05:21Z")
         self.assertEqual(roadmap["milestones"][1]["status"], "not_started")
 
     def test_missing_evidence_directory_rejected(self):
