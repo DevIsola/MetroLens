@@ -1,6 +1,6 @@
 # ADR-0003 — Product naming and identity decision (M00-T06)
 
-- **Status:** UrbanGauge preferred by maintainer (2026-10-26); **not cleared, no final brand selected or rename authorized**
+- **Current status (2026-10-27):** UrbanGauge accepted as project name; GitHub repository renamed and independently verified. **No domain/trademark/publication clearance is implied.** Earlier exploratory findings below are retained as dated history.
 - **Research date:** 2026-10-26
 - **Decision owner:** project maintainer
 - **Codename:** MetroLens; legacy planning nickname Northstar and canonical document path `docs/NORTHSTAR_MASTER_ROADMAP.md` are retained for continuity.
@@ -60,6 +60,10 @@ Additional public-web preflight evidence specifically for UrbanGauge:
 - **Output of M00-T06:** reviewed name + evidence + maintainer approval + migration plan. The user can also **defer** naming; in that case, M00-T06 remains open, and M01 can only be considered under explicit risk acceptance and temporary codename metadata.
 
 This ADR does not change the already approved separate-indicator methodology or visual identity direction, and it does not authorize a production release.
+
+## Verified repository migration — 2026-10-27
+
+Following the maintainer's explicit request, GitHub now resolves the public repository as [`DevIsola/UrbanGauge`](https://github.com/DevIsola/UrbanGauge). The maintainer updated the local `origin`, fetched successfully, confirmed `feat/M00-product-discovery` tracking and reported `Everything up-to-date`. This verifies only the GitHub slug migration, not GitHub Pages, public domain ownership, licensed dataset reuse, legal clearance, or public brand availability. Source IDs, canonical roadmap filename and historical evidence remain unchanged.
 
 ## Maintainer decision — public research repository scope (2026-10-26)
 

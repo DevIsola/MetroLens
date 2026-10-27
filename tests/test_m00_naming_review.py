@@ -32,7 +32,7 @@ class NamingReviewTests(unittest.TestCase):
         self.assertTrue(report['known_public_use_risk_acknowledged'])
         self.assertEqual(report['preferred_name'], 'UrbanGauge')
         self.assertEqual(report['selected_name'], 'UrbanGauge')
-        self.assertFalse(report['migration_performed'])
+        self.assertTrue(report['migration_performed'])
 
     def test_cli_reports_pending_and_counts_references(self):
         result = subprocess.run([sys.executable, 'scripts/review_m00_naming.py'], cwd=ROOT,
@@ -63,9 +63,15 @@ class NamingReviewTests(unittest.TestCase):
         with self.assertRaises(NamingReviewError):
             validate_review(self.changed('trademark_clearance_verified', True))
 
-    def test_repository_rename_cannot_be_preapproved(self):
+    def test_completed_repository_rename_cannot_be_undone_without_evidence(self):
         with self.assertRaises(NamingReviewError):
-            validate_review(self.changed('repository_rename_approved', True))
+            validate_review(self.changed('repository_rename_approved', False))
+
+    def test_forged_repository_migration_rejected(self):
+        forged = copy.deepcopy(self.base)
+        forged['repository_migration']['new_repository'] = 'DevIsola/OtherRepo'
+        with self.assertRaises(NamingReviewError):
+            validate_review(forged)
 
     def test_public_rebrand_cannot_be_preapproved(self):
         with self.assertRaises(NamingReviewError):
@@ -155,7 +161,7 @@ class NamingReviewTests(unittest.TestCase):
     def test_public_repository_name_selected_without_renaming_remote(self):
         self.assertTrue((ROOT / 'README.md').read_text(encoding='utf-8').startswith('# UrbanGauge\n'))
         report = validate_review(self.base)
-        self.assertFalse(report['repository_rename_approved'])
+        self.assertTrue(report['repository_rename_approved'])
         self.assertFalse(report['trademark_clearance_verified'])
 
     def test_commercial_review_requirement_cannot_disappear(self):

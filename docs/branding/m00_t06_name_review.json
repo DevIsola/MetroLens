@@ -6,11 +6,11 @@
   "working_codename": "MetroLens",
   "selected_name": "UrbanGauge",
   "brand_identity_approved": false,
-  "repository_rename_approved": false,
+  "repository_rename_approved": true,
   "domain_availability_verified": false,
   "trademark_clearance_verified": false,
   "app_store_clearance_verified": false,
-  "migration_performed": false,
+  "migration_performed": true,
   "public_rebrand_performed": false,
   "production_ready": false,
   "candidates": [
@@ -83,7 +83,7 @@
   "nonapprovals": [
     "Project naming approval is limited to this public research repository, not trademark registration, exclusivity, or freedom-to-operate advice",
     "Domain ownership/availability, trademark status, and app-store clearance remain unverified",
-    "GitHub repository slug, remote URLs, Pages paths, domains, and publication workflows are unchanged and not approved for migration",
+    "The GitHub repository slug was renamed to DevIsola/UrbanGauge; Pages publication, domains, trademarks, and public brand rollout are not authorized",
     "Public source-data publication, rent/income joins, and production releases remain separately blocked"
   ],
   "preferred_name": "UrbanGauge",
@@ -96,5 +96,14 @@
   "no_exclusive_trademark_rights_claimed": true,
   "project_readme_name_updated": true,
   "future_commercial_brand_clearance_required": true,
-  "selection_date": "2026-10-26"
+  "selection_date": "2026-10-26",
+  "repository_migration": {
+    "status": "verified_completed",
+    "scope": "github_repository_slug_only",
+    "old_repository": "DevIsola/MetroLens",
+    "new_repository": "DevIsola/UrbanGauge",
+    "verified_on": "2026-10-27",
+    "evidence": "GitHub repository metadata and maintainer git fetch/status/push",
+    "deployment_authorized": false
+  }
 }

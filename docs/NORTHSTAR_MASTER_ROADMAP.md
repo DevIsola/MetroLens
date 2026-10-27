@@ -14,7 +14,7 @@ canonical_path: "docs/NORTHSTAR_MASTER_ROADMAP.md"
 
 > **Codinome em revisão:** Northstar é provisório. A marca final será aprovada em `M00-T06` e registrada em ADR, sem renomear de antemão arquivos canônicos e links históricos.
 
-> **Atualização M00-T06 (2026-10-26):** UrbanGauge foi aceito pelo mantenedor como nome deste repositório público de pesquisa; não é serviço ou aplicativo. O slug remoto `DevIsola/MetroLens` e este caminho canônico permanecem inalterados; disponibilidade de marca/domínio não foi comprovada. Consulte ADR-0003 para limites da decisão.
+> **Atualização M00-T06 (2026-10-27):** UrbanGauge é o nome aprovado deste repositório público de pesquisa; o repositório GitHub foi renomeado de `DevIsola/MetroLens` para `DevIsola/UrbanGauge` e o remoto local foi validado. Este caminho canônico histórico permanece inalterado. Marca, domínio e publicação de dados não foram aprovados. Consulte ADR-0003.
 
 **Projeto:** Canada Affordability & Opportunity Observatory  
 **Versão da especificação:** 0.2.0 — 26 de outubro de 2026  
@@ -37,7 +37,7 @@ O produto (codinome de trabalho: Northstar) será um observatório de dados púb
 
 ## 1.0 Naming, posicionamento e decisão de marca
 
-A expressão _Canada Affordability Observatory_ funciona como descriptor do produto, não como nome comercial. Manter `MetroLens` exclusivamente como codinome de implementação até que o mantenedor aprove uma identidade; não usar candidatas como se já estivessem registradas, disponíveis como domínio ou protegidas legalmente.
+A expressão _Canada Affordability Observatory_ funciona como descritor do produto, não como marca registrada. **UrbanGauge** foi aprovado como nome do repositório de pesquisa; `MetroLens` e `Northstar` permanecem apenas como referências históricas. Nenhuma disponibilidade jurídica/de domínio foi comprovada.
 
 | Candidata               | Ideia / significado                                | Ponto forte                                                 | Cuidado                                                       |
 | ----------------------- | -------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------- |
@@ -51,7 +51,7 @@ A expressão _Canada Affordability Observatory_ funciona como descriptor do prod
 
 **Shortlist editorial proposta:** `CityMargin` (marca mais distintiva), `UrbanGauge` (mais analítica) e `Living Ledger` (melhor relação com transparência). Recomendação inicial: **CityMargin**, condicionada a checagens de conflito, preferência do mantenedor e possibilidade de comunicação bilíngue. Isto **não** é decisão final nem verificação de disponibilidade jurídica/domínios/usuários.
 
-**Atualização de decisão (2026-10-26):** O mantenedor indicou **UrbanGauge** como preferência preliminar. Uma pesquisa web adicional encontrou uso histórico do nome em um projeto de indicadores urbanos, além de UrbanGauge Studio e um anúncio premium de `urbangauge.com`. A preferência **não aprova** marca, domínio, renomeação ou publicação. A ADR-0003 mantém o gate de investigação e aceite final.
+**Decisão e migração (2026-10-27):** O mantenedor aprovou **UrbanGauge** para o repositório de pesquisa, aceitou os riscos de nomes semelhantes e autorizou o renomeio do repositório GitHub, já confirmado. O domínio, a exclusividade de marca, o deploy público e o uso/republicação de dados continuam sem aprovação. A ADR-0003 preserva os achados históricos da busca.
 
 **Critérios objetivos M00-T06:** pesquisar GitHub, domínios `.com`/`.ca`, lojas de apps, buscas e marcas registradas; avaliar pronúncia em inglês/PT-BR, leitura sem contexto, escalabilidade de marca, legibilidade em mobile, distintividade e cobertura do escopo (cidade × província); registrar alternativas rejeitadas e ADR de decisão. A atualização do nome deverá modificar README, metadata, título, asset manifest, textos de UI e caminhos de docs com redirecionamento/compatibilidade de links históricos quando necessário.
 

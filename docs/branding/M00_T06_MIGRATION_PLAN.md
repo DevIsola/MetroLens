@@ -1,6 +1,6 @@
-# M00-T06 — Controlled naming migration plan (not executed)
+# M00-T06 — Controlled naming migration (repository rename completed)
 
-**Status:** UrbanGauge accepted as the **public repository project label** on 2026-10-26, with known use/collision signals acknowledged. The README project title changes in this increment; the GitHub repository slug, domain, historical paths, deployment configuration and publisher evidence do **not** change. Trademark/domain clearance has not been established.
+**Status:** UrbanGauge accepted as the **public repository project label** on 2026-10-26. The GitHub repository was renamed from `DevIsola/MetroLens` to `DevIsola/UrbanGauge` and its local remote validated on 2026-10-27. No domain, trademark, historical source identifier, deployment configuration, or publication approval was changed.
 
 ## Inventory and dependencies
 
@@ -16,9 +16,9 @@ Use `python scripts/review_m00_naming.py` to obtain a bounded, read-only invento
 | Branding/SEO and maps | Review EN/PT-BR copy, responsive icon, Open Graph metadata, social handles and map attribution | No impression of public agency endorsement; maps still require source licence clearance |
 | Local tool scripts and reports | Change human-facing labels only after executable compatibility tests | Keep source IDs, stable `region_id` and audited hash values unchanged |
 
-## Controlled remote/application migration sequence — later increment only
+## Remaining application/brand migration sequence — future milestones
 
-1. The maintainer has selected UrbanGauge for repository naming and acknowledged known collision signals. **Before any remote rename or commercial/hosted product rollout**, record the exact requested migration scope and additional domain/trademark checks appropriate to that scope.
+1. **Repository rename completed**: `DevIsola/MetroLens` → `DevIsola/UrbanGauge` on 2026-10-27; verify local `origin` and preserve historical links. A future domain or hosted/commercial brand rollout still requires separate approval and relevant legal/registry review.
 2. Produce a searchable before/after inventory; split user-facing strings from historical file names, source identifiers and links.
 3. Prepare reversible changes on a fresh feature branch, with tests asserting existing `region_id`, source IDs, CSV/Excel cell provenance, audit hashes, and page base-path behavior.
 4. Confirm both EN/PT-BR copy, responsive/logo sizes, contrast, accessible labels, social metadata, license attributions and permalink preservation.

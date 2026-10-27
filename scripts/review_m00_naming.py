@@ -14,7 +14,6 @@ REVIEW = ROOT / 'docs/branding/m00_t06_name_review.json'
 _CANDIDATES = {'MetroLens', 'CityMargin', 'UrbanGauge', 'Living Ledger', 'Civic Ledger'}
 _REQUIRED = ('domain_availability_verified', 'trademark_clearance_verified',
              'app_store_clearance_verified', 'brand_identity_approved',
-             'repository_rename_approved', 'migration_performed',
              'public_rebrand_performed', 'production_ready')
 _REFERENCE_PATTERNS = {
     'metrolens': re.compile(r'(?i)metro[ -]?lens'),
@@ -39,9 +38,9 @@ def validate_review(review: dict, *, root: Path = ROOT) -> dict:
             review.get('identity_migration_approved') is not False or
             review.get('selected_name') != 'UrbanGauge' or
             review.get('selection_date') != '2026-10-26'):
-        raise NamingReviewError('UrbanGauge project selection/date changed or remote migration silently approved')
+        raise NamingReviewError('UrbanGauge project selection/date is inconsistent')
     if review.get('working_codename') != 'MetroLens':
-        raise NamingReviewError('Existing repository codename must remain until separately authorized remote migration')
+        raise NamingReviewError('Historical MetroLens codename was altered')
     required_project_flags = {
         'project_name_approved': True,
         'project_name_scope': 'public_research_repository_not_service_or_app',
@@ -56,7 +55,20 @@ def validate_review(review: dict, *, root: Path = ROOT) -> dict:
     if not readme.is_file() or not readme.read_text(encoding='utf-8').startswith('# UrbanGauge\n'):
         raise NamingReviewError('README title must match selected repository project name')
     if any(review.get(flag) is not False for flag in _REQUIRED):
-        raise NamingReviewError('Domain, trademark, commercial branding, remote migration and production must remain unapproved')
+        raise NamingReviewError('Domain, trademark, public branding and production must remain unapproved')
+    remote = review.get('repository_migration')
+    if not isinstance(remote, dict) or remote != {
+            'status': 'verified_completed',
+            'scope': 'github_repository_slug_only',
+            'old_repository': 'DevIsola/MetroLens',
+            'new_repository': 'DevIsola/UrbanGauge',
+            'verified_on': '2026-10-27',
+            'evidence': 'GitHub repository metadata and maintainer git fetch/status/push',
+            'deployment_authorized': False,
+    }:
+        raise NamingReviewError('Repository rename evidence is missing or inconsistent')
+    if review.get('repository_rename_approved') is not True or review.get('migration_performed') is not True:
+        raise NamingReviewError('Verified GitHub repository slug migration was not recorded')
     entries = review.get('candidates')
     if not isinstance(entries, list) or len(entries) != len(_CANDIDATES):
         raise NamingReviewError('Candidate set incomplete')
@@ -121,8 +133,10 @@ def validate_review(review: dict, *, root: Path = ROOT) -> dict:
         'selected_name': 'UrbanGauge',
         'domain_availability_verified': False,
         'trademark_clearance_verified': False,
-        'repository_rename_approved': False,
-        'migration_performed': False,
+        'repository_rename_approved': True,
+        'migration_performed': True,
+        'repository': 'DevIsola/UrbanGauge',
+        'repository_migration_scope': 'github_repository_slug_only',
         'production_ready': False,
         'maintainer_selection_required': False,
         'domain_marketplace_listing': 'urbangauge.com; USD 2695 asking (2026-10-26); not cleared',
