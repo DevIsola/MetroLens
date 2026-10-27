@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only M00-T06 naming review. Preference is not identity clearance."""
+"""Read-only M00-T06 naming review. Repository label is not legal clearance."""
 
 from __future__ import annotations
 
@@ -28,21 +28,35 @@ class NamingReviewError(ValueError):
 
 
 def validate_review(review: dict, *, root: Path = ROOT) -> dict:
-    """Verify a preferred candidate is recorded without granting final brand approval."""
+    """Verify selected research-project label without granting trademark or remote rename."""
     if not isinstance(review, dict) or review.get('schema_version') != 1 or review.get('milestone') != 'M00-T06':
         raise NamingReviewError('Unsupported naming review schema or milestone')
-    if review.get('decision_status') != 'maintainer_preference_recorded_pending_clearance':
-        raise NamingReviewError('Expected recorded preference pending independently reviewed clearance')
+    if review.get('decision_status') != 'maintainer_selected_repository_project_name_with_known_risk':
+        raise NamingReviewError('Expected maintainer-selected repository name and acknowledged known risks')
     if (review.get('preferred_name') != 'UrbanGauge' or
             review.get('preference_date') != '2026-10-26' or
-            review.get('final_identity_decision_required') is not True or
+            review.get('final_identity_decision_required') is not False or
             review.get('identity_migration_approved') is not False or
-            review.get('selected_name') is not None):
-        raise NamingReviewError('Preferred UrbanGauge is not a cleared or selected public identity')
+            review.get('selected_name') != 'UrbanGauge' or
+            review.get('selection_date') != '2026-10-26'):
+        raise NamingReviewError('UrbanGauge project selection/date changed or remote migration silently approved')
     if review.get('working_codename') != 'MetroLens':
-        raise NamingReviewError('Existing working codename changed before acceptance')
+        raise NamingReviewError('Existing repository codename must remain until separately authorized remote migration')
+    required_project_flags = {
+        'project_name_approved': True,
+        'project_name_scope': 'public_noncommercial_open_source_repository',
+        'known_public_use_risk_acknowledged': True,
+        'no_exclusive_trademark_rights_claimed': True,
+        'project_readme_name_updated': True,
+        'future_commercial_brand_clearance_required': True,
+    }
+    if any(review.get(key) != value for key, value in required_project_flags.items()):
+        raise NamingReviewError('Repository-only name acceptance or scope safeguards are invalid')
+    readme = root / 'README.md'
+    if not readme.is_file() or not readme.read_text(encoding='utf-8').startswith('# UrbanGauge\n'):
+        raise NamingReviewError('README title must match selected repository project name')
     if any(review.get(flag) is not False for flag in _REQUIRED):
-        raise NamingReviewError('Domain, trademark, identity, migration and public release must be unapproved')
+        raise NamingReviewError('Domain, trademark, commercial branding, remote migration and production must remain unapproved')
     entries = review.get('candidates')
     if not isinstance(entries, list) or len(entries) != len(_CANDIDATES):
         raise NamingReviewError('Candidate set incomplete')
@@ -92,15 +106,19 @@ def validate_review(review: dict, *, root: Path = ROOT) -> dict:
             raise NamingReviewError(f'Missing named review record: {path}')
     return {
         'milestone': 'M00-T06',
-        'status': 'identity_preference_recorded',
-        'decision_status': 'maintainer_preference_recorded_pending_clearance',
+        'status': 'repository_project_name_selected',
+        'decision_status': 'maintainer_selected_repository_project_name_with_known_risk',
         'preferred_name': 'UrbanGauge',
         'preference_date': '2026-10-26',
-        'final_identity_decision_required': True,
+        'final_identity_decision_required': False,
+        'project_name_approved': True,
+        'project_name_scope': 'public_noncommercial_open_source_repository',
+        'known_public_use_risk_acknowledged': True,
+        'future_commercial_brand_clearance_required': True,
         'candidate_names': [v['name'] for v in entries],
         'documented_public_use_signals': [v['name'] for v in entries if v['public_use_signal'] == 'observed_other_products'],
         'candidates_legally_cleared': 0,
-        'selected_name': None,
+        'selected_name': 'UrbanGauge',
         'domain_availability_verified': False,
         'trademark_clearance_verified': False,
         'repository_rename_approved': False,

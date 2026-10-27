@@ -1,4 +1,4 @@
-"""M00-T06 name preflight must not silently authorize identity or migration."""
+"""M00-T06 project name is selected without granting legal/remote release approvals."""
 
 import copy
 import json
@@ -22,13 +22,16 @@ class NamingReviewTests(unittest.TestCase):
         obj[field] = value
         return obj
 
-    def test_maintainer_preference_is_not_final_clearance(self):
+    def test_maintainer_selects_repository_name_without_trademark_claim(self):
         report = validate_review(self.base)
-        self.assertEqual(report['status'], 'identity_preference_recorded')
+        self.assertEqual(report['status'], 'repository_project_name_selected')
         self.assertFalse(report['maintainer_selection_required'])
-        self.assertTrue(report['final_identity_decision_required'])
+        self.assertFalse(report['final_identity_decision_required'])
+        self.assertTrue(report['project_name_approved'])
+        self.assertEqual(report['project_name_scope'], 'public_noncommercial_open_source_repository')
+        self.assertTrue(report['known_public_use_risk_acknowledged'])
         self.assertEqual(report['preferred_name'], 'UrbanGauge')
-        self.assertIsNone(report['selected_name'])
+        self.assertEqual(report['selected_name'], 'UrbanGauge')
         self.assertFalse(report['migration_performed'])
 
     def test_cli_reports_pending_and_counts_references(self):
@@ -36,7 +39,7 @@ class NamingReviewTests(unittest.TestCase):
                                 text=True, capture_output=True, check=False)
         self.assertEqual(result.returncode, 0, result.stderr)
         data = json.loads(result.stdout)
-        self.assertEqual(data['decision_status'], 'maintainer_preference_recorded_pending_clearance')
+        self.assertEqual(data['decision_status'], 'maintainer_selected_repository_project_name_with_known_risk')
         self.assertGreater(data['existing_reference_inventory']['metrolens']['tracked_files'], 0)
 
     def test_review_inventory_is_bounded(self):
@@ -44,9 +47,9 @@ class NamingReviewTests(unittest.TestCase):
         self.assertEqual(set(items), {'metrolens', 'northstar', 'observatory_descriptor'})
         self.assertTrue(all(len(x['sample_paths']) <= 8 for x in items.values()))
 
-    def test_selected_name_rejected_while_pending(self):
+    def test_other_selected_name_rejected(self):
         with self.assertRaises(NamingReviewError):
-            validate_review(self.changed('selected_name', 'UrbanGauge'))
+            validate_review(self.changed('selected_name', 'MetroLens'))
 
     def test_premature_acceptance_rejected(self):
         with self.assertRaises(NamingReviewError):
@@ -104,9 +107,9 @@ class NamingReviewTests(unittest.TestCase):
         with self.assertRaises(NamingReviewError):
             validate_review(self.changed('preference_date', None))
 
-    def test_final_identity_decision_stays_required(self):
+    def test_no_second_project_selection_is_needed(self):
         with self.assertRaises(NamingReviewError):
-            validate_review(self.changed('final_identity_decision_required', False))
+            validate_review(self.changed('final_identity_decision_required', True))
 
     def test_identity_migration_stays_unapproved(self):
         with self.assertRaises(NamingReviewError):
@@ -133,9 +136,31 @@ class NamingReviewTests(unittest.TestCase):
         with self.assertRaises(NamingReviewError):
             validate_review(data)
 
-    def test_accepted_identity_without_clearance_rejected(self):
+    def test_broad_legal_brand_acceptance_without_clearance_rejected(self):
         with self.assertRaises(NamingReviewError):
             validate_review(self.changed('decision_status', 'accepted'))
+
+    def test_user_accepted_name_cannot_be_scoped_as_commercial_service(self):
+        with self.assertRaises(NamingReviewError):
+            validate_review(self.changed('project_name_scope', 'hosted_commercial_service'))
+
+    def test_risk_acknowledgement_is_preserved(self):
+        with self.assertRaises(NamingReviewError):
+            validate_review(self.changed('known_public_use_risk_acknowledged', False))
+
+    def test_no_exclusive_trademark_rights_claimed(self):
+        with self.assertRaises(NamingReviewError):
+            validate_review(self.changed('no_exclusive_trademark_rights_claimed', False))
+
+    def test_public_repository_name_selected_without_renaming_remote(self):
+        self.assertTrue((ROOT / 'README.md').read_text(encoding='utf-8').startswith('# UrbanGauge\n'))
+        report = validate_review(self.base)
+        self.assertFalse(report['repository_rename_approved'])
+        self.assertFalse(report['trademark_clearance_verified'])
+
+    def test_commercial_review_requirement_cannot_disappear(self):
+        with self.assertRaises(NamingReviewError):
+            validate_review(self.changed('future_commercial_brand_clearance_required', False))
 
     def test_naming_review_does_not_mutate_repository(self):
         before = (ROOT / 'docs/branding/m00_t06_name_review.json').read_bytes()
