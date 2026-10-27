@@ -21,8 +21,12 @@ This is a **review checklist**, not legal advice or a claim that a name is avail
 | Public software and social identity | GitHub, Apple App Store, Google Play, major web searches | Exact names, related projects/products, source links, industry overlap and dates; note historical use separately from active operations. |
 | Bilingual brand fit | EN and PT-BR review | Pronunciation, readability, unintended meanings, accessibility in small-screen navigation, provincial coverage. |
 
+## Scope update — repository project name accepted
+
+The maintainer selected **UrbanGauge** for the noncommercial research repository on 2026-10-26 and acknowledged known public uses. This checklist remains relevant **if the scope expands** to a hosted/commercial brand, domain acquisition or remote repository rename. It is no longer a prerequisite to using the name as the current public repository’s project label. No trademark rights or domain clearance have been claimed.
+
 ## Decision gate
 
-**No final brand, logo, domain purchase, repository rename or public migration is authorized by a preference.** An authorized final identity decision requires separately reviewed search evidence, acceptable collision risk, a budget decision for any premium domain, explicit maintainer approval and the reversible migration plan in `M00_T06_MIGRATION_PLAN.md`.
+**UrbanGauge is selected for this repository’s project label only.** No trademark-exclusive brand, domain purchase, GitHub remote rename, Pages migration or hosted-service release is authorized. Any such step requires a separately requested migration and a risk assessment appropriate to its scope, including relevant clearance and budget decisions.
 
-While review is pending, other nonpublic M00 work may proceed under the `MetroLens` working codename. Any future generated report must continue to return `selected_name: null`, `trademark_clearance_verified: false`, `domain_availability_verified: false`, `repository_rename_approved: false` and `production_ready: false`.
+The existing remote and historical paths continue to use the `MetroLens` codename. Review reports now return `selected_name: "UrbanGauge"` with `project_name_approved: true`, while `trademark_clearance_verified`, `domain_availability_verified`, `repository_rename_approved` and `production_ready` remain `false`.

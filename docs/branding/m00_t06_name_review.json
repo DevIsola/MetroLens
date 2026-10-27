@@ -2,9 +2,9 @@
   "schema_version": 1,
   "milestone": "M00-T06",
   "research_date": "2026-10-26",
-  "decision_status": "maintainer_preference_recorded_pending_clearance",
+  "decision_status": "maintainer_selected_repository_project_name_with_known_risk",
   "working_codename": "MetroLens",
-  "selected_name": null,
+  "selected_name": "UrbanGauge",
   "brand_identity_approved": false,
   "repository_rename_approved": false,
   "domain_availability_verified": false,
@@ -81,13 +81,20 @@
     "Maintainer selects identity and approves code/document migration plan"
   ],
   "nonapprovals": [
-    "No candidate is legally cleared or confirmed available as a domain",
-    "No trademark search result or registration is asserted",
-    "No name or repository change is authorized by this research",
-    "Maintainer preference UrbanGauge does not authorize repository rename, DNS/domain purchase or public brand deployment"
+    "Project naming approval is limited to this noncommercial public repository, not trademark registration, exclusivity, or freedom-to-operate advice",
+    "Domain ownership/availability, trademark status, and app-store clearance remain unverified",
+    "GitHub repository slug, remote URLs, Pages paths, domains, and publication workflows are unchanged and not approved for migration",
+    "Public source-data publication, rent/income joins, and production releases remain separately blocked"
   ],
   "preferred_name": "UrbanGauge",
   "preference_date": "2026-10-26",
   "identity_migration_approved": false,
-  "final_identity_decision_required": true
+  "final_identity_decision_required": false,
+  "project_name_approved": true,
+  "project_name_scope": "public_noncommercial_open_source_repository",
+  "known_public_use_risk_acknowledged": true,
+  "no_exclusive_trademark_rights_claimed": true,
+  "project_readme_name_updated": true,
+  "future_commercial_brand_clearance_required": true,
+  "selection_date": "2026-10-26"
 }

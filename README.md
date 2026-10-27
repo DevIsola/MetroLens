@@ -1,6 +1,8 @@
-# Canada Affordability & Opportunity Observatory
+# UrbanGauge
 
-**Project codename:** MetroLens (not an approved public brand).
+**Project identity:** UrbanGauge — maintainer-approved name for this public, noncommercial research repository. **Existing GitHub repository slug:** `MetroLens` (unchanged). **Historical planning codename:** Northstar.
+
+*Independent Canadian housing, income and opportunity data research.* Naming approval is limited to this project; trademark rights and domain availability have not been verified.
 
 A proposed bilingual, static-first Canadian affordability data observatory. This repository starts with feasibility research and engineering governance before introducing ingestion, verified metrics, or a public dashboard. **No production data or analytical conclusions have been published.**
 
