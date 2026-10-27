@@ -61,15 +61,15 @@ Additional public-web preflight evidence specifically for UrbanGauge:
 
 This ADR does not change the already approved separate-indicator methodology or visual identity direction, and it does not authorize a production release.
 
-## Maintainer decision — open-source repository scope (2026-10-26)
+## Maintainer decision — public research repository scope (2026-10-26)
 
-**Decision: Accepted for project naming.** The maintainer explicitly clarified that the project is a public **noncommercial research repository**, not a currently operated service or app, and confirmed **UrbanGauge** as its name after receiving the observed public-use research. For that defined scope, the maintainer accepts the practical discoverability/confusion risk and elects not to treat domain acquisition, official trademark clearance, or app-store searches as prerequisites for progressing with M00/M01 development.
+**Decision: Accepted for project naming.** The maintainer explicitly clarified that the project is a public **research repository**, not a currently operated service or app, and confirmed **UrbanGauge** as its name after receiving the observed public-use research. For that defined scope, the maintainer accepts the practical discoverability/confusion risk and elects not to treat domain acquisition, official trademark clearance, or app-store searches as prerequisites for progressing with M00/M01 development.
 
 This decision is **not a finding of trademark clearance**, does not create exclusive rights, and is not a legal conclusion that a public repository can never conflict with someone else's trademark. Reevaluate before converting the repository into a commercial service, offering a hosted branded product, purchasing a domain, or asserting exclusivity. The earlier collision evidence remains preserved above.
 
 **Scope and execution:**
 
-- Selected project name: **UrbanGauge**; approved for the README and future documentation as a noncommercial open-source project label.
+- Selected project name: **UrbanGauge**; approved for the README and future documentation as a public repository project label.
 - The existing GitHub repository **`DevIsola/MetroLens` remains unchanged**. Renaming the remote, altering GitHub Pages paths, adding DNS, modifying existing URL references or publishing a hosted service requires a separately requested migration.
 - Historical `MetroLens` and `Northstar` references stay where needed for canonical links, citations and audit provenance. Do not bulk replace earlier source-acceptance records.
 - Branding for an app/service, trademark/domain clearance, source reuse approvals, data joins, scheduled ETL and production deployment remain **unapproved**.

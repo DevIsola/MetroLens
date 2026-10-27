@@ -23,7 +23,7 @@ This is a **review checklist**, not legal advice or a claim that a name is avail
 
 ## Scope update — repository project name accepted
 
-The maintainer selected **UrbanGauge** for the noncommercial research repository on 2026-10-26 and acknowledged known public uses. This checklist remains relevant **if the scope expands** to a hosted/commercial brand, domain acquisition or remote repository rename. It is no longer a prerequisite to using the name as the current public repository’s project label. No trademark rights or domain clearance have been claimed.
+The maintainer selected **UrbanGauge** for the public research repository on 2026-10-26 and acknowledged known public uses. This checklist remains relevant **if the scope expands** to a hosted/commercial brand, domain acquisition or remote repository rename. It is no longer a prerequisite to using the name as the current public repository’s project label. No trademark rights or domain clearance have been claimed.
 
 ## Decision gate
 

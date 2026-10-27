@@ -81,7 +81,7 @@
     "Maintainer selects identity and approves code/document migration plan"
   ],
   "nonapprovals": [
-    "Project naming approval is limited to this noncommercial public repository, not trademark registration, exclusivity, or freedom-to-operate advice",
+    "Project naming approval is limited to this public research repository, not trademark registration, exclusivity, or freedom-to-operate advice",
     "Domain ownership/availability, trademark status, and app-store clearance remain unverified",
     "GitHub repository slug, remote URLs, Pages paths, domains, and publication workflows are unchanged and not approved for migration",
     "Public source-data publication, rent/income joins, and production releases remain separately blocked"
@@ -91,7 +91,7 @@
   "identity_migration_approved": false,
   "final_identity_decision_required": false,
   "project_name_approved": true,
-  "project_name_scope": "public_noncommercial_open_source_repository",
+  "project_name_scope": "public_research_repository_not_service_or_app",
   "known_public_use_risk_acknowledged": true,
   "no_exclusive_trademark_rights_claimed": true,
   "project_readme_name_updated": true,

@@ -44,7 +44,7 @@ def validate_review(review: dict, *, root: Path = ROOT) -> dict:
         raise NamingReviewError('Existing repository codename must remain until separately authorized remote migration')
     required_project_flags = {
         'project_name_approved': True,
-        'project_name_scope': 'public_noncommercial_open_source_repository',
+        'project_name_scope': 'public_research_repository_not_service_or_app',
         'known_public_use_risk_acknowledged': True,
         'no_exclusive_trademark_rights_claimed': True,
         'project_readme_name_updated': True,
@@ -112,7 +112,7 @@ def validate_review(review: dict, *, root: Path = ROOT) -> dict:
         'preference_date': '2026-10-26',
         'final_identity_decision_required': False,
         'project_name_approved': True,
-        'project_name_scope': 'public_noncommercial_open_source_repository',
+        'project_name_scope': 'public_research_repository_not_service_or_app',
         'known_public_use_risk_acknowledged': True,
         'future_commercial_brand_clearance_required': True,
         'candidate_names': [v['name'] for v in entries],

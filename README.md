@@ -1,6 +1,6 @@
 # UrbanGauge
 
-**Project identity:** UrbanGauge — maintainer-approved name for this public, noncommercial research repository. **Existing GitHub repository slug:** `MetroLens` (unchanged). **Historical planning codename:** Northstar.
+**Project identity:** UrbanGauge — maintainer-approved name for this public research repository that is not a service or app. **Existing GitHub repository slug:** `MetroLens` (unchanged). **Historical planning codename:** Northstar.
 
 *Independent Canadian housing, income and opportunity data research.* Naming approval is limited to this project; trademark rights and domain availability have not been verified.
 

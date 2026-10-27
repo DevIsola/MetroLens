@@ -28,7 +28,7 @@ class NamingReviewTests(unittest.TestCase):
         self.assertFalse(report['maintainer_selection_required'])
         self.assertFalse(report['final_identity_decision_required'])
         self.assertTrue(report['project_name_approved'])
-        self.assertEqual(report['project_name_scope'], 'public_noncommercial_open_source_repository')
+        self.assertEqual(report['project_name_scope'], 'public_research_repository_not_service_or_app')
         self.assertTrue(report['known_public_use_risk_acknowledged'])
         self.assertEqual(report['preferred_name'], 'UrbanGauge')
         self.assertEqual(report['selected_name'], 'UrbanGauge')

@@ -1,6 +1,6 @@
 # M00-T06 — Controlled naming migration plan (not executed)
 
-**Status:** UrbanGauge accepted as the **noncommercial open-source project label** on 2026-10-26, with known use/collision signals acknowledged. The README project title changes in this increment; the GitHub repository slug, domain, historical paths, deployment configuration and publisher evidence do **not** change. Trademark/domain clearance has not been established.
+**Status:** UrbanGauge accepted as the **public repository project label** on 2026-10-26, with known use/collision signals acknowledged. The README project title changes in this increment; the GitHub repository slug, domain, historical paths, deployment configuration and publisher evidence do **not** change. Trademark/domain clearance has not been established.
 
 ## Inventory and dependencies
 
