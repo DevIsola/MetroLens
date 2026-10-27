@@ -49,7 +49,7 @@ class RoadmapContractTests(unittest.TestCase):
 
     def test_done_without_merge_evidence_rejected(self):
         bad = copy.deepcopy(self.data)
-        bad["milestones"][0]["status"] = "done"
+        bad["milestones"][0].update(status="done", prs=[], evidence=[], merged_commit=None, accepted_at=None)
         with self.assertRaises(StatusValidationError):
             validate_status(bad)
 
