@@ -14,6 +14,8 @@ canonical_path: "docs/NORTHSTAR_MASTER_ROADMAP.md"
 
 > **Codinome em revisão:** Northstar é provisório. A marca final será aprovada em `M00-T06` e registrada em ADR, sem renomear de antemão arquivos canônicos e links históricos.
 
+> **Atualização M00-T06 (2026-10-26):** UrbanGauge foi aceito pelo mantenedor como nome deste repositório público de pesquisa, sem fins comerciais. O slug remoto `DevIsola/MetroLens` e este caminho canônico permanecem inalterados; disponibilidade de marca/domínio não foi comprovada. Consulte ADR-0003 para limites da decisão.
+
 **Projeto:** Canada Affordability & Opportunity Observatory  
 **Versão da especificação:** 0.2.0 — 26 de outubro de 2026  
 **Status:** baseline proposta; nenhuma fase de engenharia foi validada como concluída  

@@ -43,7 +43,7 @@ Additional public-web preflight evidence specifically for UrbanGauge:
 
 **Risk:** discoverability and potential confusion, especially given the historical urban-indicators project. Neither no visible CIPO matches in web search nor the domain marketplace listing constitutes trademark clearance. We have **not** completed an official CIPO results review, an official .ca registry lookup, social/app-store inventories or legal risk assessment. If the exact-name historical use is concerning, consider a more distinctive name before committing design assets.
 
-## Required checks before an identity decision
+## Additional checks before any commercial/hosted brand or domain commitment (superseded for repository-only naming)
 
 1. Search the **Canadian Intellectual Property Office (CIPO)** database for exact, variant, plural and phonetically similar names, considering the relevant goods/services classes; record dated results. Official search guidance: https://www.ised-isde.canada.ca/site/canadian-intellectual-property-office/en/trademarks/basic-search and https://ised-isde.canada.ca/cipo/trademark-search/ . This project has **not** completed that formal search.
 2. Check relevant foreign marks via official WIPO search at https://branddb.wipo.int/ if serving other jurisdictions. Seek professional advice if branding/legal risk is material.
@@ -51,7 +51,7 @@ Additional public-web preflight evidence specifically for UrbanGauge:
 4. Review existing GitHub projects, browser/web search, Google Play and Apple App Store; record links and assess audience/industry proximity, rather than equating all identical terms with conflict.
 5. Maintainer explicitly selects a candidate or submits a new name, then independently approves the reference-migration plan in `M00_T06_MIGRATION_PLAN.md`. Until that point, do not rename the GitHub repository, domain, README, image assets or historical paths.
 
-## Decision pending
+## Prior decision state — superseded by repository-scope approval below
 
 - **Preferred candidate:** UrbanGauge (maintainer, 2026-10-26).
 - **Selected public name:** _not selected; pending clearance and final maintainer approval_.
