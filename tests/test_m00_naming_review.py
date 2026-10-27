@@ -22,10 +22,12 @@ class NamingReviewTests(unittest.TestCase):
         obj[field] = value
         return obj
 
-    def test_proposed_contract_is_explicitly_pending(self):
+    def test_maintainer_preference_is_not_final_clearance(self):
         report = validate_review(self.base)
-        self.assertEqual(report['status'], 'identity_preflight_validated')
-        self.assertTrue(report['maintainer_selection_required'])
+        self.assertEqual(report['status'], 'identity_preference_recorded')
+        self.assertFalse(report['maintainer_selection_required'])
+        self.assertTrue(report['final_identity_decision_required'])
+        self.assertEqual(report['preferred_name'], 'UrbanGauge')
         self.assertIsNone(report['selected_name'])
         self.assertFalse(report['migration_performed'])
 
@@ -34,7 +36,7 @@ class NamingReviewTests(unittest.TestCase):
                                 text=True, capture_output=True, check=False)
         self.assertEqual(result.returncode, 0, result.stderr)
         data = json.loads(result.stdout)
-        self.assertEqual(data['decision_status'], 'awaiting_maintainer_selection')
+        self.assertEqual(data['decision_status'], 'maintainer_preference_recorded_pending_clearance')
         self.assertGreater(data['existing_reference_inventory']['metrolens']['tracked_files'], 0)
 
     def test_review_inventory_is_bounded(self):
@@ -93,6 +95,47 @@ class NamingReviewTests(unittest.TestCase):
     def test_missing_migration_plan_rejected(self):
         with self.assertRaises(NamingReviewError):
             validate_review(self.base, root=ROOT / 'does-not-exist')
+
+    def test_preference_must_be_exact_and_explicit(self):
+        with self.assertRaises(NamingReviewError):
+            validate_review(self.changed('preferred_name', 'MetroLens'))
+
+    def test_preference_date_cannot_be_removed(self):
+        with self.assertRaises(NamingReviewError):
+            validate_review(self.changed('preference_date', None))
+
+    def test_final_identity_decision_stays_required(self):
+        with self.assertRaises(NamingReviewError):
+            validate_review(self.changed('final_identity_decision_required', False))
+
+    def test_identity_migration_stays_unapproved(self):
+        with self.assertRaises(NamingReviewError):
+            validate_review(self.changed('identity_migration_approved', True))
+
+    def test_research_project_reference_cannot_be_removed(self):
+        data = copy.deepcopy(self.base)
+        urban = next(v for v in data['candidates'] if v['name'] == 'UrbanGauge')
+        urban['evidence_urls'].remove('https://uosarch.ac.kr/uosarch_people/%ED%99%A9%EC%A7%80%EC%9D%80/')
+        with self.assertRaises(NamingReviewError):
+            validate_review(data)
+
+    def test_game_publisher_reference_cannot_be_removed(self):
+        data = copy.deepcopy(self.base)
+        urban = next(v for v in data['candidates'] if v['name'] == 'UrbanGauge')
+        urban['evidence_urls'].remove('https://www.classification.gov.au/titles/word-play-city-edition')
+        with self.assertRaises(NamingReviewError):
+            validate_review(data)
+
+    def test_domain_asking_price_is_not_registry_clearance(self):
+        data = copy.deepcopy(self.base)
+        urban = next(v for v in data['candidates'] if v['name'] == 'UrbanGauge')
+        urban['domain_marketplace_evidence']['verification'] = 'registered_and_cleared'
+        with self.assertRaises(NamingReviewError):
+            validate_review(data)
+
+    def test_accepted_identity_without_clearance_rejected(self):
+        with self.assertRaises(NamingReviewError):
+            validate_review(self.changed('decision_status', 'accepted'))
 
     def test_naming_review_does_not_mutate_repository(self):
         before = (ROOT / 'docs/branding/m00_t06_name_review.json').read_bytes()

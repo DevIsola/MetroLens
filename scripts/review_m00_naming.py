@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only M00-T06 naming preflight. Never check domains or rename repository."""
+"""Read-only M00-T06 naming review. Preference is not identity clearance."""
 
 from __future__ import annotations
 
@@ -28,11 +28,17 @@ class NamingReviewError(ValueError):
 
 
 def validate_review(review: dict, *, root: Path = ROOT) -> dict:
-    """Require an explicitly incomplete, non-mutating decision before brand selection."""
+    """Verify a preferred candidate is recorded without granting final brand approval."""
     if not isinstance(review, dict) or review.get('schema_version') != 1 or review.get('milestone') != 'M00-T06':
         raise NamingReviewError('Unsupported naming review schema or milestone')
-    if review.get('decision_status') != 'awaiting_maintainer_selection' or review.get('selected_name') is not None:
-        raise NamingReviewError('Name selection requires a later explicit maintainer decision')
+    if review.get('decision_status') != 'maintainer_preference_recorded_pending_clearance':
+        raise NamingReviewError('Expected recorded preference pending independently reviewed clearance')
+    if (review.get('preferred_name') != 'UrbanGauge' or
+            review.get('preference_date') != '2026-10-26' or
+            review.get('final_identity_decision_required') is not True or
+            review.get('identity_migration_approved') is not False or
+            review.get('selected_name') is not None):
+        raise NamingReviewError('Preferred UrbanGauge is not a cleared or selected public identity')
     if review.get('working_codename') != 'MetroLens':
         raise NamingReviewError('Existing working codename changed before acceptance')
     if any(review.get(flag) is not False for flag in _REQUIRED):
@@ -60,8 +66,23 @@ def validate_review(review: dict, *, root: Path = ROOT) -> dict:
             raise NamingReviewError('Collision references must be HTTPS URLs')
         with_evidence[entry['name']] = len(urls)
     if (with_evidence.get('MetroLens', 0) < 2 or
-            with_evidence.get('Living Ledger', 0) < 2):
+            with_evidence.get('Living Ledger', 0) < 2 or
+            with_evidence.get('UrbanGauge', 0) < 2):
         raise NamingReviewError('Known public-use evidence must not be removed')
+    urban = next(entry for entry in entries if entry['name'] == 'UrbanGauge')
+    expected_evidence_urls = {
+        'https://uosarch.ac.kr/uosarch_people/%ED%99%A9%EC%A7%80%EC%9D%80/',
+        'https://www.classification.gov.au/titles/word-play-city-edition',
+    }
+    if not expected_evidence_urls.issubset(set(urban['evidence_urls'])):
+        raise NamingReviewError('UrbanGauge historical research and app-publisher evidence missing')
+    market = urban.get('domain_marketplace_evidence')
+    if (not isinstance(market, dict) or market.get('domain') != 'urbangauge.com' or
+            market.get('url') != 'https://www.brandzilla.io/name/UrbanGauge.com' or
+            market.get('observed_asking_price_usd') != 2695 or
+            market.get('observed_on') != '2026-10-26' or
+            market.get('verification') != 'marketplace_listing_only_not_registry_or_ownership_clearance'):
+        raise NamingReviewError('UrbanGauge .com listing must remain labelled as unverified marketplace evidence')
     if not isinstance(review.get('required_clearance_steps'), list) or len(review['required_clearance_steps']) < 5:
         raise NamingReviewError('Trademarks, domains, stores and maintainer gates missing')
     for path in ('docs/adr/ADR-0003-naming-and-identity.md',
@@ -71,8 +92,11 @@ def validate_review(review: dict, *, root: Path = ROOT) -> dict:
             raise NamingReviewError(f'Missing named review record: {path}')
     return {
         'milestone': 'M00-T06',
-        'status': 'identity_preflight_validated',
-        'decision_status': 'awaiting_maintainer_selection',
+        'status': 'identity_preference_recorded',
+        'decision_status': 'maintainer_preference_recorded_pending_clearance',
+        'preferred_name': 'UrbanGauge',
+        'preference_date': '2026-10-26',
+        'final_identity_decision_required': True,
         'candidate_names': [v['name'] for v in entries],
         'documented_public_use_signals': [v['name'] for v in entries if v['public_use_signal'] == 'observed_other_products'],
         'candidates_legally_cleared': 0,
@@ -82,7 +106,8 @@ def validate_review(review: dict, *, root: Path = ROOT) -> dict:
         'repository_rename_approved': False,
         'migration_performed': False,
         'production_ready': False,
-        'maintainer_selection_required': True,
+        'maintainer_selection_required': False,
+        'domain_marketplace_listing': 'urbangauge.com; USD 2695 asking (2026-10-26); not cleared',
     }
 
 
