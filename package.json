@@ -1,0 +1,16 @@
+{
+  "name": "urbangauge-workspace",
+  "version": "0.0.0",
+  "private": true,
+  "description": "UrbanGauge reproducible engineering workspace; no public runtime or datasets yet.",
+  "packageManager": "pnpm@10.34.9",
+  "engines": {
+    "node": ">=24.22.1 <25",
+    "pnpm": "10.34.9"
+  },
+  "scripts": {
+    "check:toolchains": "python scripts/validate_m01_toolchains.py",
+    "check:roadmap": "python scripts/sync_roadmap.py --check",
+    "test:python": "python -m unittest discover -s tests -v"
+  }
+}

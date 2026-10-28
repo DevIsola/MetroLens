@@ -1,0 +1,10 @@
+[project]
+name = "urbangauge-pipeline"
+version = "0.0.0"
+description = "Private development environment for UrbanGauge source validation."
+requires-python = ">=3.13,<3.14"
+dependencies = []
+
+[tool.uv]
+package = false
+required-version = "==0.10.0"
