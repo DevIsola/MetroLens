@@ -17,7 +17,7 @@ Remove-Item Env:NEXT_PUBLIC_BASE_PATH -ErrorAction SilentlyContinue
 pnpm.cmd --dir frontend typegen
 pnpm.cmd --dir frontend typecheck
 pnpm.cmd --dir frontend build
-python scripts/validate_m01_static_export.py --smoke --base-path ""
+python scripts/validate_m01_static_export.py --smoke --base-path=
 
 # 2. Independent project-path export, still only local files.
 $env:NEXT_PUBLIC_BASE_PATH = '/UrbanGauge'
@@ -35,6 +35,8 @@ python scripts/sync_roadmap.py --check
 git diff --check
 git status -sb
 ```
+
+On Windows PowerShell, pass the root-path argument as `--base-path=` (one token). Passing `--base-path ""` may result in an omitted argument. Always rebuild without `NEXT_PUBLIC_BASE_PATH` before the root smoke.
 
 `--smoke` serves `frontend/out/` on an ephemeral **127.0.0.1-only** port, requests the homepage and direct methodology deep link, checks that absolute URLs keep the correct subpath, and retrieves up to four actual Next.js static assets. It shuts the server down after the checks and makes no internet requests. It does **not** assert production hosting/CDN behavior, a hosted GitHub Actions run, or an independently reviewed source-data release.
 

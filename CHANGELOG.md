@@ -13,6 +13,7 @@ Significant changes are recorded here when verified in the repository. This is a
 - **M01-T05:** This changelog, ADR index, docs-as-code validator and richer **manual** milestone verification workflow.
 - **M01-T06:** SECURITY.md, ADR-0005, offline credential/workflow checks and manual dependency audit guidance; no automatic security updates.
 - **M01-T07:** Local root/subpath static export smoke, methodology deep link and manual build verification; no deployment.
+- **M01 pre-merge review:** Fail-closed milestone evidence checklist and explicit deferred decisions; no completion claim or release.
 
 ### Restrictions
 
