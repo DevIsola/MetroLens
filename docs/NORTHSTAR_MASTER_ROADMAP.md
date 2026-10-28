@@ -373,7 +373,7 @@ Cada Insight terá `id`, pergunta, período, definição de métrica, evidência
 | Milestone | Escopo                              | Status       | Evidência |
 | --------- | ----------------------------------- | ------------ | --------- |
 | M00       | Discovery e contrato do produto     | Concluído    | Registrada |
-| M01       | Foundation + CI + governança        | Não iniciado | Pendente  |
+| M01       | Foundation + CI + governança        | Em andamento | Pendente  |
 | M02       | Ingestão das fontes oficiais        | Não iniciado | Pendente  |
 | M03       | Bronze / Silver + qualidade         | Não iniciado | Pendente  |
 | M04       | Gold marts + dbt + export           | Não iniciado | Pendente  |

@@ -24,13 +24,13 @@
     {
       "id": "M01",
       "title": "Foundation + CI + governança",
-      "status": "not_started",
+      "status": "in_progress",
       "prs": [],
       "issues": [],
       "merged_commit": null,
       "evidence": [],
       "accepted_at": null,
-      "notes": "No verified implementation evidence yet."
+      "notes": "M01-T01 engineering foundation started 2026-10-27 after accepted and merged M00 discovery. Local onboarding, frontend/pipeline boundaries and workspace validation only. Runtime pinning/lockfiles, actual packages, CI governance, static export and licence selection remain pending; Actions/ETL/publication remain manual-only or disabled."
     },
     {
       "id": "M02",

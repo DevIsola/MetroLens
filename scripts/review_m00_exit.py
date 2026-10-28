@@ -58,8 +58,10 @@ def review(*, root: Path = ROOT) -> dict:
     if not isinstance(items, list) or len(items) != 12 or [m.get("id") for m in items] != [f"M{i:02d}" for i in range(12)]:
         raise ExitReviewError("Roadmap milestones M00–M11 changed")
     m00, m01 = items[:2]
-    if m00.get("status") != "done" or m01.get("status") != "not_started":
-        raise ExitReviewError("M00 must have accepted discovery evidence; M01 must remain not started")
+    if m00.get("status") != "done":
+        raise ExitReviewError("M00 must have accepted discovery evidence")
+    if m01.get("status") not in {"not_started", "in_progress", "done"}:
+        raise ExitReviewError("Unrecognized M01 milestone state")
     if (m00.get("prs") != ["https://github.com/DevIsola/UrbanGauge/pull/1"] or
         m00.get("merged_commit") != "87e9d035dfbc841c0282ec35da7a3d29707f7ff1" or
         m00.get("accepted_at") != "2026-10-27T23:05:21Z" or
@@ -102,7 +104,7 @@ def review(*, root: Path = ROOT) -> dict:
         "publication_approved": False,
         "rent_to_income_ratio": None,
         "m00_marked_done": True,
-        "m01_started": False,
+        "m01_started": m01.get("status") != "not_started",
         "merged_pr": "https://github.com/DevIsola/UrbanGauge/pull/1",
         "merged_commit": "87e9d035dfbc841c0282ec35da7a3d29707f7ff1",
         "accepted_at": "2026-10-27T23:05:21Z",
@@ -110,7 +112,7 @@ def review(*, root: Path = ROOT) -> dict:
             "Review publisher reuse and attribution before any public data export",
             "Cross-publisher CMA crosswalk and income/rent comparability remain unapproved",
         ],
-        "next_step": "Merge the M00 bookkeeping closeout, then create feat/M01-engineering-foundation from main",
+        "next_step": "Continue M01 engineering foundation; keep source and publication gates closed" if m01.get("status") != "not_started" else "Start M01 engineering foundation after M00 closeout",
     }
 
 
