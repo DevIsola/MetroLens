@@ -42,3 +42,7 @@ playwright-report/
 
 # Local M00 UX review output (source-derived; never commit or deploy)
 local-previews/
+
+# Next.js generated typing artifacts (created by next typegen/build)
+frontend/next-env.d.ts
+frontend/*.tsbuildinfo

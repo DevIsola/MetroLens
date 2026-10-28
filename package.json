@@ -2,7 +2,7 @@
   "name": "urbangauge-workspace",
   "version": "0.0.0",
   "private": true,
-  "description": "UrbanGauge reproducible engineering workspace; no public runtime or datasets yet.",
+  "description": "UrbanGauge reproducible monorepo with a static frontend scaffold; no public datasets.",
   "packageManager": "pnpm@10.34.9",
   "engines": {
     "node": ">=24.22.1 <25",
@@ -11,6 +11,9 @@
   "scripts": {
     "check:toolchains": "python scripts/validate_m01_toolchains.py",
     "check:roadmap": "python scripts/sync_roadmap.py --check",
-    "test:python": "python -m unittest discover -s tests -v"
+    "test:python": "python -m unittest discover -s tests -v",
+    "typecheck:frontend": "pnpm --dir frontend typecheck",
+    "build:frontend": "pnpm --dir frontend build",
+    "check:frontend": "python scripts/validate_m01_frontend.py"
   }
 }
