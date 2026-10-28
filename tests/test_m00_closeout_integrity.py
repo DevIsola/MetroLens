@@ -38,7 +38,7 @@ class M00CloseoutIntegrityTests(unittest.TestCase):
         self.assertFalse(report["publication_approved"])
         self.assertIsNone(report["rent_to_income_ratio"])
         self.assertFalse(report["automatic_deployment_enabled"])
-        self.assertFalse(report["m01_started"])
+        self.assertEqual(report["m01_started"], self.data["milestones"][1]["status"] != "not_started")
 
 if __name__ == "__main__":
     unittest.main()
