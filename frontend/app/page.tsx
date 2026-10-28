@@ -49,6 +49,7 @@ export default function HomePage() {
               </p>
               <div className="hero-actions">
                 <a className="primary-link" href="#scope">Explore the approach <span aria-hidden="true">↓</span></a>
+                <Link className="quiet-note" href="/methodology">Read the methodology</Link>
                 <span className="quiet-note">No public datasets available yet</span>
               </div>
             </div>

@@ -43,7 +43,11 @@ jobs:
         run: pnpm --dir frontend typegen
       - name: Check strict TypeScript
         run: pnpm --dir frontend typecheck
-      - name: Build static frontend (not deploy)
+      - name: Build project-subpath static frontend (not deploy)
+        env:
+          NEXT_PUBLIC_BASE_PATH: /UrbanGauge
         run: pnpm --dir frontend build
+      - name: Check exported deep links and static assets on loopback only
+        run: python scripts/validate_m01_static_export.py --smoke --base-path /UrbanGauge
       - name: Require static output without publishing
         run: test -s frontend/out/index.html

@@ -12,6 +12,7 @@ Significant changes are recorded here when verified in the repository. This is a
 - **M01-T04:** Contribution guidance, issue forms and review policy without automated triggers or required hosted checks.
 - **M01-T05:** This changelog, ADR index, docs-as-code validator and richer **manual** milestone verification workflow.
 - **M01-T06:** SECURITY.md, ADR-0005, offline credential/workflow checks and manual dependency audit guidance; no automatic security updates.
+- **M01-T07:** Local root/subpath static export smoke, methodology deep link and manual build verification; no deployment.
 
 ### Restrictions
 
