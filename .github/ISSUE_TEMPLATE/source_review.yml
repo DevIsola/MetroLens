@@ -1,0 +1,40 @@
+name: Official-source review
+description: Record publisher-specific provenance, reuse terms, and statistical limitations without uploading source files.
+title: "[Source review] "
+body:
+  - type: input
+    id: milestone
+    attributes:
+      label: Milestone and task ID
+      placeholder: M02-T01
+    validations:
+      required: true
+  - type: input
+    id: publisher_url
+    attributes:
+      label: Official publisher URL
+      description: Link to an official public source, not a private download or credentials.
+      placeholder: https://www.statcan.gc.ca/
+    validations:
+      required: true
+  - type: textarea
+    id: identifiers
+    attributes:
+      label: Identifiers and statistical definitions
+      description: Table/series ID, geographic vintage, period, population, unit, statistic, flags, source version or hash.
+    validations:
+      required: true
+  - type: textarea
+    id: licence
+    attributes:
+      label: Reuse, attribution, and redistribution disposition
+      description: Record verified terms, reviewer, evidence URL, and unresolved restrictions. Unknown is acceptable and blocks public export.
+    validations:
+      required: true
+  - type: textarea
+    id: comparability
+    attributes:
+      label: Comparability and publication risks
+      description: Do not imply compatible rent/income joins without separately accepted matching evidence.
+    validations:
+      required: true

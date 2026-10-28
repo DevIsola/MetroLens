@@ -1,31 +1,36 @@
 ## Milestone / task IDs
 
-<!-- Example: M00 / M00-T01, M00-T03. Link real GitHub Issues when created. -->
+<!-- Example: M01 / M01-T04. Link real GitHub Issues when created. -->
 
 ## Scope and why
 
-<!-- Describe one milestone increment; include relevant source citations/official IDs for data changes. -->
+<!-- Describe one reviewable increment, the user/engineering outcome, and what is explicitly out of scope. -->
 
 ## Changes
 
 ## Evidence / checks
 
-- [ ] Local tests run (`python -m unittest discover -s tests -v` for M00)
+- [ ] Full local Python suite run (`python -m unittest discover -s tests -v`)
 - [ ] Roadmap synchronized (`python scripts/sync_roadmap.py --check`)
-- [ ] Manual cloud CI run, when workflow is available on default branch
-- [ ] If changing metrics, official definitions and incompatible-input cases validated
-- [ ] If changing UI, screenshots and keyboard/mobile checks attached
-- [ ] No secrets, invalid/mock production data, or unnecessary binary datasets committed
+- [ ] Relevant contract validators run (workspace/toolchains/frontend/governance as applicable)
+- [ ] Frozen package installation and actual typecheck/build passed when frontend dependencies changed
+- [ ] Source definitions, publisher terms, licence decisions and incompatible-input cases reviewed when metrics/data changed
+- [ ] Responsive/keyboard checks and screenshots attached when user-facing UI changed
+- [ ] No secrets, unapproved publisher datasets, invented data, or binary source archives committed
+- [ ] Any manual GitHub Actions execution is described as optional evidence, **not** an automatically required PR check
+
+## Source / methodology / release restrictions
+
+<!-- State what is and is not approved for reuse, statistical comparability, client JSON export, and publication. -->
+
+- [ ] No new unapproved rent-to-income join, aggregate burden, or misleading cross-source comparison
+- [ ] No Pages/Cloudflare/public-data deployment with this PR (default)
+- [ ] No new push/PR/scheduled GitHub Actions triggers
 
 ## Documentation impact
 
-<!-- Files updated or "none" with a reason. Never mark milestones done without post-merge SHA and acceptance evidence. -->
+<!-- Files updated or "none" with a reason. Never mark a milestone done before real merge and acceptance evidence. -->
 
-## Release decision
+## Reviewer decision / Risks / rollback
 
-- [ ] No Pages publication with this PR (default)
-- [ ] Approved major milestone: manual release **after merge** to main (requires separate human confirmation)
-
-## Risks / rollback
-
-<!-- How to safely revert. -->
+<!-- Record manual review, reproduction notes, and rollback steps. Any later release needs separate human confirmation. -->

@@ -1,0 +1,33 @@
+name: Feature or engineering task
+description: Propose a scoped milestone implementation with acceptance criteria.
+title: "[Task] "
+body:
+  - type: input
+    id: milestone
+    attributes:
+      label: Milestone and task ID
+      description: Example M01-T04, or mark as unplanned.
+      placeholder: M01-T04
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: User or engineering outcome
+      description: State what should improve and why.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Verifiable acceptance criteria
+      description: Include local commands, expected artifacts, and failure cases.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Out of scope and dependencies
+      description: Identify source-licensing, statistical comparability, and publication dependencies as applicable.
+    validations:
+      required: false

@@ -1,0 +1,14 @@
+{
+  "milestone": "M01-T04",
+  "status": "repository_files_prepared_admin_review_pending",
+  "repo": "DevIsola/UrbanGauge",
+  "manual_actions_only": true,
+  "automatic_ci_enabled_by_increment": false,
+  "automatic_deployment_enabled_by_increment": false,
+  "required_status_checks_enabled_by_increment": false,
+  "rulesets_configured_by_increment": false,
+  "labels_created_by_increment": false,
+  "publication_approved": false,
+  "source_crosswalk_approved": false,
+  "license_selected": false
+}
