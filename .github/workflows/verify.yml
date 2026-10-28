@@ -1,7 +1,7 @@
 name: Verify milestone (manual)
 
-# Intentionally no push, pull_request, merge, release, or schedule triggers.
-# Execute once for a review checkpoint / major milestone acceptance.
+# Intentionally manual: no push, pull_request, release, schedule or deployment triggers.
+# This verifies a selected ref only after a human starts workflow_dispatch.
 on:
   workflow_dispatch:
 
@@ -11,15 +11,37 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 6
+    timeout-minutes: 15
     steps:
-      - name: Checkout milestone ref
+      - name: Checkout selected ref
         uses: actions/checkout@v4
-      - name: Set up Python
+      - name: Set up Python 3.13
         uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Unit and policy tests
+      - name: Run Python regressions and publication policy checks
         run: python -m unittest discover -s tests -v
-      - name: Roadmap synchronization
+      - name: Check generated roadmap (do not rewrite)
         run: python scripts/sync_roadmap.py --check
+      - name: Verify docs-as-code and manual execution policy
+        run: python scripts/validate_m01_docs.py
+      - name: Set up pinned pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: '10.34.9'
+          run_install: false
+      - name: Set up pinned Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.node-version'
+          cache: 'pnpm'
+      - name: Install pinned frontend dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Generate Next.js route types
+        run: pnpm --dir frontend typegen
+      - name: Check strict TypeScript
+        run: pnpm --dir frontend typecheck
+      - name: Build static frontend (not deploy)
+        run: pnpm --dir frontend build
+      - name: Require static output without publishing
+        run: test -s frontend/out/index.html
