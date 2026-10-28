@@ -8,5 +8,6 @@ ADRs document decisions and their **scope**. An accepted planning ADR is not per
 | [ADR-0002](ADR-0002-unjoined-indicators.md) | Separate rent and income series | Accepted; no joined affordability ratio |
 | [ADR-0003](ADR-0003-naming-and-identity.md) | UrbanGauge research repository identity | Accepted for repository, not commercial brand clearance |
 | [ADR-0004](ADR-0004-manual-verification-and-docs-as-code.md) | Manual verification and documentation contract | Accepted for M01 implementation; no automatic triggers |
+| [ADR-0005](ADR-0005-manual-security-and-dependency-governance.md) | Manual dependency and secret safeguards | Accepted for repository-file review; hosted security settings unverified |
 
 Create future ADRs with a unique next sequence number, context, decision, alternatives, consequences and evidence. Update this index and `CHANGELOG.md` in the same pull request. Do not replace historical ADR references during an identity rename.

@@ -11,6 +11,7 @@ Significant changes are recorded here when verified in the repository. This is a
 - **M01-T03:** Strict TypeScript and static Next.js frontend scaffold; local production build validated by the maintainer.
 - **M01-T04:** Contribution guidance, issue forms and review policy without automated triggers or required hosted checks.
 - **M01-T05:** This changelog, ADR index, docs-as-code validator and richer **manual** milestone verification workflow.
+- **M01-T06:** SECURITY.md, ADR-0005, offline credential/workflow checks and manual dependency audit guidance; no automatic security updates.
 
 ### Restrictions
 
